@@ -7,95 +7,95 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "BIM Specialist & Civil Engineer",
-    "subtitle": "5+ Years of Experience | 171+ Projects",
-    "description": "Specialized in architectural design, BIM modeling, and project supervision. Delivering excellence in residential, commercial, and hospitality projects.",
+    "title": "BIM Specialist & Architectural Supervision Engineer",
+    "subtitle": "5 Years of Experience | 171+ Projects | Revit, BIM, Grasshopper",
+    "description": "Specialized in **Advanced Architectural Design** using BIM technologies (Revit) and Parametric Design (Grasshopper), with extensive experience in **Site Supervision** and execution of major projects (5-star hotels, luxury villas, industrial projects).",
     "cta": "View My Work",
     "contact": "Get in Touch"
   },
   "portfolio": {
     "title": "Featured Projects",
-    "subtitle": "A selection of my recent architectural designs and completed projects",
+    "subtitle": "A selection of advanced design works and major field execution achievements",
     "categories": {
       "all": "All Projects",
-      "residential": "Residential",
-      "commercial": "Commercial",
-      "hospitality": "Hospitality",
-      "industrial": "Industrial"
+      "design": "BIM Design",
+      "supervision": "Supervision & Execution",
+      "hospitality": "Hospitality & Guest Houses",
+      "industrial": "Industrial & Agricultural"
     },
     "viewProject": "View Project",
     "projects": {
-      "villa1": {
-        "title": "Luxury Villa Design",
-        "category": "Residential",
-        "description": "Modern luxury villa with sophisticated architectural design and premium finishes"
+      "hotel_supervision": {
+        "title": "Supervision of 5-Star Hotel and Guest House (Madina Al-Moali)",
+        "category": "Supervision & Execution",
+        "description": "Full supervision of the construction of a 6-story, 5-star hotel and a political guest house hosting international conferences. Ensured execution according to technical specifications and international standards."
       },
-      "hotel1": {
-        "title": "5-Star Hotel Complex",
-        "category": "Hospitality",
-        "description": "Contemporary hotel design with 6 floors, featuring luxury amenities and elegant architecture"
+      "farm_design": {
+        "title": "Design and Supervision of Model Farm (Wadi Al-Khair)",
+        "category": "BIM Design",
+        "description": "Design and supervision of the initial phase of a 10,000 dunam model farm project. Focused on modern infrastructure and sustainable planning."
       },
-      "commercial1": {
-        "title": "Commercial Complex",
-        "category": "Commercial",
-        "description": "Modern commercial space with contemporary design and functional layout"
+      "villa_supervision": {
+        "title": "Supervision of Luxury Residential Villa (Madina Al-Moali)",
+        "category": "Supervision & Execution",
+        "description": "Supervised the execution of a luxury residential villa, ensuring the quality of finishes and precise architectural details."
       },
-      "farm1": {
-        "title": "Model Farm Project",
-        "category": "Industrial",
-        "description": "10,000 dunam sustainable farm with modern infrastructure and organized planning"
+      "commercial_offices": {
+        "title": "Design and Supervision of Um Qasr Cement Company Offices",
+        "category": "BIM Design",
+        "description": "Consulting role in the supervision of the construction of Um Qasr Cement Company offices, with design provided for Taiba Omani Company. Applied BIM standards in interior and MEP design."
       }
     }
   },
   "experience": {
     "title": "Professional Experience",
-    "subtitle": "My journey in architectural design and project management",
+    "subtitle": "Integrated expertise in advanced design and engineering supervision",
     "items": {
       "madina": {
-        "company": "Madina Al-Moali",
-        "position": "Consulting Engineer & Site Supervisor",
+        "company": "Madina Al-Moali Company",
+        "position": "Consulting Supervisor (Villa, 5-Star Hotel, Guest House)",
         "duration": "2020 - Present",
-        "description": "Supervised construction of 5-star hotel (6 floors), luxury villas, and guest houses. Ensured compliance with architectural specifications and quality standards."
-      },
-      "wadi": {
-        "company": "Wadi Al-Khair",
-        "position": "Design & Supervision Engineer",
-        "duration": "2019 - 2020",
-        "description": "Designed and supervised the initial phase of a 10,000 dunam model farm project with modern infrastructure and sustainable design."
+        "description": "Supervised the construction of a villa, a 6-story, 5-star hotel, and a political guest house hosting international conferences. Ensured quality and adherence to technical specifications."
       },
       "dar": {
-        "company": "Dar Al-Naseem",
-        "position": "Consulting Engineer",
-        "duration": "2021 - Present",
-        "description": "Consulting role for the design and supervision of Um Qasr Cement Company offices and Taiba Omani Company facilities."
+        "company": "Dar Al-Naseem Company",
+        "position": "Consulting Entity (Supervision of Um Qasr Offices)",
+        "duration": "Recently",
+        "description": "Supervised the construction of Um Qasr Cement Company Northern offices, with design provided for Taiba Omani Company. Applied engineering and consulting standards."
+      },
+      "wadi": {
+        "company": "Wadi Al-Khair Company",
+        "position": "Design & Supervision Engineer (Model Farm)",
+        "duration": "2019 - 2020",
+        "description": "Designed and supervised the initial phase of a 10,000 dunam model farm project. Focused on structural planning and infrastructure."
       }
     }
   },
   "skills": {
     "title": "Technical Skills",
-    "subtitle": "Expertise in modern architectural design and BIM technologies",
+    "subtitle": "Specialization in Building Information Modeling (BIM) and Parametric Design",
     "categories": {
       "bim": {
-        "title": "BIM & Design Software",
-        "skills": ["Revit Architecture", "Revit Structure", "Revit MEP", "AutoCAD", "Lumion", "3DS Max"]
+        "title": "Building Information Modeling (BIM)",
+        "skills": ["Revit (Architectural, Structural, MEP)", "BIM 4D/5D", "BIM Management and Coordination", "Navisworks"]
       },
       "design": {
-        "title": "Design Specialization",
-        "skills": ["Architectural Design", "MEP Design", "Water & Sanitation Systems", "Electrical Systems", "Grasshopper Parametric Design"]
+        "title": "Advanced & Parametric Design",
+        "skills": ["Grasshopper", "Algorithmic Design", "Environmental Simulation", "Design Evolutionary", "Architectural Design"]
       },
-      "advanced": {
-        "title": "Advanced Tools",
-        "skills": ["Grasshopper", "Environmental Simulation", "Design Fluency", "Python", "Machine Learning"]
+      "mep": {
+        "title": "Engineering Systems Design",
+        "skills": ["Water and Drainage Systems Design", "Electrical Systems Design", "Mechanical, Electrical, and Plumbing (MEP) Design"]
       },
-      "soft": {
-        "title": "Professional Skills",
-        "skills": ["Project Management", "Site Supervision", "Consultation", "Team Leadership", "Quality Assurance"]
+      "supervision": {
+        "title": "Site Supervision and Execution",
+        "skills": ["Project Management", "Site Supervision", "Quality Assurance (QA/QC)", "Reading Executive Drawings", "Contract Management"]
       }
     }
   },
   "certifications": {
-    "title": "Certifications & Achievements",
-    "subtitle": "Continuous learning and professional development",
+    "title": "Certifications & Professional Development",
+    "subtitle": "Continuous learning in advanced architecture and engineering",
     "items": [
       {
         "title": "User Innovation & Entrepreneurship",
@@ -131,10 +131,10 @@
   },
   "about": {
     "title": "About Me",
-    "intro": "I am a civil engineer with a passion for architectural design and innovative solutions. With over 5 years of experience, I have successfully completed 171+ projects across residential, commercial, and industrial sectors.",
-    "expertise": "My expertise spans from conceptual design to detailed BIM modeling and on-site project supervision. I specialize in creating designs that balance aesthetics, functionality, and sustainability.",
-    "education": "I graduated from KUFA University with a degree in Civil Engineering, specializing in structural and water resource engineering.",
-    "interests": "My interests include architecture, design, technology, programming, machine learning, and sustainable building practices."
+    "intro": "I am a Civil Engineer specializing in **Advanced Architectural Design** and BIM technologies. With over 5 years of experience, I have designed and supervised over 171 projects, including massive undertakings like a **5-star hotel** and a **political guest house**.",
+    "expertise": "My expertise lies in integrating architectural design with engineering systems (MEP and water) using **Revit and BIM**, alongside utilizing **Grasshopper** and **Design Evolutionary** tools for design optimization and environmental simulation. I also have a proven track record in **Site Supervision** and ensuring quality execution for major projects.",
+    "education": "I graduated from KUFA University with a Bachelor's degree in Civil Engineering.",
+    "interests": "My interests include architecture, parametric design, construction technology, programming, and sustainable engineering solutions."
   },
   "contact": {
     "title": "Get In Touch",
