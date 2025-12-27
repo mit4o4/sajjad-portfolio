@@ -47,7 +47,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   };
 
   if (!isHydrated) {
-    return <>{children}</>;
+    return null;
   }
 
   return (
