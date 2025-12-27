@@ -21,24 +21,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # New step to install pnpm
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
+        # with:       <-- REMOVED "with" and "version"
+        #   version: 9
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm' # Changed from 'npm' to 'pnpm'
-          
+          cache: 'pnpm'
+
       - name: Install dependencies
-        run: pnpm install # Changed from 'npm ci'
-        
+        run: pnpm install
+
       - name: Build
-        run: pnpm run build # Changed from 'npm run build'
-        
+        run: pnpm run build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
