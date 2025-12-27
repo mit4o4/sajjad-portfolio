@@ -21,7 +21,13 @@
       "design": "تصميم BIM",
       "supervision": "إشراف وتنفيذ",
       "hospitality": "فندقي وضيافة",
-      "industrial": "صناعي وزراعي"
+      "industrial": "صناعي وزراعي",
+      "houses": "منازل",
+      "commercial": "محال تجارية وشركات",
+      "model_farms": "مزارع نموذجية",
+      "villas": "فلل",
+      "restaurants": "مطاعم",
+      "clinics": "عيادات طبية"
     },
     "viewProject": "عرض المشروع",
     "projects": {

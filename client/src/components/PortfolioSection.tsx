@@ -38,21 +38,49 @@ export default function PortfolioSection() {
     new Set(projectsData.map((p) => (p.category || 'other').toString().toLowerCase()))
   );
 
-  // prefer a stable ordering (all -> design -> supervision -> hospitality -> industrial -> others)
-  const preferredOrder = ['design', 'supervision', 'hospitality', 'industrial'];
-
-  const orderedCategories = [
-    'all',
-    ...preferredOrder.filter((c) => derivedCategories.includes(c)),
-    ...derivedCategories.filter((c) => !preferredOrder.includes(c)),
+  // user-requested sections (stable order)
+  const desiredSections = [
+    'houses', // منازل
+    'commercial', // محال تجارية وشركات
+    'model_farms', // مزارع نموذجية
+    'villas', // فلل
+    'restaurants', // مطاعم
+    'clinics', // عيادات طبية
   ];
 
+  // classifier: determine which desired section a project belongs to (by title or titleAr)
+  const classifyProject = (p: typeof projectsData[0]) => {
+    const text = ((p.title || '') + ' ' + (p.titleAr || '') + ' ' + (p.description || '') + ' ' + (p.descriptionAr || '')).toLowerCase();
+
+    // clinics (عيادات)
+    if (/clinic|عيادة|عيادات|dental|أسنان|طبية|عيادة طبية/.test(text)) return 'clinics';
+
+    // restaurants (مطاعم)
+    if (/restaurant|مطعم|مندي|تندور|مطاعم|مندي العقيق|مندي/.test(text)) return 'restaurants';
+
+    // villas (فلل)
+    if (/villa|villas|فيلا|فلل|فيلا فاخرة|فيلا سكنية/.test(text)) return 'villas';
+
+    // model farms (مزارع نموذجية)
+    if (/farm|مزرعة|مزارع|مزرعة نموذجية|model farm/.test(text)) return 'model_farms';
+
+    // houses (منازل / houses / residential)
+    if (/house|home|household|بيت|منازل|منزل|سكنية|residential|residence|villa/i.test(text)) return 'houses';
+
+    // commercial (offices, companies, shops)
+    if (/office|company|company|office|مكتب|شركة|محل|تجاري|تجارية|commercial/.test(text)) return 'commercial';
+
+    // fallback
+    return 'commercial';
+  };
+
+  const orderedCategories = ['all', ...desiredSections];
   const categories = orderedCategories.map((c) => ({ key: c, value: c }));
 
-  const filteredProjects =
-    activeCategory === 'all'
-      ? reversedProjects
-      : reversedProjects.filter((p: typeof projectsData[0]) => p.category === activeCategory);
+    const filteredProjects =
+      activeCategory === 'all'
+        ? reversedProjects
+        : reversedProjects.filter((p: typeof projectsData[0]) => classifyProject(p) === activeCategory);
 
   const displayedProjects = showMore ? filteredProjects : filteredProjects.slice(0, 8);
   const hasMore = filteredProjects.length > 8;

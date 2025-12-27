@@ -21,7 +21,13 @@
       "design": "BIM Design",
       "supervision": "Supervision & Execution",
       "hospitality": "Hospitality & Guest Houses",
-      "industrial": "Industrial & Agricultural"
+      "industrial": "Industrial & Agricultural",
+      "houses": "Houses",
+      "commercial": "Commercial & Companies",
+      "model_farms": "Model Farms",
+      "villas": "Villas",
+      "restaurants": "Restaurants",
+      "clinics": "Medical Clinics"
     },
     "viewProject": "View Project",
     "projects": {
