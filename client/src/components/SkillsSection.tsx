@@ -14,13 +14,13 @@ const skillCategories = [
   },
   {
     icon: Zap,
-    titleKey: 'skills.categories.advanced.title',
-    skillsKey: 'skills.categories.advanced.skills',
+    titleKey: 'skills.categories.mep.title',
+    skillsKey: 'skills.categories.mep.skills',
   },
   {
     icon: Users,
-    titleKey: 'skills.categories.soft.title',
-    skillsKey: 'skills.categories.soft.skills',
+    titleKey: 'skills.categories.supervision.title',
+    skillsKey: 'skills.categories.supervision.skills',
   },
 ];
 
