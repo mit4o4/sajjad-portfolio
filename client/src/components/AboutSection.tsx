@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { CheckCircle, Linkedin, Github } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import sajjadProfile from '../../public/images/sajjad.png';
 
 export default function AboutSection() {
@@ -45,28 +45,6 @@ export default function AboutSection() {
                   <p className="text-foreground/70">{t(key)}</p>
                 </div>
               ))}
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-4 pt-4">
-              <a
-                href={t('about.linkedin')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-primary/10 rounded-lg hover:bg-primary hover:text-white transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={20} />
-              </a>
-              <a
-                href={t('about.github')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-primary/10 rounded-lg hover:bg-primary hover:text-white transition-colors"
-                aria-label="GitHub"
-              >
-                <Github size={20} />
-              </a>
             </div>
 
             {/* Stats */}

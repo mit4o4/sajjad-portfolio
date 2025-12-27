@@ -7,8 +7,8 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: Instagram, href: 'https://instagram.com/te.bim', label: 'Instagram' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Github, href: '#', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/sajjad-abdulhamead/', label: 'LinkedIn' },
+    { icon: Github, href: 'https://github.com/mit4o4', label: 'GitHub' },
     { icon: Mail, href: 'mailto:sajjad.abdulhameed@gmail.com', label: 'Email' },
   ];
 
@@ -18,9 +18,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-bold text-primary mb-2">SAM</h3>
+            <h3 className="text-xl font-bold text-primary mb-2">Sajjad</h3>
             <p className="text-foreground/60 text-sm">
-              BIM Specialist & Civil Engineer
+              Architectural Designer & Civil Engineer
             </p>
           </div>
 
