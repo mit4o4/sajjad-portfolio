@@ -33,13 +33,21 @@ export default function PortfolioSection() {
   // Reverse projects order (newest first)
   const reversedProjects = [...projectsData].reverse();
 
-  const categories = [
-    { key: 'all', value: 'all' },
-    { key: 'design', value: 'design' },
-    { key: 'supervision', value: 'supervision' },
-    { key: 'hospitality', value: 'hospitality' },
-    { key: 'industrial', value: 'industrial' },
+  // derive categories from projectsData so UI reflects available projects
+  const derivedCategories = Array.from(
+    new Set(projectsData.map((p) => (p.category || 'other').toString().toLowerCase()))
+  );
+
+  // prefer a stable ordering (all -> design -> supervision -> hospitality -> industrial -> others)
+  const preferredOrder = ['design', 'supervision', 'hospitality', 'industrial'];
+
+  const orderedCategories = [
+    'all',
+    ...preferredOrder.filter((c) => derivedCategories.includes(c)),
+    ...derivedCategories.filter((c) => !preferredOrder.includes(c)),
   ];
+
+  const categories = orderedCategories.map((c) => ({ key: c, value: c }));
 
   const filteredProjects =
     activeCategory === 'all'
@@ -72,7 +80,8 @@ export default function PortfolioSection() {
               }}
               className="transition-all"
             >
-              {t(`portfolio.categories.${cat.key}`)}
+              {/* translation fallback: if missing, show capitalized category */}
+              {t(`portfolio.categories.${cat.key}`) || cat.key.charAt(0).toUpperCase() + cat.key.slice(1)}
             </Button>
           ))}
         </div>
