@@ -1,0 +1,164 @@
+{
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "about": "About",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "BIM Specialist & Civil Engineer",
+    "subtitle": "5+ Years of Experience | 171+ Projects",
+    "description": "Specialized in architectural design, BIM modeling, and project supervision. Delivering excellence in residential, commercial, and hospitality projects.",
+    "cta": "View My Work",
+    "contact": "Get in Touch"
+  },
+  "portfolio": {
+    "title": "Featured Projects",
+    "subtitle": "A selection of my recent architectural designs and completed projects",
+    "categories": {
+      "all": "All Projects",
+      "residential": "Residential",
+      "commercial": "Commercial",
+      "hospitality": "Hospitality",
+      "industrial": "Industrial"
+    },
+    "viewProject": "View Project",
+    "projects": {
+      "villa1": {
+        "title": "Luxury Villa Design",
+        "category": "Residential",
+        "description": "Modern luxury villa with sophisticated architectural design and premium finishes"
+      },
+      "hotel1": {
+        "title": "5-Star Hotel Complex",
+        "category": "Hospitality",
+        "description": "Contemporary hotel design with 6 floors, featuring luxury amenities and elegant architecture"
+      },
+      "commercial1": {
+        "title": "Commercial Complex",
+        "category": "Commercial",
+        "description": "Modern commercial space with contemporary design and functional layout"
+      },
+      "farm1": {
+        "title": "Model Farm Project",
+        "category": "Industrial",
+        "description": "10,000 dunam sustainable farm with modern infrastructure and organized planning"
+      }
+    }
+  },
+  "experience": {
+    "title": "Professional Experience",
+    "subtitle": "My journey in architectural design and project management",
+    "items": {
+      "madina": {
+        "company": "Madina Al-Moali",
+        "position": "Consulting Engineer & Site Supervisor",
+        "duration": "2020 - Present",
+        "description": "Supervised construction of 5-star hotel (6 floors), luxury villas, and guest houses. Ensured compliance with architectural specifications and quality standards."
+      },
+      "wadi": {
+        "company": "Wadi Al-Khair",
+        "position": "Design & Supervision Engineer",
+        "duration": "2019 - 2020",
+        "description": "Designed and supervised the initial phase of a 10,000 dunam model farm project with modern infrastructure and sustainable design."
+      },
+      "dar": {
+        "company": "Dar Al-Naseem",
+        "position": "Consulting Engineer",
+        "duration": "2021 - Present",
+        "description": "Consulting role for the design and supervision of Um Qasr Cement Company offices and Taiba Omani Company facilities."
+      }
+    }
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "subtitle": "Expertise in modern architectural design and BIM technologies",
+    "categories": {
+      "bim": {
+        "title": "BIM & Design Software",
+        "skills": ["Revit Architecture", "Revit Structure", "Revit MEP", "AutoCAD", "Lumion", "3DS Max"]
+      },
+      "design": {
+        "title": "Design Specialization",
+        "skills": ["Architectural Design", "MEP Design", "Water & Sanitation Systems", "Electrical Systems", "Grasshopper Parametric Design"]
+      },
+      "advanced": {
+        "title": "Advanced Tools",
+        "skills": ["Grasshopper", "Environmental Simulation", "Design Fluency", "Python", "Machine Learning"]
+      },
+      "soft": {
+        "title": "Professional Skills",
+        "skills": ["Project Management", "Site Supervision", "Consultation", "Team Leadership", "Quality Assurance"]
+      }
+    }
+  },
+  "certifications": {
+    "title": "Certifications & Achievements",
+    "subtitle": "Continuous learning and professional development",
+    "items": [
+      {
+        "title": "User Innovation & Entrepreneurship",
+        "issuer": "MIT - Massachusetts Institute of Technology",
+        "date": "March 2020"
+      },
+      {
+        "title": "3D Modeling from Architectural Drawings",
+        "issuer": "ITBombay",
+        "date": "February 2020"
+      },
+      {
+        "title": "Global Entrepreneurship Network",
+        "issuer": "Bahrain",
+        "date": "2021"
+      },
+      {
+        "title": "Full Stack Development",
+        "issuer": "Udacity & Ministry of Artificial Intelligence, UAE",
+        "date": "June 2019"
+      },
+      {
+        "title": "Fundamentals of Digital Marketing",
+        "issuer": "Google Certification",
+        "date": "September 2019"
+      },
+      {
+        "title": "Sustainability in Architecture",
+        "issuer": "Universitat Politecnica de Valencia",
+        "date": "2024"
+      }
+    ]
+  },
+  "about": {
+    "title": "About Me",
+    "intro": "I am a civil engineer with a passion for architectural design and innovative solutions. With over 5 years of experience, I have successfully completed 171+ projects across residential, commercial, and industrial sectors.",
+    "expertise": "My expertise spans from conceptual design to detailed BIM modeling and on-site project supervision. I specialize in creating designs that balance aesthetics, functionality, and sustainability.",
+    "education": "I graduated from KUFA University with a degree in Civil Engineering, specializing in structural and water resource engineering.",
+    "interests": "My interests include architecture, design, technology, programming, machine learning, and sustainable building practices."
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Let's discuss your next project",
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "phone": "Your Phone",
+      "subject": "Subject",
+      "message": "Your Message",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent successfully!",
+      "error": "Error sending message. Please try again."
+    },
+    "info": {
+      "phone": "+964 782 69 40781",
+      "email": "sajjad.abdulhameed@gmail.com",
+      "location": "Najaf, Iraq"
+    }
+  },
+  "footer": {
+    "copyright": "© 2024 Sajjad Abdulhameed Majeed. All rights reserved.",
+    "followMe": "Follow Me",
+    "quickLinks": "Quick Links"
+  }
+}
