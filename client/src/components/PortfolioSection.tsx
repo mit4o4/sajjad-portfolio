@@ -50,6 +50,16 @@ export default function PortfolioSection() {
 
   // classifier: determine which desired section a project belongs to (by title or titleAr)
   const classifyProject = (p: typeof projectsData[0]) => {
+    // ID-specific overrides provided by user
+    const idOverrides: Record<string, string> = {
+      '00A-0093': 'commercial', // محل كوزمتك تجاري
+      '00A-0108': 'houses', // منزل
+      '00A-0095': 'clinics', // عيادة طبية
+      '00A-0094': 'clinics', // عيادة طبية
+      '00A-0115': 'restaurants', // مطعم
+      '00A-0109': 'commercial', // معرض تجاري
+    };
+    if (p.id && idOverrides[p.id]) return idOverrides[p.id];
     const text = ((p.title || '') + ' ' + (p.titleAr || '') + ' ' + (p.description || '') + ' ' + (p.descriptionAr || '')).toLowerCase();
 
     // clinics (عيادات)
