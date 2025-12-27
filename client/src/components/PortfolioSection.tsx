@@ -11,6 +11,7 @@ export default function PortfolioSection() {
   const [selectedProject, setSelectedProject] = useState<typeof projectsData[0] | null>(null);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
   // Auto-rotate images every 3 seconds when modal is open
   useEffect(() => {
@@ -23,6 +24,11 @@ export default function PortfolioSection() {
 
     return () => clearInterval(interval);
   }, [selectedProject]);
+
+  // Handle image load
+  const handleImageLoad = (imageSrc: string) => {
+    setLoadedImages((prev) => new Set([...prev, imageSrc]));
+  };
 
   // Reverse projects order (newest first)
   const reversedProjects = [...projectsData].reverse();
@@ -80,12 +86,19 @@ export default function PortfolioSection() {
             >
               {/* Image Container */}
               <div className="relative h-48 overflow-hidden bg-muted select-none pointer-events-none">
+                {!loadedImages.has(project.image) && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse" />
+                )}
                 <img
                   src={project.image}
                   alt={isRTL ? project.titleAr : project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 select-none pointer-events-none"
+                  className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-500 select-none pointer-events-none ${
+                    loadedImages.has(project.image) ? 'opacity-100' : 'opacity-0'
+                  }`}
                   draggable={false}
                   onContextMenu={(e) => e.preventDefault()}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad(project.image)}
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
@@ -206,15 +219,21 @@ export default function PortfolioSection() {
                             {section.images.map((image: string, idx: number) => (
                               <div
                                 key={idx}
-                                className="aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer select-none"
+                                className="aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer select-none relative"
                               >
+                                {!loadedImages.has(image) && (
+                                  <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10" />
+                                )}
                                 <img
                                   src={image}
                                   alt={`${section.name} ${idx + 1}`}
-                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 select-none pointer-events-none"
+                                  className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-300 select-none pointer-events-none ${
+                                    loadedImages.has(image) ? 'opacity-100' : 'opacity-0'
+                                  }`}
                                   draggable={false}
                                   onContextMenu={(e) => e.preventDefault()}
                                   loading="lazy"
+                                  onLoad={() => handleImageLoad(image)}
                                 />
                               </div>
                             ))}
@@ -229,15 +248,27 @@ export default function PortfolioSection() {
                 <div className="space-y-4">
                   {/* Main carousel image */}
                   <div className="relative aspect-video rounded-lg overflow-hidden bg-muted group select-none pointer-events-none">
+                    {!loadedImages.has((selectedProject.allImages || [selectedProject.image])[currentImageIndex]) && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10" />
+                    )}
                     <img
                       src={
                         (selectedProject.allImages || [selectedProject.image])[currentImageIndex]
                       }
                       alt={`Gallery ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover transition-all duration-500 select-none pointer-events-none"
+                      className={`w-full h-full object-cover transition-all duration-500 select-none pointer-events-none ${
+                        loadedImages.has((selectedProject.allImages || [selectedProject.image])[currentImageIndex])
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                      }`}
                       draggable={false}
                       onContextMenu={(e) => e.preventDefault()}
                       loading="lazy"
+                      onLoad={() =>
+                        handleImageLoad(
+                          (selectedProject.allImages || [selectedProject.image])[currentImageIndex]
+                        )
+                      }
                     />
                     {/* Image counter */}
                     <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -257,13 +288,19 @@ export default function PortfolioSection() {
                             : 'opacity-70 hover:opacity-100'
                         }`}
                       >
+                        {!loadedImages.has(image) && (
+                          <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10" />
+                        )}
                         <img
                           src={image}
                           alt={`Thumbnail ${idx + 1}`}
-                          className="w-full h-full object-cover select-none pointer-events-none"
+                          className={`w-full h-full object-cover select-none pointer-events-none ${
+                            loadedImages.has(image) ? 'opacity-100' : 'opacity-0'
+                          }`}
                           draggable={false}
                           onContextMenu={(e) => e.preventDefault()}
                           loading="lazy"
+                          onLoad={() => handleImageLoad(image)}
                         />
                       </div>
                     ))}
