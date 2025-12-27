@@ -3,6 +3,12 @@ import { Briefcase, Calendar } from 'lucide-react';
 
 const experiences = [
   {
+    companyKey: 'experience.items.dar.company',
+    positionKey: 'experience.items.dar.position',
+    durationKey: 'experience.items.dar.duration',
+    descriptionKey: 'experience.items.dar.description',
+  },
+  {
     companyKey: 'experience.items.madina.company',
     positionKey: 'experience.items.madina.position',
     durationKey: 'experience.items.madina.duration',
@@ -13,12 +19,6 @@ const experiences = [
     positionKey: 'experience.items.wadi.position',
     durationKey: 'experience.items.wadi.duration',
     descriptionKey: 'experience.items.wadi.description',
-  },
-  {
-    companyKey: 'experience.items.dar.company',
-    positionKey: 'experience.items.dar.position',
-    durationKey: 'experience.items.dar.duration',
-    descriptionKey: 'experience.items.dar.description',
   },
 ];
 
