@@ -58,6 +58,8 @@ export default function PortfolioSection() {
       '00A-0094': 'clinics', // عيادة طبية
       '00A-0115': 'restaurants', // مطعم
       '00A-0109': 'commercial', // معرض تجاري
+      '00A-0064': 'model_farms', // مزرعة
+      '00A-0100': 'commercial', // مشروع تجاري
     };
     if (p.id && idOverrides[p.id]) return idOverrides[p.id];
     const text = ((p.title || '') + ' ' + (p.titleAr || '') + ' ' + (p.description || '') + ' ' + (p.descriptionAr || '')).toLowerCase();
