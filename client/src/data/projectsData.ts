@@ -25,7 +25,11 @@ export interface Project {
 }
 
 const BASE_URL = import.meta.env.BASE_URL;
-const imagePath = (name: string) => `${BASE_URL}images/Project/${name}`;
+const imagePath = (name: string) => {
+  // convert extension (.png/.jpg/.jpeg/...) to .webp to match compressed files
+  const webpName = name.replace(/\.[^/.]+$/, '.webp');
+  return `${BASE_URL}images/Project/${webpName}`;
+};
 
 export const projectsData: Project[] = [
   {
