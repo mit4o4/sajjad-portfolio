@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import heroBimDesign from '../../public/images/hero-bim-design.jpg';
 
 export default function HeroSection() {
   const { t, isRTL } = useLanguage();
@@ -13,11 +14,11 @@ export default function HeroSection() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero-bim-design.jpg"
+          src={heroBimDesign}
           alt="BIM Design"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/95 to-background/50"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-background/95 to-background/50"></div>
       </div>
 
       {/* Content */}

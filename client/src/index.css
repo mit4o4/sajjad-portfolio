@@ -186,6 +186,16 @@
     }
   }
 
+  /* Image Protection - Prevent Saving and Downloading */
+  img {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+  }
+
   /* RTL Support */
   [dir="rtl"] .ltr-only {
     display: none;

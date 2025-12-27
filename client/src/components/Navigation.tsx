@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Menu, X, Globe } from 'lucide-react';
 import { useState } from 'react';
+import sajjadProfile from '../../public/images/sajjad.png';
 
 export default function Navigation() {
   const { language, setLanguage, t, isRTL } = useLanguage();
@@ -10,7 +11,6 @@ export default function Navigation() {
     { key: 'home', href: '#home' },
     { key: 'portfolio', href: '#portfolio' },
     { key: 'about', href: '#about' },
-    { key: 'services', href: '#services' },
     { key: 'contact', href: '#contact' },
   ];
 
@@ -23,9 +23,10 @@ export default function Navigation() {
       <div className="container">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0 flex items-center gap-2">
+            <img src={sajjadProfile} alt="Sajjad" className="w-8 h-8 rounded-full object-cover" />
             <a href="#home" className="text-xl font-bold text-primary">
-              SAM
+              Sajjad
             </a>
           </div>
 
