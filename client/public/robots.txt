@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sajjad-studio.com/sitemap.xml

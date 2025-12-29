@@ -149,3 +149,42 @@ This is a personal portfolio. For inquiries or collaboration opportunities, plea
 ---
 
 **Last Updated**: December 2024
+
+## 🔗 Quick Share Snippets
+Copy-paste these short texts to add the portfolio link to your profiles and outreach.
+
+- LinkedIn — About / Featured:
+
+```
+Sajjad — Civil Engineer & 3D Artist. Specializing in architectural visualization, BIM and project delivery. Portfolio: https://sajjad-studio.com
+```
+
+- GitHub — Top of `README.md`:
+
+```
+Sajjad Studio — Civil Engineer & Architectural Visualizer
+Portfolio & projects: https://sajjad-studio.com
+```
+
+- Behance — Project description (short):
+
+```
+Project: [Project Title] — [One-line objective]. Services: Architectural design, 3D visualization, BIM. Visit full portfolio: https://sajjad-studio.com
+```
+
+- Instagram — Bio:
+
+```
+Sajjad | Civil Engineer & 3D Artist
+Architectural design & visualization — Baghdad
+https://sajjad-studio.com
+```
+
+- Email signature:
+
+```
+Sajjad Abdulhameed — Civil Engineer & 3D Artist
+sajjad-studio.com | sajjad.abdulhameed@gmail.com | LinkedIn: [your LinkedIn URL]
+```
+
+Use these to add authoritative backlinks quickly (LinkedIn Featured, GitHub README, Behance projects, Instagram bio, email signatures).  
