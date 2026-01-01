@@ -5,6 +5,10 @@ import { projectsData } from "@/data/projectsData";
 
 export default function MapSection() {
   const { t } = useLanguage();
+  // Marker sizing constants (pixels)
+  const MARKER_SIZE = 56; // main circular marker diameter
+  const SMALL_SIZE = 28; // diameter for small images shown around a marker
+  const SMALL_RADIUS = 36; // distance from center for small images
   // Build list of projects to display on the map.
   // Show projects that have explicit coordinates, and for projects that mention Karbala or Hilla
   // provide an approximate fallback coordinate so they appear on the map.
@@ -74,8 +78,8 @@ export default function MapSection() {
         if (!images || images.length <= 1) return; // nothing extra to show
 
         const count = Math.min(max, images.length - 1);
-        const center = { x: 32, y: 32 };
-        const radius = 44; // distance from center for small images
+        const center = { x: MARKER_SIZE / 2, y: MARKER_SIZE / 2 };
+        const radius = SMALL_RADIUS; // distance from center for small images
         const startDeg = 120; // distribute along lower semicircle
         const endDeg = 240;
         const smallEls: HTMLElement[] = [];
@@ -91,8 +95,8 @@ export default function MapSection() {
           small.style.position = 'absolute';
           small.style.left = `${x}px`;
           small.style.top = `${y}px`;
-          small.style.width = '40px';
-          small.style.height = '40px';
+          small.style.width = `${SMALL_SIZE}px`;
+          small.style.height = `${SMALL_SIZE}px`;
           small.style.margin = '0';
           small.style.padding = '0';
           small.style.borderRadius = '50%';
@@ -190,8 +194,8 @@ export default function MapSection() {
       projectsWithCoords.forEach((p) => {
         // create a DOM element to act as marker content (circular image)
         const container = document.createElement('div');
-        container.style.width = '100px';
-        container.style.height = '100px';
+        container.style.width = `${MARKER_SIZE}px`;
+        container.style.height = `${MARKER_SIZE}px`;
         container.style.position = 'relative';
         container.style.borderRadius = '50%';
         container.style.overflow = 'hidden';
@@ -302,8 +306,8 @@ export default function MapSection() {
         if (!images || images.length <= 1) return;
 
         const count = Math.min(max, images.length - 1);
-        const center = { x: 32, y: 32 };
-        const radius = 44;
+        const center = { x: MARKER_SIZE / 2, y: MARKER_SIZE / 2 };
+        const radius = SMALL_RADIUS;
         const startDeg = 120;
         const endDeg = 240;
         const smallEls: HTMLElement[] = [];
@@ -319,8 +323,8 @@ export default function MapSection() {
           small.style.position = 'absolute';
           small.style.left = `${x}px`;
           small.style.top = `${y}px`;
-          small.style.width = '40px';
-          small.style.height = '40px';
+          small.style.width = `${SMALL_SIZE}px`;
+          small.style.height = `${SMALL_SIZE}px`;
           small.style.margin = '0';
           small.style.padding = '0';
           small.style.borderRadius = '50%';
@@ -401,8 +405,8 @@ export default function MapSection() {
         let idx = 0;
 
         // create placeholder html for divIcon
-        const html = `<div style="width:100px;height:100px;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.3);cursor:pointer;position:relative;"><img loading="lazy" decoding="async" src="${images[0]}" style="width:100%;height:100%;object-fit:cover;"/></div>`;
-        const icon = L.divIcon({ html, className: '', iconSize: [100, 100] });
+        const html = `<div style="width:${MARKER_SIZE}px;height:${MARKER_SIZE}px;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.3);cursor:pointer;position:relative;"><img loading="lazy" decoding="async" src="${images[0]}" style="width:100%;height:100%;object-fit:cover;"/></div>`;
+        const icon = L.divIcon({ html, className: '', iconSize: [MARKER_SIZE, MARKER_SIZE] });
         const marker = L.marker([p.coordinates.lat, p.coordinates.lng], { icon }).addTo(leafletMap as any);
 
         // once element available, rotation will be handled by global interval
