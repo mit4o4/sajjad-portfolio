@@ -48,7 +48,9 @@ export default function MapSection() {
 
       // containers for cleanup and nearest-marker behavior
       const markers: Array<any> = [];
-      const intervals: number[] = [];
+      // We only keep a single global rotation interval for the nearest marker
+      let globalRotationInterval: number | null = null;
+      let currentRotatingMd: typeof markerData[number] | null = null;
       const markerData: Array<{
         marker: any;
         project: any;
@@ -159,6 +161,20 @@ export default function MapSection() {
               clearSmallImagesFor(md);
             }
           });
+
+          // manage global rotation: only rotate images for the nearest marker when zoomed in
+          if (nearest && zoom >= thresholdZoom) {
+            if (currentRotatingMd !== nearest) {
+              currentRotatingMd = nearest;
+              try {
+                const imgEl = nearest.container?.querySelector('img') as HTMLImageElement | null;
+                if (imgEl) imgEl.dataset.__idx = '0';
+              } catch (e) {}
+              startGlobalRotation();
+            }
+          } else {
+            stopGlobalRotation();
+          }
         } catch (e) {}
       }
 
@@ -204,11 +220,8 @@ export default function MapSection() {
           title: p.title,
         });
 
-        // rotate images every 2 seconds (adjustable)
-        const intervalId = window.setInterval(() => {
-          idx = (idx + 1) % images.length;
-          img.src = images[idx];
-        }, 2000);
+        // do not create per-marker intervals (expensive for many markers)
+        // image rotation will be handled by a single global interval below
 
         // click opens portfolio modal via custom event
         container.addEventListener('click', () => {
@@ -218,15 +231,41 @@ export default function MapSection() {
 
         // keep references for cleanup and nearest marker calculations
         markers.push(marker);
-        intervals.push(intervalId);
         markerData.push({ marker, project: p, container, position: { lat: p.coordinates.lat, lng: p.coordinates.lng } });
       });
 
+      // start a single rotation interval that updates only the nearest marker when zoomed in
+      function startGlobalRotation() {
+        stopGlobalRotation();
+        const intervalMs = 3000; // slower rotation reduces work
+        globalRotationInterval = window.setInterval(() => {
+          try {
+            if (!currentRotatingMd) return;
+            const md = currentRotatingMd;
+            const images = (md.project.allImages && md.project.allImages.length > 0) ? md.project.allImages : [md.project.image];
+            if (!images || images.length <= 1) return;
+            const imgEl = md.container?.querySelector('img') as HTMLImageElement | null;
+            if (!imgEl) return;
+            // advance image index stored on the element dataset
+            const cur = Number(imgEl.dataset.__idx || 0);
+            const next = (cur + 1) % images.length;
+            imgEl.dataset.__idx = String(next);
+            imgEl.src = images[next];
+          } catch (e) {}
+        }, intervalMs) as unknown as number;
+      }
+
+      function stopGlobalRotation() {
+        if (globalRotationInterval != null) {
+          clearInterval(globalRotationInterval);
+          globalRotationInterval = null;
+        }
+        currentRotatingMd = null;
+      }
+
       // cleanup on unmount: store for outer effect and remove listeners
       (window as any).__mapMarkers = (window as any).__mapMarkers || [];
-      (window as any).__mapIntervals = (window as any).__mapIntervals || [];
       (window as any).__mapMarkers.push(...markers);
-      (window as any).__mapIntervals.push(...intervals);
       (window as any).__mapMarkerData = (window as any).__mapMarkerData || [];
       (window as any).__mapMarkerData.push(...markerData);
       // store zoom listener to remove later
@@ -240,7 +279,8 @@ export default function MapSection() {
     if (L && map && typeof map.setView === 'function') {
       const leafletMap = map as any;
       const markers: any[] = [];
-      const intervals: number[] = [];
+      let globalRotationInterval: number | null = null;
+      let currentRotatingMd: typeof markerData[number] | null = null;
       const markerData: Array<{
         marker: any;
         project: any;
@@ -339,6 +379,20 @@ export default function MapSection() {
               clearSmallImagesFor(md);
             }
           });
+
+          // manage global rotation: only rotate images for the nearest marker when zoomed in
+          if (nearest && leafletMap.getZoom() >= thresholdZoom) {
+            if (currentRotatingMd !== nearest) {
+              currentRotatingMd = nearest;
+              try {
+                const imgEl = nearest.container?.querySelector('img') as HTMLImageElement | null;
+                if (imgEl) imgEl.dataset.__idx = '0';
+              } catch (e) {}
+              startGlobalRotation();
+            }
+          } else {
+            stopGlobalRotation();
+          }
         } catch (e) {}
       }
 
@@ -351,15 +405,8 @@ export default function MapSection() {
         const icon = L.divIcon({ html, className: '', iconSize: [100, 100] });
         const marker = L.marker([p.coordinates.lat, p.coordinates.lng], { icon }).addTo(leafletMap as any);
 
-        // once element available, set up interval to rotate image
+        // once element available, rotation will be handled by global interval
         const el = marker.getElement();
-        const intervalId = window.setInterval(() => {
-          idx = (idx + 1) % images.length;
-          try {
-            const imgEl = el.querySelector('img');
-            if (imgEl) imgEl.src = images[idx];
-          } catch (e) {}
-        }, 2000);
 
         marker.on('click', () => {
           const ev = new CustomEvent('open-project', { detail: { id: p.id } });
@@ -367,16 +414,42 @@ export default function MapSection() {
         });
 
         markers.push(marker);
-        intervals.push(intervalId);
         markerData.push({ marker, project: p, container: el, position: { lat: p.coordinates.lat, lng: p.coordinates.lng } });
       });
-
       (window as any).__mapMarkers = (window as any).__mapMarkers || [];
-      (window as any).__mapIntervals = (window as any).__mapIntervals || [];
       (window as any).__mapMarkers.push(...markers);
-      (window as any).__mapIntervals.push(...intervals);
       (window as any).__mapMarkerData = (window as any).__mapMarkerData || [];
       (window as any).__mapMarkerData.push(...markerData);
+
+      // global rotation control for Leaflet: start/stop functions
+      function startGlobalRotation() {
+        stopGlobalRotation();
+        const intervalMs = 3000;
+        globalRotationInterval = window.setInterval(() => {
+          try {
+            if (!currentRotatingMd) return;
+            const md = currentRotatingMd;
+            const images = (md.project.allImages && md.project.allImages.length > 0) ? md.project.allImages : [md.project.image];
+            if (!images || images.length <= 1) return;
+            const imgEl = md.container?.querySelector('img') as HTMLImageElement | null;
+            if (!imgEl) return;
+            const cur = Number(imgEl.dataset.__idx || 0);
+            const next = (cur + 1) % images.length;
+            imgEl.dataset.__idx = String(next);
+            imgEl.src = images[next];
+          } catch (e) {}
+        }, intervalMs) as unknown as number;
+        (window as any).__mapRotationInterval = globalRotationInterval;
+      }
+
+      function stopGlobalRotation() {
+        if (globalRotationInterval != null) {
+          clearInterval(globalRotationInterval);
+          globalRotationInterval = null;
+        }
+        currentRotatingMd = null;
+        (window as any).__mapRotationInterval = null;
+      }
 
       // listen for zoom end
       const onZoomEnd = () => setTimeout(updateNearestMarkerForZoom, 80);
@@ -400,6 +473,11 @@ export default function MapSection() {
       if (intervals) {
         intervals.forEach((id) => clearInterval(id));
         (window as any).__mapIntervals = [];
+      }
+      const rotation = (window as any).__mapRotationInterval as number | undefined;
+      if (rotation) {
+        try { clearInterval(rotation); } catch (e) {}
+        (window as any).__mapRotationInterval = null;
       }
       if (markers) {
         markers.forEach((m) => {
