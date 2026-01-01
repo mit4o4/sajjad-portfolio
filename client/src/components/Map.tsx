@@ -86,24 +86,43 @@ declare global {
   }
 }
 
-const API_KEY = import.meta.env.VITE_FRONTEND_FORGE_API_KEY;
-const FORGE_BASE_URL =
-  import.meta.env.VITE_FRONTEND_FORGE_API_URL ||
-  "https://forge.butterfly-effect.dev";
-const MAPS_PROXY_URL = `${FORGE_BASE_URL}/v1/maps/proxy`;
+// Prefer proxy key (used by project). Fallback to direct Google Maps API key if provided.
+const API_KEY = import.meta.env.VITE_FRONTEND_FORGE_API_KEY || import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const FORGE_BASE_URL = import.meta.env.VITE_FRONTEND_FORGE_API_URL || "";
+const MAPS_PROXY_URL = FORGE_BASE_URL ? `${FORGE_BASE_URL}/v1/maps/proxy` : "";
 
 function loadMapScript() {
   return new Promise(resolve => {
     const script = document.createElement("script");
-    script.src = `${MAPS_PROXY_URL}/maps/api/js?key=${API_KEY}&v=weekly&libraries=marker,places,geocoding,geometry`;
+    // If we have a proxy base URL, use the proxy (keeps key server-side). Otherwise fall back to direct Google URL.
+    if (MAPS_PROXY_URL && import.meta.env.VITE_FRONTEND_FORGE_API_KEY) {
+      script.src = `${MAPS_PROXY_URL}/maps/api/js?key=${API_KEY}&v=weekly&libraries=marker,places,geocoding,geometry`;
+    } else if (API_KEY) {
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=weekly&libraries=marker,places,geocoding,geometry`;
+    } else {
+      // No Google key — load Leaflet from CDN as fallback so the UI still shows a working map.
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+
+      const leafletScript = document.createElement('script');
+      leafletScript.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      leafletScript.async = true;
+      leafletScript.crossOrigin = 'anonymous';
+      leafletScript.onload = () => resolve(null);
+      leafletScript.onerror = (e) => console.error('Failed to load Leaflet', e);
+      document.head.appendChild(leafletScript);
+      return;
+    }
     script.async = true;
     script.crossOrigin = "anonymous";
     script.onload = () => {
       resolve(null);
       script.remove(); // Clean up immediately
     };
-    script.onerror = () => {
-      console.error("Failed to load Google Maps script");
+    script.onerror = (e) => {
+      console.error("Failed to load Google Maps script", e);
     };
     document.head.appendChild(script);
   });
@@ -111,9 +130,10 @@ function loadMapScript() {
 
 interface MapViewProps {
   className?: string;
-  initialCenter?: google.maps.LatLngLiteral;
+  initialCenter?: { lat: number; lng: number };
   initialZoom?: number;
-  onMapReady?: (map: google.maps.Map) => void;
+  // map can be google.maps.Map or a Leaflet map instance (any)
+  onMapReady?: (map: any) => void;
 }
 
 export function MapView({
@@ -131,18 +151,42 @@ export function MapView({
       console.error("Map container not found");
       return;
     }
-    map.current = new window.google.maps.Map(mapContainer.current, {
-      zoom: initialZoom,
-      center: initialCenter,
-      mapTypeControl: true,
-      fullscreenControl: true,
-      zoomControl: true,
-      streetViewControl: true,
-      mapId: "DEMO_MAP_ID",
-    });
-    if (onMapReady) {
-      onMapReady(map.current);
+    // If Google Maps loaded, create Google map, otherwise fallback to Leaflet (loaded by loader)
+    if (window.google && window.google.maps) {
+      map.current = new window.google.maps.Map(mapContainer.current, {
+        zoom: initialZoom,
+        center: initialCenter as google.maps.LatLngLiteral,
+        mapTypeControl: true,
+        fullscreenControl: true,
+        zoomControl: true,
+        streetViewControl: true,
+        mapId: "DEMO_MAP_ID",
+        mapTypeId: window.google.maps.MapTypeId.SATELLITE,
+      });
+      if (onMapReady) onMapReady(map.current);
+      return;
     }
+
+    // Leaflet fallback: create map if L is available (loader will provide L)
+    const L = (window as any).L;
+    if (L) {
+      // ensure container has height styles applied by parent; initialize leaflet map
+      const leafletMap = L.map(mapContainer.current, {
+        zoomControl: true,
+      }).setView([initialCenter.lat, initialCenter.lng], initialZoom);
+
+      // Use satellite imagery (Esri World Imagery) as fallback when Google Maps is unavailable
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+      }).addTo(leafletMap);
+
+      map.current = leafletMap as any;
+      if (onMapReady) onMapReady(leafletMap);
+      return;
+    }
+
+    console.error('No mapping library loaded (google.maps or Leaflet).');
   });
 
   useEffect(() => {

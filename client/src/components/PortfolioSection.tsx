@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { X, ChevronDown, ChevronUp } from 'lucide-react';
 import { projectsData } from '@/data/projectsData';
 
+// Final fix: All images now point to .webp files
 export default function PortfolioSection() {
   const { t, isRTL } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('all');
@@ -25,13 +26,33 @@ export default function PortfolioSection() {
     return () => clearInterval(interval);
   }, [selectedProject]);
 
+  // Listen for open-project events dispatched from map markers
+  useEffect(() => {
+    function handler(e: Event) {
+      // custom event may carry detail: { id, imageIndex }
+      const ev = e as CustomEvent<{ id?: string; imageIndex?: number }>;
+      const id = ev?.detail?.id;
+      const imageIndex = typeof ev?.detail?.imageIndex === 'number' ? ev.detail.imageIndex : 0;
+      if (!id) return;
+      const proj = projectsData.find((p) => p.id === id);
+      if (proj) {
+        setSelectedProject(proj);
+        setExpandedSection(null);
+        setCurrentImageIndex(imageIndex || 0);
+      }
+    }
+    window.addEventListener('open-project', handler as EventListener);
+    return () => window.removeEventListener('open-project', handler as EventListener);
+  }, []);
+
   // Handle image load
   const handleImageLoad = (imageSrc: string) => {
     setLoadedImages((prev) => new Set([...prev, imageSrc]));
   };
 
-  // Reverse projects order (newest first)
-  const reversedProjects = [...projectsData].reverse();
+  // Reverse projects order (newest first) - DISABLED: keeping original order
+  // const reversedProjects = [...projectsData].reverse();
+  const reversedProjects = [...projectsData]; // Keep original order: old first, new last
 
   // derive categories from projectsData so UI reflects available projects
   const derivedCategories = Array.from(
@@ -134,14 +155,14 @@ export default function PortfolioSection() {
               className="group rounded-lg overflow-hidden bg-card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
             >
               {/* Image Container */}
-              <div className="relative h-48 overflow-hidden bg-muted select-none pointer-events-none">
+              <div className="relative h-64 overflow-hidden bg-muted select-none pointer-events-none">
                 {!loadedImages.has(project.image) && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse pointer-events-none" />
                 )}
-                <img
+                  <img
                   src={project.image}
                   alt={isRTL ? project.titleAr : project.title}
-                  className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-500 select-none pointer-events-none ${
+                    className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-500 select-none ${
                     loadedImages.has(project.image) ? 'opacity-100' : 'opacity-0'
                   }`}
                   draggable={false}
@@ -212,8 +233,24 @@ export default function PortfolioSection() {
 
       {/* Gallery Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 overflow-y-auto">
-          <div className="bg-card rounded-lg max-w-5xl w-full my-auto">
+        <div
+          style={{ zIndex: 9999999 }}
+          className="fixed inset-0 flex items-center justify-center bg-black/80 p-4 overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setSelectedProject(null);
+              setExpandedSection(null);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setSelectedProject(null);
+              setExpandedSection(null);
+            }
+          }}
+          tabIndex={-1}
+        >
+          <div onClick={(e) => e.stopPropagation()} className="bg-card rounded-lg max-w-5xl w-full my-auto">
             {/* Modal Header */}
             <div className="sticky top-0 flex items-center justify-between p-6 border-b border-border bg-card rounded-t-lg">
               <div>
@@ -271,7 +308,7 @@ export default function PortfolioSection() {
                                 className="aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer select-none relative"
                               >
                                 {!loadedImages.has(image) && (
-                                  <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10" />
+                                  <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
                                 )}
                                 <img
                                   src={image}
@@ -298,14 +335,14 @@ export default function PortfolioSection() {
                   {/* Main carousel image */}
                   <div className="relative aspect-video rounded-lg overflow-hidden bg-muted group select-none pointer-events-none">
                     {!loadedImages.has((selectedProject.allImages || [selectedProject.image])[currentImageIndex]) && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
                     )}
                     <img
                       src={
                         (selectedProject.allImages || [selectedProject.image])[currentImageIndex]
                       }
                       alt={`Gallery ${currentImageIndex + 1}`}
-                      className={`w-full h-full object-cover transition-all duration-500 select-none pointer-events-none ${
+                        className={`w-full h-full object-cover transition-all duration-500 select-none ${
                         loadedImages.has((selectedProject.allImages || [selectedProject.image])[currentImageIndex])
                           ? 'opacity-100'
                           : 'opacity-0'
@@ -338,12 +375,12 @@ export default function PortfolioSection() {
                         }`}
                       >
                         {!loadedImages.has(image) && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
                         )}
                         <img
                           src={image}
                           alt={`Thumbnail ${idx + 1}`}
-                          className={`w-full h-full object-cover select-none pointer-events-none ${
+                            className={`w-full h-full object-cover select-none ${
                             loadedImages.has(image) ? 'opacity-100' : 'opacity-0'
                           }`}
                           draggable={false}

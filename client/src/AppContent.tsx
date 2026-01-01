@@ -3,6 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Navigation from "./components/Navigation";
 import HeroSection from "./components/HeroSection";
 import PortfolioSection from "./components/PortfolioSection";
+import MapSection from "./components/MapSection";
 import ExperienceSection from "./components/ExperienceSection";
 import SkillsSection from "./components/SkillsSection";
 import CertificationsSection from "./components/CertificationsSection";
@@ -17,6 +18,7 @@ export default function AppContent() {
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
         <HeroSection />
+        <MapSection />
         <PortfolioSection />
         <ExperienceSection />
         <SkillsSection />

@@ -1,0 +1,232 @@
+{
+  "updated_projects_images": [
+    {
+      "project": "00A-0060",
+      "files_count": 10
+    },
+    {
+      "project": "00A-0062",
+      "files_count": 21
+    },
+    {
+      "project": "00A-0064",
+      "files_count": 31
+    },
+    {
+      "project": "00A-0065",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0066",
+      "files_count": 14
+    },
+    {
+      "project": "00A-0077",
+      "files_count": 12
+    },
+    {
+      "project": "00A-0080",
+      "files_count": 49
+    },
+    {
+      "project": "00A-0086",
+      "files_count": 4
+    },
+    {
+      "project": "00A-0088",
+      "files_count": 7
+    },
+    {
+      "project": "00A-0091",
+      "files_count": 28
+    },
+    {
+      "project": "00A-0093",
+      "files_count": 17
+    },
+    {
+      "project": "00A-0094",
+      "files_count": 3
+    },
+    {
+      "project": "00A-0095",
+      "files_count": 23
+    },
+    {
+      "project": "00A-0097",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0099",
+      "files_count": 6
+    },
+    {
+      "project": "00A-0100",
+      "files_count": 6
+    },
+    {
+      "project": "00A-0101",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0103",
+      "files_count": 4
+    },
+    {
+      "project": "00A-0107",
+      "files_count": 15
+    },
+    {
+      "project": "00A-0108",
+      "files_count": 11
+    },
+    {
+      "project": "00A-0109",
+      "files_count": 10
+    },
+    {
+      "project": "00A-0110",
+      "files_count": 7
+    },
+    {
+      "project": "00A-0115",
+      "files_count": 7
+    },
+    {
+      "project": "00A-0147",
+      "files_count": 3
+    },
+    {
+      "project": "00A-0151",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0156",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0161",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0165",
+      "files_count": 1
+    },
+    {
+      "project": "00A-0061",
+      "files_count": 12
+    },
+    {
+      "project": "00A-0075",
+      "files_count": 6
+    },
+    {
+      "project": "00A-0084",
+      "files_count": 1
+    },
+    {
+      "project": "00A-0085",
+      "files_count": 4
+    },
+    {
+      "project": "00A-0112",
+      "files_count": 3
+    },
+    {
+      "project": "00A-0135",
+      "files_count": 1
+    },
+    {
+      "project": "00A-0154",
+      "files_count": 1
+    },
+    {
+      "project": "00A-0071",
+      "files_count": 6
+    },
+    {
+      "project": "00A-0078",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0079",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0083",
+      "files_count": 3
+    },
+    {
+      "project": "00A-0096",
+      "files_count": 1
+    },
+    {
+      "project": "00A-0102",
+      "files_count": 2
+    },
+    {
+      "project": "00A-0104",
+      "files_count": 3
+    },
+    {
+      "project": "00A-0116",
+      "files_count": 10
+    },
+    {
+      "project": "00A-0125",
+      "files_count": 4
+    },
+    {
+      "project": "00A-0126",
+      "files_count": 2
+    },
+    {
+      "project": "00A-0129",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0130",
+      "files_count": 5
+    },
+    {
+      "project": "00A-0134",
+      "files_count": 3
+    },
+    {
+      "project": "00A-0140",
+      "files_count": 6
+    },
+    {
+      "project": "00A-0143",
+      "files_count": 3
+    },
+    {
+      "project": "00A-0152",
+      "files_count": 6
+    },
+    {
+      "project": "00A-0157",
+      "files_count": 9
+    }
+  ],
+  "inserted_coordinates": [
+    "00A-0094",
+    "00A-0103",
+    "00A-0161",
+    "00A-0165",
+    "00A-0154",
+    "00A-0096",
+    "00A-0104",
+    "00A-0157"
+  ],
+  "projects_with_no_files_found": [
+    "00A-0131",
+    "00A-0136",
+    "00A-0141",
+    "00A-0142",
+    "00A-0150",
+    "00A-0160",
+    "00A-0166",
+    "00A-0167"
+  ]
+}

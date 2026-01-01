@@ -53,6 +53,9 @@
       }
     }
   },
+  "map": {
+    "title": "Projects on the Map"
+  },
   "experience": {
     "title": "Professional Experience",
     "subtitle": "Integrated expertise in advanced design and engineering supervision",
