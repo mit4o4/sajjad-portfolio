@@ -1,10 +1,10 @@
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Menu, X, Globe, ExternalLink } from 'lucide-react';
-import { useState } from 'react';
-import sajjadProfile from '../../public/images/sajjad.png';
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Menu, X, Globe, ExternalLink } from "lucide-react";
+import { useState } from "react";
+import sajjadProfile from "../../public/images/sajjad.png";
 
 // Standalone pricing app (TeBIM Seals — design/works/services pricing) opened as its own page.
-const PRICING_APP_URL = 'https://tebim-seals-mangement.web.app';
+const PRICING_APP_URL = "https://tebim-seals-mangement.web.app";
 
 interface NavItem {
   key: string;
@@ -17,15 +17,15 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems: NavItem[] = [
-    { key: 'home', href: '#home' },
-    { key: 'portfolio', href: '#portfolio' },
-    { key: 'about', href: '#about' },
-    { key: 'pricing', href: PRICING_APP_URL, external: true },
-    { key: 'contact', href: '#contact' },
+    { key: "home", href: "#home" },
+    { key: "portfolio", href: "#portfolio" },
+    { key: "about", href: "#about" },
+    { key: "pricing", href: PRICING_APP_URL, external: true },
+    { key: "contact", href: "#contact" },
   ];
 
   const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'ar' : 'en');
+    setLanguage(language === "en" ? "ar" : "en");
   };
 
   return (
@@ -34,7 +34,11 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="shrink-0 flex items-center gap-2">
-            <img src={sajjadProfile} alt="Sajjad" className="w-8 h-8 rounded-full object-cover" />
+            <img
+              src={sajjadProfile}
+              alt="Sajjad"
+              className="w-8 h-8 rounded-full object-cover"
+            />
             <a href="#home" className="text-xl font-bold text-primary">
               Sajjad
             </a>
@@ -42,12 +46,12 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <a
                 key={item.key}
                 href={item.href}
-                target={item.external ? '_blank' : undefined}
-                rel={item.external ? 'noopener noreferrer' : undefined}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
                 className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors inline-flex items-center gap-1"
               >
                 {t(`nav.${item.key}`)}
@@ -65,7 +69,9 @@ export default function Navigation() {
               aria-label="Toggle language"
             >
               <Globe size={18} />
-              <span className="text-sm font-medium">{language.toUpperCase()}</span>
+              <span className="text-sm font-medium">
+                {language.toUpperCase()}
+              </span>
             </button>
 
             {/* Mobile Menu Button */}
@@ -82,12 +88,12 @@ export default function Navigation() {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden border-t border-border py-4 space-y-3">
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <a
                 key={item.key}
                 href={item.href}
-                target={item.external ? '_blank' : undefined}
-                rel={item.external ? 'noopener noreferrer' : undefined}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
                 className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground/70 hover:text-primary hover:bg-secondary rounded-lg transition-colors"
                 onClick={() => setIsOpen(false)}
               >

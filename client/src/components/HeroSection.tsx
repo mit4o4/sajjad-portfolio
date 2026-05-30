@@ -1,9 +1,9 @@
-import { useLanguage } from '@/contexts/LanguageContext';
-import { ArrowRight, Mail } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import Reveal from '@/components/Reveal';
-import heroBimDesign from '../../public/images/hero-bim-design.jpg';
+import { useLanguage } from "@/contexts/LanguageContext";
+import { ArrowRight, Mail } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import Reveal from "@/components/Reveal";
+import heroBimDesign from "../../public/images/hero-bim-design.jpg";
 
 /** Animate a number from 0 → target with an easeOutCubic curve. */
 function useCountUp(target: number, durationMs = 1600): number {
@@ -46,17 +46,17 @@ export default function HeroSection() {
         ticking = false;
       });
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const projects = useCountUp(171);
   const years = useCountUp(5);
   const companies = useCountUp(3);
   const stats: Stat[] = [
-    { value: projects, suffix: '+', label: 'Projects Completed' },
-    { value: years, suffix: '+', label: 'Years Experience' },
-    { value: companies, suffix: '', label: 'Major Companies' },
+    { value: projects, suffix: "+", label: "Projects Completed" },
+    { value: years, suffix: "+", label: "Years Experience" },
+    { value: companies, suffix: "", label: "Major Companies" },
   ];
 
   return (
@@ -90,45 +90,70 @@ export default function HeroSection() {
                   <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
                 </span>
-                <span className="eyebrow !text-primary">{t('hero.subtitle')}</span>
+                <span className="eyebrow !text-primary">
+                  {t("hero.subtitle")}
+                </span>
               </div>
             </Reveal>
 
             {/* Main title — Fraunces display */}
             <Reveal as="h1" delay={150} className="text-foreground">
-              {t('hero.title')}
+              {t("hero.title")}
             </Reveal>
 
             {/* Description */}
-            <Reveal as="p" delay={350} className="text-lg md:text-xl text-foreground/70 max-w-xl font-light leading-relaxed">
-              {t('hero.description')}
+            <Reveal
+              as="p"
+              delay={350}
+              className="text-lg md:text-xl text-foreground/70 max-w-xl font-light leading-relaxed"
+            >
+              {t("hero.description")}
             </Reveal>
 
             {/* CTA Buttons */}
-            <Reveal as="div" delay={500} className="flex flex-col sm:flex-row gap-4 pt-2">
+            <Reveal
+              as="div"
+              delay={500}
+              className="flex flex-col sm:flex-row gap-4 pt-2"
+            >
               <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 group rounded-none px-7 h-13 hover-lift"
-                onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() =>
+                  document
+                    .getElementById("portfolio")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
               >
-                {t('hero.cta')}
-                <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
+                {t("hero.cta")}
+                <ArrowRight
+                  size={20}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
               </Button>
 
               <Button
                 size="lg"
                 variant="outline"
                 className="gap-2 rounded-none px-7 h-13 border-foreground/20 hover:border-foreground/60"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() =>
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
               >
                 <Mail size={20} />
-                {t('hero.contact')}
+                {t("hero.contact")}
               </Button>
             </Reveal>
 
             {/* Stats — animated count-up, hairline-separated */}
-            <Reveal as="div" delay={650} className="flex flex-wrap gap-x-10 gap-y-6 pt-10 border-t border-border/60 mt-2">
-              {stats.map((s) => (
+            <Reveal
+              as="div"
+              delay={650}
+              className="flex flex-wrap gap-x-10 gap-y-6 pt-10 border-t border-border/60 mt-2"
+            >
+              {stats.map(s => (
                 <div key={s.label}>
                   <div className="text-4xl font-mono font-medium text-primary tabular-nums">
                     {s.value}
@@ -147,9 +172,21 @@ export default function HeroSection() {
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
         <div className="flex flex-col items-center gap-2 animate-bounce">
-          <span className="eyebrow text-foreground/40 !text-[0.6rem]">Scroll</span>
-          <svg className="w-5 h-5 text-foreground/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          <span className="eyebrow text-foreground/40 !text-[0.6rem]">
+            Scroll
+          </span>
+          <svg
+            className="w-5 h-5 text-foreground/40"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
           </svg>
         </div>
       </div>

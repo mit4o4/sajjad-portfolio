@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ElementType,
+  type ReactNode,
+} from "react";
 
 interface RevealProps {
   children: ReactNode;
@@ -20,11 +26,11 @@ interface RevealProps {
  */
 export default function Reveal({
   children,
-  as: Tag = 'div',
+  as: Tag = "div",
   delay = 0,
   clip = false,
   threshold = 0.18,
-  className = '',
+  className = "",
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
@@ -45,12 +51,12 @@ export default function Reveal({
     return () => observer.disconnect();
   }, [threshold]);
 
-  const base = clip ? 'reveal-clip' : 'reveal';
+  const base = clip ? "reveal-clip" : "reveal";
   return (
     <Tag
       ref={ref}
-      className={`${base} ${visible ? 'is-visible' : ''} ${className}`.trim()}
-      style={{ ['--reveal-delay' as string]: `${delay}ms` }}
+      className={`${base} ${visible ? "is-visible" : ""} ${className}`.trim()}
+      style={{ ["--reveal-delay" as string]: `${delay}ms` }}
     >
       {children}
     </Tag>
