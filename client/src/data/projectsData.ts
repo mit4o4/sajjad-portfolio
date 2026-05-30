@@ -23,6 +23,8 @@ export interface Project {
   sections?: ProjectSection[];
   allImages?: string[];
   coordinates?: { lat: number; lng: number };
+  /** External app URL. When set, the card taps through to this URL instead of opening the gallery modal. */
+  link?: string;
 }
 
 const BASE_URL = import.meta.env.BASE_URL;
@@ -32,6 +34,17 @@ const imagePath = (name: string) => {
 };
 
 export const projectsData: Project[] = [
+  {
+    id: 'TeBIM-Seals',
+    title: 'TeBIM Seals — Design Your Space',
+    titleAr: 'TeBIM Seals — صمم مساحتك',
+    image: imagePath('tebim-seals-cover.jpg'),
+    category: 'commercial',
+    description: 'Interactive pricing calculator and lead-generation tool for interior design services. Tap to launch the live app.',
+    descriptionAr: 'حاسبة تسعير تفاعلية وأداة لجذب العملاء لخدمات التصميم الداخلي. اضغط لفتح التطبيق المباشر.',
+    link: 'https://tebim-seals-mangement.web.app',
+    allImages: [imagePath('tebim-seals-cover.jpg')],
+  },
   {
     id: '00A-0060',
     title: 'Dar Al-Nujaf Company',

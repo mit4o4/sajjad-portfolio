@@ -1,7 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { X, ChevronDown, ChevronUp } from 'lucide-react';
+import { X, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { projectsData } from '@/data/projectsData';
 
 // Final fix: All images now point to .webp files
@@ -48,6 +48,16 @@ export default function PortfolioSection() {
   // Handle image load
   const handleImageLoad = (imageSrc: string) => {
     setLoadedImages((prev) => new Set([...prev, imageSrc]));
+  };
+
+  // Open a project: external link taps through to the live app, otherwise opens the gallery modal
+  const openProject = (project: typeof projectsData[0]) => {
+    if (project.link) {
+      window.open(project.link, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    setSelectedProject(project);
+    setExpandedSection(null);
   };
 
   // Reverse projects order (newest first) - DISABLED: keeping original order
@@ -152,6 +162,15 @@ export default function PortfolioSection() {
           {displayedProjects.map((project: typeof projectsData[0]) => (
             <div
               key={project.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => openProject(project)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  openProject(project);
+                }
+              }}
               className="group rounded-lg overflow-hidden bg-card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
             >
               {/* Image Container */}
@@ -190,14 +209,20 @@ export default function PortfolioSection() {
                   {isRTL ? project.descriptionAr : project.description}
                 </p>
                 <Button
-                  onClick={() => {
-                    setSelectedProject(project);
-                    setExpandedSection(null);
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openProject(project);
                   }}
                   variant="ghost"
-                  className="text-primary hover:text-primary/80 p-0 h-auto font-semibold text-xs w-auto"
+                  className="text-primary hover:text-primary/80 p-0 h-auto font-semibold text-xs w-auto inline-flex items-center gap-1"
                 >
-                  View →
+                  {project.link ? (
+                    <>
+                      {isRTL ? 'افتح التطبيق' : 'Launch App'} <ExternalLink size={12} />
+                    </>
+                  ) : (
+                    'View →'
+                  )}
                 </Button>
               </div>
             </div>
