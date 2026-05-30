@@ -1,16 +1,26 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import sajjadProfile from '../../public/images/sajjad.png';
+
+// Standalone pricing app (TeBIM Seals — design/works/services pricing) opened as its own page.
+const PRICING_APP_URL = 'https://tebim-seals-mangement.web.app';
+
+interface NavItem {
+  key: string;
+  href: string;
+  external?: boolean;
+}
 
 export default function Navigation() {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
-  const navItems = [
+  const navItems: NavItem[] = [
     { key: 'home', href: '#home' },
     { key: 'portfolio', href: '#portfolio' },
     { key: 'about', href: '#about' },
+    { key: 'pricing', href: PRICING_APP_URL, external: true },
     { key: 'contact', href: '#contact' },
   ];
 
@@ -36,9 +46,12 @@ export default function Navigation() {
               <a
                 key={item.key}
                 href={item.href}
-                className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener noreferrer' : undefined}
+                className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors inline-flex items-center gap-1"
               >
                 {t(`nav.${item.key}`)}
+                {item.external && <ExternalLink size={14} />}
               </a>
             ))}
           </div>
@@ -73,10 +86,13 @@ export default function Navigation() {
               <a
                 key={item.key}
                 href={item.href}
-                className="block px-4 py-2 text-sm font-medium text-foreground/70 hover:text-primary hover:bg-secondary rounded-lg transition-colors"
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener noreferrer' : undefined}
+                className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground/70 hover:text-primary hover:bg-secondary rounded-lg transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {t(`nav.${item.key}`)}
+                {item.external && <ExternalLink size={14} />}
               </a>
             ))}
           </div>

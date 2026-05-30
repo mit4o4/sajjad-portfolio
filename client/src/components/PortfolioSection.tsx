@@ -1,15 +1,17 @@
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { X, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
-import { projectsData } from '@/data/projectsData';
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { X, ChevronDown, ChevronUp } from "lucide-react";
+import { projectsData } from "@/data/projectsData";
 
 // Final fix: All images now point to .webp files
 export default function PortfolioSection() {
   const { t, isRTL } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState("all");
   const [showMore, setShowMore] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<typeof projectsData[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<
+    (typeof projectsData)[0] | null
+  >(null);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
@@ -20,7 +22,7 @@ export default function PortfolioSection() {
 
     const interval = setInterval(() => {
       const images = selectedProject.allImages || [selectedProject.image];
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      setCurrentImageIndex(prev => (prev + 1) % images.length);
     }, 3000);
 
     return () => clearInterval(interval);
@@ -32,30 +34,28 @@ export default function PortfolioSection() {
       // custom event may carry detail: { id, imageIndex }
       const ev = e as CustomEvent<{ id?: string; imageIndex?: number }>;
       const id = ev?.detail?.id;
-      const imageIndex = typeof ev?.detail?.imageIndex === 'number' ? ev.detail.imageIndex : 0;
+      const imageIndex =
+        typeof ev?.detail?.imageIndex === "number" ? ev.detail.imageIndex : 0;
       if (!id) return;
-      const proj = projectsData.find((p) => p.id === id);
+      const proj = projectsData.find(p => p.id === id);
       if (proj) {
         setSelectedProject(proj);
         setExpandedSection(null);
         setCurrentImageIndex(imageIndex || 0);
       }
     }
-    window.addEventListener('open-project', handler as EventListener);
-    return () => window.removeEventListener('open-project', handler as EventListener);
+    window.addEventListener("open-project", handler as EventListener);
+    return () =>
+      window.removeEventListener("open-project", handler as EventListener);
   }, []);
 
   // Handle image load
   const handleImageLoad = (imageSrc: string) => {
-    setLoadedImages((prev) => new Set([...prev, imageSrc]));
+    setLoadedImages(prev => new Set([...prev, imageSrc]));
   };
 
-  // Open a project: external link taps through to the live app, otherwise opens the gallery modal
-  const openProject = (project: typeof projectsData[0]) => {
-    if (project.link) {
-      window.open(project.link, '_blank', 'noopener,noreferrer');
-      return;
-    }
+  // Open a project's gallery modal
+  const openProject = (project: (typeof projectsData)[0]) => {
     setSelectedProject(project);
     setExpandedSection(null);
   };
@@ -66,66 +66,94 @@ export default function PortfolioSection() {
 
   // derive categories from projectsData so UI reflects available projects
   const derivedCategories = Array.from(
-    new Set(projectsData.map((p) => (p.category || 'other').toString().toLowerCase()))
+    new Set(
+      projectsData.map(p => (p.category || "other").toString().toLowerCase())
+    )
   );
 
   // user-requested sections (stable order)
   const desiredSections = [
-    'houses', // منازل
-    'commercial', // محال تجارية وشركات
-    'model_farms', // مزارع نموذجية
-    'villas', // فلل
-    'restaurants', // مطاعم
-    'clinics', // عيادات طبية
+    "houses", // منازل
+    "commercial", // محال تجارية وشركات
+    "model_farms", // مزارع نموذجية
+    "villas", // فلل
+    "restaurants", // مطاعم
+    "clinics", // عيادات طبية
   ];
 
   // classifier: determine which desired section a project belongs to (by title or titleAr)
-  const classifyProject = (p: typeof projectsData[0]) => {
+  const classifyProject = (p: (typeof projectsData)[0]) => {
     // ID-specific overrides provided by user
     const idOverrides: Record<string, string> = {
-      '00A-0093': 'commercial', // محل كوزمتك تجاري
-      '00A-0108': 'houses', // منزل
-      '00A-0095': 'clinics', // عيادة طبية
-      '00A-0094': 'clinics', // عيادة طبية
-      '00A-0115': 'restaurants', // مطعم
-      '00A-0109': 'commercial', // معرض تجاري
-      '00A-0064': 'model_farms', // مزرعة
-      '00A-0100': 'commercial', // مشروع تجاري
+      "00A-0093": "commercial", // محل كوزمتك تجاري
+      "00A-0108": "houses", // منزل
+      "00A-0095": "clinics", // عيادة طبية
+      "00A-0094": "clinics", // عيادة طبية
+      "00A-0115": "restaurants", // مطعم
+      "00A-0109": "commercial", // معرض تجاري
+      "00A-0064": "model_farms", // مزرعة
+      "00A-0100": "commercial", // مشروع تجاري
     };
     if (p.id && idOverrides[p.id]) return idOverrides[p.id];
-    const text = ((p.title || '') + ' ' + (p.titleAr || '') + ' ' + (p.description || '') + ' ' + (p.descriptionAr || '')).toLowerCase();
+    const text = (
+      (p.title || "") +
+      " " +
+      (p.titleAr || "") +
+      " " +
+      (p.description || "") +
+      " " +
+      (p.descriptionAr || "")
+    ).toLowerCase();
 
     // clinics (عيادات)
-    if (/clinic|عيادة|عيادات|dental|أسنان|طبية|عيادة طبية/.test(text)) return 'clinics';
+    if (/clinic|عيادة|عيادات|dental|أسنان|طبية|عيادة طبية/.test(text))
+      return "clinics";
 
     // restaurants (مطاعم)
-    if (/restaurant|مطعم|مندي|تندور|مطاعم|مندي العقيق|مندي/.test(text)) return 'restaurants';
+    if (/restaurant|مطعم|مندي|تندور|مطاعم|مندي العقيق|مندي/.test(text))
+      return "restaurants";
 
     // villas (فلل)
-    if (/villa|villas|فيلا|فلل|فيلا فاخرة|فيلا سكنية/.test(text)) return 'villas';
+    if (/villa|villas|فيلا|فلل|فيلا فاخرة|فيلا سكنية/.test(text))
+      return "villas";
 
     // model farms (مزارع نموذجية)
-    if (/farm|مزرعة|مزارع|مزرعة نموذجية|model farm/.test(text)) return 'model_farms';
+    if (/farm|مزرعة|مزارع|مزرعة نموذجية|model farm/.test(text))
+      return "model_farms";
 
     // houses (منازل / houses / residential)
-    if (/house|home|household|بيت|منازل|منزل|سكنية|residential|residence|villa/i.test(text)) return 'houses';
+    if (
+      /house|home|household|بيت|منازل|منزل|سكنية|residential|residence|villa/i.test(
+        text
+      )
+    )
+      return "houses";
 
     // commercial (offices, companies, shops)
-    if (/office|company|company|office|مكتب|شركة|محل|تجاري|تجارية|commercial/.test(text)) return 'commercial';
+    if (
+      /office|company|company|office|مكتب|شركة|محل|تجاري|تجارية|commercial/.test(
+        text
+      )
+    )
+      return "commercial";
 
     // fallback
-    return 'commercial';
+    return "commercial";
   };
 
-  const orderedCategories = ['all', ...desiredSections];
-  const categories = orderedCategories.map((c) => ({ key: c, value: c }));
+  const orderedCategories = ["all", ...desiredSections];
+  const categories = orderedCategories.map(c => ({ key: c, value: c }));
 
-    const filteredProjects =
-      activeCategory === 'all'
-        ? reversedProjects
-        : reversedProjects.filter((p: typeof projectsData[0]) => classifyProject(p) === activeCategory);
+  const filteredProjects =
+    activeCategory === "all"
+      ? reversedProjects
+      : reversedProjects.filter(
+          (p: (typeof projectsData)[0]) => classifyProject(p) === activeCategory
+        );
 
-  const displayedProjects = showMore ? filteredProjects : filteredProjects.slice(0, 8);
+  const displayedProjects = showMore
+    ? filteredProjects
+    : filteredProjects.slice(0, 8);
   const hasMore = filteredProjects.length > 8;
 
   return (
@@ -134,17 +162,19 @@ export default function PortfolioSection() {
         {/* Section Header */}
         <div className="max-w-2xl mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            {t('portfolio.title')}
+            {t("portfolio.title")}
           </h2>
-          <p className="text-lg text-foreground/60">{t('portfolio.subtitle')}</p>
+          <p className="text-lg text-foreground/60">
+            {t("portfolio.subtitle")}
+          </p>
         </div>
 
         {/* Category Filter */}
         <div className="flex flex-wrap gap-3 mb-12">
-          {categories.map((cat) => (
+          {categories.map(cat => (
             <Button
               key={cat.value}
-              variant={activeCategory === cat.value ? 'default' : 'outline'}
+              variant={activeCategory === cat.value ? "default" : "outline"}
               onClick={() => {
                 setActiveCategory(cat.value);
                 setShowMore(false);
@@ -152,21 +182,22 @@ export default function PortfolioSection() {
               className="transition-all"
             >
               {/* translation fallback: if missing, show capitalized category */}
-              {t(`portfolio.categories.${cat.key}`) || cat.key.charAt(0).toUpperCase() + cat.key.slice(1)}
+              {t(`portfolio.categories.${cat.key}`) ||
+                cat.key.charAt(0).toUpperCase() + cat.key.slice(1)}
             </Button>
           ))}
         </div>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-          {displayedProjects.map((project: typeof projectsData[0]) => (
+          {displayedProjects.map((project: (typeof projectsData)[0]) => (
             <div
               key={project.id}
               role="button"
               tabIndex={0}
               onClick={() => openProject(project)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+              onKeyDown={e => {
+                if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
                   openProject(project);
                 }
@@ -178,14 +209,16 @@ export default function PortfolioSection() {
                 {!loadedImages.has(project.image) && (
                   <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse pointer-events-none" />
                 )}
-                  <img
+                <img
                   src={project.image}
                   alt={isRTL ? project.titleAr : project.title}
-                    className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-500 select-none ${
-                    loadedImages.has(project.image) ? 'opacity-100' : 'opacity-0'
+                  className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-500 select-none ${
+                    loadedImages.has(project.image)
+                      ? "opacity-100"
+                      : "opacity-0"
                   }`}
                   draggable={false}
-                  onContextMenu={(e) => e.preventDefault()}
+                  onContextMenu={e => e.preventDefault()}
                   loading="lazy"
                   onLoad={() => handleImageLoad(project.image)}
                 />
@@ -209,20 +242,14 @@ export default function PortfolioSection() {
                   {isRTL ? project.descriptionAr : project.description}
                 </p>
                 <Button
-                  onClick={(e) => {
+                  onClick={e => {
                     e.stopPropagation();
                     openProject(project);
                   }}
                   variant="ghost"
                   className="text-primary hover:text-primary/80 p-0 h-auto font-semibold text-xs w-auto inline-flex items-center gap-1"
                 >
-                  {project.link ? (
-                    <>
-                      {isRTL ? 'افتح التطبيق' : 'Launch App'} <ExternalLink size={12} />
-                    </>
-                  ) : (
-                    'View →'
-                  )}
+                  View →
                 </Button>
               </div>
             </div>
@@ -261,25 +288,30 @@ export default function PortfolioSection() {
         <div
           style={{ zIndex: 9999999 }}
           className="fixed inset-0 flex items-center justify-center bg-black/80 p-4 overflow-y-auto"
-          onClick={(e) => {
+          onClick={e => {
             if (e.target === e.currentTarget) {
               setSelectedProject(null);
               setExpandedSection(null);
             }
           }}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
+          onKeyDown={e => {
+            if (e.key === "Escape") {
               setSelectedProject(null);
               setExpandedSection(null);
             }
           }}
           tabIndex={-1}
         >
-          <div onClick={(e) => e.stopPropagation()} className="bg-card rounded-lg max-w-5xl w-full my-auto">
+          <div
+            onClick={e => e.stopPropagation()}
+            className="bg-card rounded-lg max-w-5xl w-full my-auto"
+          >
             {/* Modal Header */}
             <div className="sticky top-0 flex items-center justify-between p-6 border-b border-border bg-card rounded-t-lg">
               <div>
-                <p className="text-sm text-primary font-semibold uppercase">{selectedProject.id}</p>
+                <p className="text-sm text-primary font-semibold uppercase">
+                  {selectedProject.id}
+                </p>
                 <h3 className="text-2xl font-bold text-foreground">
                   {isRTL ? selectedProject.titleAr : selectedProject.title}
                 </h3>
@@ -298,123 +330,157 @@ export default function PortfolioSection() {
             {/* Modal Content */}
             <div className="p-6 max-h-[calc(90vh-150px)] overflow-y-auto">
               <p className="text-foreground/70 mb-6">
-                {isRTL ? selectedProject.descriptionAr : selectedProject.description}
+                {isRTL
+                  ? selectedProject.descriptionAr
+                  : selectedProject.description}
               </p>
 
               {/* If has sections, show expandable sections */}
-              {selectedProject.sections && selectedProject.sections.length > 0 ? (
+              {selectedProject.sections &&
+              selectedProject.sections.length > 0 ? (
                 <div className="space-y-4">
-                  {selectedProject.sections.map((section: typeof projectsData[0]['sections'][0]) => (
-                    <div key={section.nameAr} className="border border-border rounded-lg overflow-hidden">
-                      <button
-                        onClick={() =>
-                          setExpandedSection(
-                            expandedSection === section.nameAr ? null : section.nameAr
-                          )
-                        }
-                        className="w-full px-6 py-4 flex items-center justify-between hover:bg-secondary/50 transition-colors"
+                  {selectedProject.sections.map(
+                    (section: (typeof projectsData)[0]["sections"][0]) => (
+                      <div
+                        key={section.nameAr}
+                        className="border border-border rounded-lg overflow-hidden"
                       >
-                        <h4 className="text-lg font-semibold text-foreground">
-                          {isRTL ? section.nameAr : section.name}
-                        </h4>
-                        {expandedSection === section.nameAr ? (
-                          <ChevronUp className="text-primary shrink-0" />
-                        ) : (
-                          <ChevronDown className="text-primary shrink-0" />
-                        )}
-                      </button>
+                        <button
+                          onClick={() =>
+                            setExpandedSection(
+                              expandedSection === section.nameAr
+                                ? null
+                                : section.nameAr
+                            )
+                          }
+                          className="w-full px-6 py-4 flex items-center justify-between hover:bg-secondary/50 transition-colors"
+                        >
+                          <h4 className="text-lg font-semibold text-foreground">
+                            {isRTL ? section.nameAr : section.name}
+                          </h4>
+                          {expandedSection === section.nameAr ? (
+                            <ChevronUp className="text-primary shrink-0" />
+                          ) : (
+                            <ChevronDown className="text-primary shrink-0" />
+                          )}
+                        </button>
 
-                      {expandedSection === section.nameAr && (
-                        <div className="px-6 py-6 bg-secondary/30 border-t border-border">
-                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            {section.images.map((image: string, idx: number) => (
-                              <div
-                                key={idx}
-                                className="aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer select-none relative"
-                              >
-                                {!loadedImages.has(image) && (
-                                  <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
-                                )}
-                                <img
-                                  src={image}
-                                  alt={`${section.name} ${idx + 1}`}
-                                  className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-300 select-none pointer-events-none ${
-                                    loadedImages.has(image) ? 'opacity-100' : 'opacity-0'
-                                  }`}
-                                  draggable={false}
-                                  onContextMenu={(e) => e.preventDefault()}
-                                  loading="lazy"
-                                  onLoad={() => handleImageLoad(image)}
-                                />
-                              </div>
-                            ))}
+                        {expandedSection === section.nameAr && (
+                          <div className="px-6 py-6 bg-secondary/30 border-t border-border">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                              {section.images.map(
+                                (image: string, idx: number) => (
+                                  <div
+                                    key={idx}
+                                    className="aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer select-none relative"
+                                  >
+                                    {!loadedImages.has(image) && (
+                                      <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
+                                    )}
+                                    <img
+                                      src={image}
+                                      alt={`${section.name} ${idx + 1}`}
+                                      className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-300 select-none pointer-events-none ${
+                                        loadedImages.has(image)
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      }`}
+                                      draggable={false}
+                                      onContextMenu={e => e.preventDefault()}
+                                      loading="lazy"
+                                      onLoad={() => handleImageLoad(image)}
+                                    />
+                                  </div>
+                                )
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                        )}
+                      </div>
+                    )
+                  )}
                 </div>
               ) : (
                 // If no sections, show carousel of images that auto-rotate
                 <div className="space-y-4">
                   {/* Main carousel image */}
                   <div className="relative aspect-video rounded-lg overflow-hidden bg-muted group select-none pointer-events-none">
-                    {!loadedImages.has((selectedProject.allImages || [selectedProject.image])[currentImageIndex]) && (
+                    {!loadedImages.has(
+                      (selectedProject.allImages || [selectedProject.image])[
+                        currentImageIndex
+                      ]
+                    ) && (
                       <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
                     )}
                     <img
                       src={
-                        (selectedProject.allImages || [selectedProject.image])[currentImageIndex]
+                        (selectedProject.allImages || [selectedProject.image])[
+                          currentImageIndex
+                        ]
                       }
                       alt={`Gallery ${currentImageIndex + 1}`}
-                        className={`w-full h-full object-cover transition-all duration-500 select-none ${
-                        loadedImages.has((selectedProject.allImages || [selectedProject.image])[currentImageIndex])
-                          ? 'opacity-100'
-                          : 'opacity-0'
+                      className={`w-full h-full object-cover transition-all duration-500 select-none ${
+                        loadedImages.has(
+                          (selectedProject.allImages || [
+                            selectedProject.image,
+                          ])[currentImageIndex]
+                        )
+                          ? "opacity-100"
+                          : "opacity-0"
                       }`}
                       draggable={false}
-                      onContextMenu={(e) => e.preventDefault()}
+                      onContextMenu={e => e.preventDefault()}
                       loading="lazy"
                       onLoad={() =>
                         handleImageLoad(
-                          (selectedProject.allImages || [selectedProject.image])[currentImageIndex]
+                          (selectedProject.allImages || [
+                            selectedProject.image,
+                          ])[currentImageIndex]
                         )
                       }
                     />
                     {/* Image counter */}
                     <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      {currentImageIndex + 1} / {(selectedProject.allImages || [selectedProject.image]).length}
+                      {currentImageIndex + 1} /{" "}
+                      {
+                        (selectedProject.allImages || [selectedProject.image])
+                          .length
+                      }
                     </div>
                   </div>
 
                   {/* Thumbnail grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {(selectedProject.allImages || [selectedProject.image]).map((image: string, idx: number) => (
-                      <div
-                        key={idx}
-                        onClick={() => setCurrentImageIndex(idx)}
-                        className={`aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer transition-all select-none ${
-                          idx === currentImageIndex
-                            ? 'ring-2 ring-primary shadow-lg'
-                            : 'opacity-70 hover:opacity-100'
-                        }`}
-                      >
-                        {!loadedImages.has(image) && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
-                        )}
-                        <img
-                          src={image}
-                          alt={`Thumbnail ${idx + 1}`}
-                            className={`w-full h-full object-cover select-none ${
-                            loadedImages.has(image) ? 'opacity-100' : 'opacity-0'
+                    {(selectedProject.allImages || [selectedProject.image]).map(
+                      (image: string, idx: number) => (
+                        <div
+                          key={idx}
+                          onClick={() => setCurrentImageIndex(idx)}
+                          className={`aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer transition-all select-none ${
+                            idx === currentImageIndex
+                              ? "ring-2 ring-primary shadow-lg"
+                              : "opacity-70 hover:opacity-100"
                           }`}
-                          draggable={false}
-                          onContextMenu={(e) => e.preventDefault()}
-                          loading="lazy"
-                          onLoad={() => handleImageLoad(image)}
-                        />
-                      </div>
-                    ))}
+                        >
+                          {!loadedImages.has(image) && (
+                            <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
+                          )}
+                          <img
+                            src={image}
+                            alt={`Thumbnail ${idx + 1}`}
+                            className={`w-full h-full object-cover select-none ${
+                              loadedImages.has(image)
+                                ? "opacity-100"
+                                : "opacity-0"
+                            }`}
+                            draggable={false}
+                            onContextMenu={e => e.preventDefault()}
+                            loading="lazy"
+                            onLoad={() => handleImageLoad(image)}
+                          />
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
               )}
