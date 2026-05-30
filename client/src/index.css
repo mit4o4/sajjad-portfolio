@@ -3,8 +3,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Google Fonts — architectural type system: Fraunces (display) · Inter Tight (body) · IBM Plex Mono (data) */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400&family=Inter+Tight:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -46,15 +46,15 @@
 }
 
 :root {
-  /* Primary Colors - Professional Blue */
-  --primary: oklch(0.45 0.15 260);
-  --primary-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.50 0.16 260);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  
-  /* Accent Colors - Sky Blue */
-  --accent: oklch(0.60 0.18 250);
-  --accent-foreground: oklch(0.98 0 0);
+  /* Primary — refined architectural indigo */
+  --primary: oklch(0.42 0.13 264);
+  --primary-foreground: oklch(0.98 0.005 85);
+  --sidebar-primary: oklch(0.46 0.14 262);
+  --sidebar-primary-foreground: oklch(0.98 0.005 85);
+
+  /* Accent — deep slate blue */
+  --accent: oklch(0.54 0.15 258);
+  --accent-foreground: oklch(0.98 0.005 85);
   
   /* Chart Colors */
   --chart-1: oklch(0.60 0.18 250);
@@ -66,21 +66,21 @@
   /* Radius */
   --radius: 0.65rem;
   
-  /* Light Mode Colors */
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.15 0.02 280);
-  --card: oklch(0.99 0 0);
-  --card-foreground: oklch(0.15 0.02 280);
-  --popover: oklch(0.99 0 0);
-  --popover-foreground: oklch(0.15 0.02 280);
-  --secondary: oklch(0.95 0.01 280);
-  --secondary-foreground: oklch(0.25 0.03 280);
-  --muted: oklch(0.92 0.01 280);
-  --muted-foreground: oklch(0.50 0.05 280);
+  /* Light Mode — warm premium paper */
+  --background: oklch(0.972 0.006 85);
+  --foreground: oklch(0.18 0.012 60);
+  --card: oklch(0.985 0.006 85);
+  --card-foreground: oklch(0.18 0.012 60);
+  --popover: oklch(0.985 0.006 85);
+  --popover-foreground: oklch(0.18 0.012 60);
+  --secondary: oklch(0.935 0.008 80);
+  --secondary-foreground: oklch(0.26 0.02 70);
+  --muted: oklch(0.925 0.008 80);
+  --muted-foreground: oklch(0.47 0.018 70);
   --destructive: oklch(0.58 0.22 30);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.90 0.01 280);
-  --input: oklch(0.90 0.01 280);
+  --border: oklch(0.885 0.01 80);
+  --input: oklch(0.885 0.01 80);
   --ring: oklch(0.60 0.18 250);
   --sidebar: oklch(0.99 0 0);
   --sidebar-foreground: oklch(0.15 0.02 280);
@@ -136,13 +136,27 @@
   
   body {
     @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-feature-settings: 'ss01';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
+    text-wrap: balance;
   }
+
+  /* Fluid display scale — large, confident, architectural */
+  h1 { font-size: clamp(2.6rem, 6vw, 5rem); }
+  h2 { font-size: clamp(2rem, 4.5vw, 3.4rem); }
+  h3 { font-size: clamp(1.25rem, 2.2vw, 1.7rem); letter-spacing: -0.01em; }
+
+  /* Monospace accent for codes, metadata, labels */
+  .font-mono, .mono { font-family: 'IBM Plex Mono', monospace; }
   
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -269,4 +283,63 @@
 [dir="rtl"] .ml-auto {
   margin-left: auto;
   margin-right: 0;
+}
+
+/* ============================================================
+   PREMIUM LAYER — selection, scrollbar, scroll-reveal, polish
+   ============================================================ */
+
+/* Branded selection */
+::selection { background: var(--primary); color: var(--primary-foreground); }
+
+/* Refined custom scrollbar (webkit) */
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: var(--secondary); }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklch, var(--muted-foreground) 45%, transparent);
+  border: 3px solid var(--secondary);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* Scroll-reveal — opacity + lift, staggerable via --reveal-delay.
+   Elements start hidden; .is-visible (set by IntersectionObserver) animates them in. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+.reveal-clip {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[dir="rtl"] .reveal-clip { clip-path: inset(0 0 0 100%); }
+.reveal-clip.is-visible { clip-path: inset(0 0 0 0); }
+
+/* Eyebrow / micro-label */
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+/* Premium magnetic-ish button feel + section rhythm helpers */
+.hover-lift { transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease; }
+.hover-lift:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -20px color-mix(in oklch, var(--primary) 40%, transparent); }
+
+/* Thin hairline divider used as an editorial accent */
+.hairline { height: 1px; background: var(--border); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-clip { transition: none; opacity: 1; transform: none; clip-path: none; }
+  html { scroll-behavior: auto; }
 }

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { X, ChevronDown, ChevronUp } from "lucide-react";
 import { projectsData } from "@/data/projectsData";
+import Reveal from "@/components/Reveal";
 
 // Final fix: All images now point to .webp files
 export default function PortfolioSection() {
@@ -160,14 +161,13 @@ export default function PortfolioSection() {
     <section id="portfolio" className="py-20 bg-secondary/30">
       <div className="container">
         {/* Section Header */}
-        <div className="max-w-2xl mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            {t("portfolio.title")}
-          </h2>
-          <p className="text-lg text-foreground/60">
+        <Reveal as="div" className="max-w-2xl mb-12">
+          <span className="eyebrow block mb-4">02 — Selected Works</span>
+          <h2 className="text-foreground mb-4">{t("portfolio.title")}</h2>
+          <p className="text-lg text-foreground/60 font-light">
             {t("portfolio.subtitle")}
           </p>
-        </div>
+        </Reveal>
 
         {/* Category Filter */}
         <div className="flex flex-wrap gap-3 mb-12">
@@ -202,7 +202,7 @@ export default function PortfolioSection() {
                   openProject(project);
                 }
               }}
-              className="group rounded-lg overflow-hidden bg-card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              className="group rounded-none overflow-hidden bg-card border border-border/60 hover-lift cursor-pointer"
             >
               {/* Image Container */}
               <div className="relative h-64 overflow-hidden bg-muted select-none pointer-events-none">
@@ -226,16 +226,16 @@ export default function PortfolioSection() {
               </div>
 
               {/* Content */}
-              <div className="p-4">
+              <div className="p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-primary uppercase tracking-widest">
+                  <span className="font-mono text-xs text-primary tracking-widest">
                     {project.id}
                   </span>
-                  <span className="text-xs font-semibold text-primary uppercase tracking-widest">
+                  <span className="font-mono text-[0.65rem] text-foreground/40 uppercase tracking-widest">
                     {project.category}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-1 line-clamp-2">
+                <h3 className="text-lg text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors duration-300">
                   {isRTL ? project.titleAr : project.title}
                 </h3>
                 <p className="text-foreground/60 text-xs mb-3 line-clamp-2">
