@@ -9,10 +9,16 @@
   },
   "hero": {
     "title": "BIM Specialist & Architectural Supervision Engineer",
-    "subtitle": "5 Years of Experience | 171+ Projects | Revit, BIM, Grasshopper",
-    "description": "Architectural Designer and Civil Engineer specializing in BIM-based architectural design (Revit) and parametric design (Grasshopper), with solid experience in design development, site supervision, and high-quality execution across residential, commercial, and large-scale projects.",
-    "cta": "View My Work",
-    "contact": "Get in Touch"
+    "subtitle": "7+ Years of Experience | 200+ Projects | Revit, BIM, Grasshopper",
+    "description": "TeBIM Studio, founded by Sajjad Abdulhameed Majeed — specializing in BIM-based architectural design, parametric facade engineering, and comprehensive on-site engineering supervision and execution across 200+ residential and commercial projects in Iraq.",
+    "cta": "Explore Portfolio",
+    "contact": "Get in Touch",
+    "stats": {
+      "projects": "Projects Completed",
+      "years": "Years Experience",
+      "companies": "Major Companies"
+    },
+    "scroll": "Scroll"
   },
   "portfolio": {
     "title": "Featured Projects",
@@ -31,6 +37,9 @@
       "clinics": "Medical Clinics"
     },
     "viewProject": "View Project",
+    "view": "View →",
+    "showMore": "Show More Projects",
+    "showLess": "Show Less",
     "projects": {
       "hotel_supervision": {
         "title": "Supervision of 5-Star Hotel and Guest House (Madina Al-Moali)",
@@ -140,17 +149,28 @@
     ]
   },
   "about": {
-    "title": "About Me",
+    "title": "About TeBIM",
     "intro": "Architectural Designer and Civil Engineer specializing in BIM-based architectural design (Revit) and parametric design (Grasshopper), with solid experience in design development, site supervision, and high-quality execution across residential, commercial, and large-scale projects.",
     "expertise": "Experienced in developing architectural concepts and translating them into coordinated BIM models, while utilizing parametric design tools such as Grasshopper to explore design alternatives and improve efficiency. I have a strong background in site supervision, ensuring accurate execution and high construction quality, supported by solid coordination skills with engineering systems.",
     "education": "Bachelor's degree in Civil Engineering from the University of Kufa.",
     "interests": "Passionate about architecture, parametric design, construction technology, programming, and sustainable design solutions.",
     "linkedin": "https://www.linkedin.com/in/sajjad-abdulhamead/",
-    "github": "https://github.com/mit4o4"
+    "github": "https://github.com/mit4o4",
+    "avatarAlt": "Sajjad Abdulhameed Majeed - Founder of TeBIM",
+    "stats": {
+      "projects": "Projects",
+      "years": "Years",
+      "certifications": "Certifications"
+    }
   },
   "contact": {
     "title": "Get In Touch",
-    "subtitle": "Contact Information",
+    "subtitle": "Contact information for architectural design, BIM, and engineering consultation",
+    "labels": {
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location"
+    },
     "form": {
       "name": "Your Name",
       "email": "Your Email",
@@ -169,8 +189,10 @@
     }
   },
   "footer": {
-    "copyright": "© 2024 Sajjad Abdulhameed Majeed. All rights reserved.",
-    "followMe": "Follow Me",
+    "brand": "TeBIM",
+    "tagline": "Architectural Design, BIM Modeling & Engineering Execution in Iraq",
+    "copyright": "© 2026 TeBIM — Sajjad Abdulhameed Majeed. All rights reserved.",
+    "followMe": "Follow Us",
     "quickLinks": "Quick Links"
   }
 }

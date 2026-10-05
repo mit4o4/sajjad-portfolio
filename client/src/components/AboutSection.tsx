@@ -20,7 +20,7 @@ export default function AboutSection() {
             <div className="relative w-80 h-80">
               <img
                 src={sajjadProfile}
-                alt="About"
+                alt={t('about.avatarAlt') || 'سجاد عبد الحميد مجيد - مؤسس TeBIM'}
                 className="w-full h-full rounded-full shadow-lg object-cover border-4 border-primary/20"
               />
               <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-primary/20 rounded-full -z-10"></div>
@@ -50,16 +50,16 @@ export default function AboutSection() {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border">
               <div>
-                <div className="text-2xl font-bold text-primary">171+</div>
-                <p className="text-sm text-foreground/60">Projects</p>
+                <div className="text-2xl font-bold text-primary">200+</div>
+                <p className="text-sm text-foreground/60">{t('about.stats.projects')}</p>
               </div>
               <div>
-                <div className="text-2xl font-bold text-primary">5+</div>
-                <p className="text-sm text-foreground/60">Years</p>
+                <div className="text-2xl font-bold text-primary">7+</div>
+                <p className="text-sm text-foreground/60">{t('about.stats.years')}</p>
               </div>
               <div>
                 <div className="text-2xl font-bold text-primary">6</div>
-                <p className="text-sm text-foreground/60">Certifications</p>
+                <p className="text-sm text-foreground/60">{t('about.stats.certifications')}</p>
               </div>
             </div>
           </div>

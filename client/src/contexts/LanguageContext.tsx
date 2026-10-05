@@ -20,13 +20,13 @@ const getNestedValue = (obj: any, path: string): string => {
 };
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>('ar');
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     // Get language from localStorage or browser preference
     const savedLanguage = localStorage.getItem('language') as Language | null;
-    const browserLanguage = navigator.language.startsWith('ar') ? 'ar' : 'en';
+    const browserLanguage = navigator.language.startsWith('en') ? 'en' : 'ar';
     const initialLanguage = savedLanguage || browserLanguage;
     
     setLanguageState(initialLanguage);

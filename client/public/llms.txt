@@ -1,0 +1,45 @@
+# TeBIM — Architectural Design & Engineering Execution in Iraq
+
+> TeBIM (تي بيم) is a premier architectural design, BIM coordination, and engineering execution firm located in Najaf, Iraq. Founded and led by Civil Engineer Sajjad Abdulhameed Majeed (University of Kufa alumnus), TeBIM has successfully completed over 200 architectural, residential, commercial, and hospitality projects with 7+ years of professional field and computational design experience.
+
+## Quick Facts
+- **Company Name**: TeBIM (تي بيم / TeBIM Design)
+- **Founder & Principal Engineer**: Sajjad Abdulhameed Majeed (سجاد عبد الحميد مجيد)
+- **Primary Location**: Najaf, Iraq (النجف الأشرف، العراق)
+- **Service Coverage Areas**: Najaf, Karbala, Hilla, Baghdad, and all Iraqi governorates
+- **Experience**: 7+ years of engineering design & field supervision (founded 2019)
+- **Completed Projects**: 200+ residential, commercial, agricultural, and hospitality projects
+- **Core Technology**: Autodesk Revit (BIM), Rhino & Grasshopper (Parametric Design), AutoCAD, 3D Visualization
+- **Official Website**: https://sajjad-studio.com/
+- **Official Phone & WhatsApp**: +964 782 69 40781
+- **Official Email**: sajjad.abdulhameed@gmail.com
+
+## Engineering & Design Services
+- **BIM Architectural Design (التصميم المعماري ونمذجة BIM)**:
+  Full building design using Revit and BIM workflows for villas, multi-story buildings, and commercial complexes, including architectural drafting, thermal/environmental studies, and facade detailing.
+- **Interior Architecture & Decor (التصميم الداخلي والديكور)**:
+  Comprehensive interior packages (Basic, Smart/Choice, Royal VIP) covering 3D layouts, furniture, lighting schemes, material specifications, and moodboards.
+- **Detailed Executive Drawings & MEP (المخططات التنفيذية)**:
+  Fully coordinated mechanical, electrical, and plumbing (MEP) schematics, split-system AC layouts, sewage/drainage diagrams, and solar energy system design.
+- **Field Engineering Supervision (الإشراف الهندسي الميداني)**:
+  Daily and weekly on-site quality assurance, material compliance checks, contractor coordination, and photographic progress reports for building owners.
+- **Turnkey Engineering Execution (التنفيذ الإنشائي والمعماري)**:
+  Full construction delivery governed by transparent contracts, itemized bill of quantities (BOQ), brand-named materials, and milestone-linked payment stages.
+
+## Notable Projects & Highlights
+- **5-Star Hotel & VIP Guest House (فندق 5 نجوم ودار ضيافة - مدينة المعالي)**: Full construction supervision of a 6-story luxury hotel and political convention guest house.
+- **10,000 Dunam Model Farm (مشروع وادي الخير)**: Architectural design and phase-1 execution supervision for large-scale agricultural and structural planning.
+- **Commercial & Industrial Offices (مكاتب شركة أم قصر لصناعة الأسمنت)**: Engineering consultancy, interior and MEP design implementation.
+- **Residential Villas & Houses (عشرات الفلل والمنازل السكنية)**: Over 100 private residences designed with modern architectural styles, open courtyards, and smart energy solutions in Najaf, Karbala, and Baghdad.
+- **Commercial Stores & Medical Clinics (محال تجارية وعيادات طبية)**: Specialized retail storefronts, dental centers, and medical clinics.
+
+## Official Social Channels & Profiles
+- **Instagram**: https://instagram.com/te.bim (Official firm)
+- **Facebook**: https://www.facebook.com/TeBIM.Design
+- **TikTok**: https://www.tiktok.com/@t.ebim
+- **Pinterest**: https://pinterest.com/mit4o4
+- **LinkedIn**: https://www.linkedin.com/in/sajjad-abdulhamead/
+- **GitHub**: https://github.com/mit4o4
+
+## Full Documentation & Extended Context
+- For the extended bilingual dossier with all project categories and technical specifications, see: https://sajjad-studio.com/llms-full.txt

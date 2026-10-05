@@ -9,8 +9,8 @@ const path = require('path');
       bundle: true,
       platform: 'node',
       format: 'esm',
+      packages: 'external',
       outdir: path.join(process.cwd(), 'dist'),
-      external: [],
       logLevel: 'info',
     });
     console.log('esbuild: server bundle created.');

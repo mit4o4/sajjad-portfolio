@@ -24,7 +24,7 @@ export default function ContactSection() {
                 <div className="p-3 bg-primary/10 rounded-lg mb-4">
                   <Mail className="text-primary" size={28} />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Email</h3>
+                <h3 className="font-semibold text-foreground mb-2">{t('contact.labels.email')}</h3>
                 <a
                   href={`mailto:${t('contact.info.email')}`}
                   className="text-primary hover:underline break-all"
@@ -40,7 +40,7 @@ export default function ContactSection() {
                 <div className="p-3 bg-primary/10 rounded-lg mb-4">
                   <Phone className="text-primary" size={28} />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Phone</h3>
+                <h3 className="font-semibold text-foreground mb-2">{t('contact.labels.phone')}</h3>
                 <a
                   href={`tel:${t('contact.info.phone')}`}
                   className="text-primary hover:underline"
@@ -56,7 +56,7 @@ export default function ContactSection() {
                 <div className="p-3 bg-primary/10 rounded-lg mb-4">
                   <MapPin className="text-primary" size={28} />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Location</h3>
+                <h3 className="font-semibold text-foreground mb-2">{t('contact.labels.location')}</h3>
                 <p className="text-foreground/70">{t('contact.info.location')}</p>
               </div>
             </div>

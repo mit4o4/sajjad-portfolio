@@ -249,7 +249,7 @@ export default function PortfolioSection() {
                   variant="ghost"
                   className="text-primary hover:text-primary/80 p-0 h-auto font-semibold text-xs w-auto inline-flex items-center gap-1"
                 >
-                  View →
+                  {t('portfolio.view') || 'View →'}
                 </Button>
               </div>
             </div>
@@ -264,7 +264,7 @@ export default function PortfolioSection() {
               size="lg"
               className="px-8"
             >
-              Show More Projects ({filteredProjects.length - 8} remaining)
+              {t('portfolio.showMore')} ({filteredProjects.length - 8})
             </Button>
           </div>
         )}
@@ -277,7 +277,7 @@ export default function PortfolioSection() {
               size="lg"
               className="px-8"
             >
-              Show Less
+              {t('portfolio.showLess') || 'Show Less'}
             </Button>
           </div>
         )}

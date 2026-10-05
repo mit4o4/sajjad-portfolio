@@ -1,11 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400&family=Inter+Tight:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
-/* Google Fonts — architectural type system: Fraunces (display) · Inter Tight (body) · IBM Plex Mono (data) */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400&family=Inter+Tight:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -269,6 +267,14 @@
   text-align: right;
 }
 
+[dir="rtl"] body {
+  font-family: 'IBM Plex Sans Arabic', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+  font-family: 'IBM Plex Sans Arabic', 'Poppins', sans-serif;
+}
+
 [dir="ltr"] {
   direction: ltr;
   text-align: left;
@@ -342,4 +348,12 @@
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-clip { transition: none; opacity: 1; transform: none; clip-path: none; }
   html { scroll-behavior: auto; }
+}
+
+/* Arabic RTL Typography */
+[dir="rtl"] body {
+  font-family: 'IBM Plex Sans Arabic', 'Inter Tight', sans-serif;
+}
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+  font-family: 'IBM Plex Sans Arabic', 'Fraunces', serif;
 }

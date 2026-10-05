@@ -50,13 +50,13 @@ export default function HeroSection() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const projects = useCountUp(171);
-  const years = useCountUp(5);
+  const projects = useCountUp(200);
+  const years = useCountUp(7);
   const companies = useCountUp(3);
   const stats: Stat[] = [
-    { value: projects, suffix: "+", label: "Projects Completed" },
-    { value: years, suffix: "+", label: "Years Experience" },
-    { value: companies, suffix: "", label: "Major Companies" },
+    { value: projects, suffix: "+", label: t("hero.stats.projects") },
+    { value: years, suffix: "+", label: t("hero.stats.years") },
+    { value: companies, suffix: "", label: t("hero.stats.companies") },
   ];
 
   return (
@@ -69,7 +69,7 @@ export default function HeroSection() {
         <div ref={bgRef} className="absolute inset-0 will-change-transform">
           <img
             src={heroBimDesign}
-            alt="BIM Design"
+            alt="TeBIM - التصميم المعماري ونمذجة BIM في العراق"
             className="w-full h-full object-cover"
             fetchPriority="high"
             decoding="async"
@@ -173,7 +173,7 @@ export default function HeroSection() {
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
         <div className="flex flex-col items-center gap-2 animate-bounce">
           <span className="eyebrow text-foreground/40 !text-[0.6rem]">
-            Scroll
+            {t("hero.scroll")}
           </span>
           <svg
             className="w-5 h-5 text-foreground/40"

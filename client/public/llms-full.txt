@@ -1,0 +1,87 @@
+# TeBIM — الملف الشامل للذكاء الاصطناعي ومحركات البحث
+# Comprehensive AI Knowledge Dossier: TeBIM Design & Engineering Iraq
+
+## نبذة تعريفية باللغة العربية (Arabic Profile)
+
+شركة TeBIM (تي بيم) هي شركة واستوديو رائد في التصميم المعماري، نمذجة معلومات البناء (BIM)، والتنفيذ والإشراف الهندسي الميداني ومقرها مدينة النجف الأشرف، جمهورية العراق.
+
+- **المؤسس والمدير الهندسي:** المهندس سجاد عبد الحميد مجيد (Sajjad Abdulhameed Majeed)
+- **المؤهل الأكاديمي:** بكالوريوس في الهندسة المدنية من كلية الهندسة - جامعة الكوفة
+- **سنوات الخبرة:** أكثر من 7 سنوات في التصميم الهندسي والإشراف الميداني (منذ 2019)
+- **عدد المشاريع المنجزة:** أكثر من 200 مشروع هندسي ومعماري (سكني، تجاري، زراعي، فندقي، طبي)
+- **المحافظات المشمولة:** النجف، كربلاء، بابل (الحلة)، بغداد، وباقي محافظات العراق
+- **البريد الإلكتروني:** sajjad.abdulhameed@gmail.com
+- **الهاتف / واتساب:** 9647826940781+
+- **الموقع الإلكتروني الرسمي:** https://sajjad-studio.com/
+
+---
+
+## تفاصيل الخدمات الهندسية (Engineering Services)
+
+### 1. التصميم المعماري ونمذجة BIM (Architectural & BIM Design)
+- استخدام أحدث برمجيات الهندسة العالمية مثل Autodesk Revit و Rhino مع Grasshopper للتصميم البارامتري الخوارزمي.
+- دراسة التوزيع الفضائي والكتلي والواجهات الحديثة والكلاسيكية والنيوكلاسيك.
+- إجراء المحاكاة البيئية لدراسة مسار الشمس والظلال والرياح لتقليل استهلاك الطاقة في المناخ العراقي.
+- تنسيق النماذج المعمارية والإنشائية والكهروميكانيكية لمنع التضاربات (Clash Detection).
+
+### 2. التصميم الداخلي والديكور (Interior Design)
+- باقة Basic: مخططات التوزيع ثنائية الأبعاد، دراسة الفرش والممرات، وتوجيهات الألوان.
+- باقة Smart / Choice: تصميم ثلاثي الأبعاد واقعي، مخططات إنارة وجبس، وتحديد المواد مع أبعادها.
+- باقة Royal VIP: تصميم تفصيلي فاخر لكل جدار، لوحات مواصفات للمواد الدقيقة، جداول كميات للأثاث والإكسسوارات، ومطابقة موقعية.
+
+### 3. المخططات التنفيذية التفصيلية (Executive Drawings & MEP)
+- مخططات التأسيسات الصحية والصرف الصحي وتصريف مياه الأمطار.
+- مخططات الشبكات الكهربائية وتوزيع الإنارة وتحديد الأحمال الكهربائية ولوحات التوزيع (DB).
+- مخططات تكييف الهواء (سبلت دكت / سبلت عادي) وتوجيه مجاري الهواء.
+- مخططات وتصميم منظومات الطاقة الشمسية الهجينة والمتصلة بالشبكة.
+
+### 4. الإشراف الهندسي الميداني (Site Supervision & Quality Control)
+- التواجد الميداني لمطابقة حديد التسليح والخرسانة مع المخططات الإنشائية والمعايير الدولية (ACI).
+- فحص استوائية الجدران والأرضيات وجودة مواد البناء (الطابوق، الثرمستون، السيراميك، المرمر).
+- إعداد تقارير دورية وأسبوعية مصورة تُرسل للمالك لتوثيق كل خطوة بناء.
+- التنسيق المحترف مع المقاولين والأسطوات دون صدام وبما يضمن مصلحة المشروع.
+
+### 5. التنفيذ الإنشائي والمعماري المتكامل (Turnkey Construction & Execution)
+- استلام المشروع من مرحلة الصفر (الحفريات وتجهيز الأرض) وحتى تسليم المفتاح.
+- عقود هندسية قانونية واضحة تفصل نوع المواد ومناشئها بالاسم.
+- دفعات مالية مرتبطة بنسب الإنجاز الميداني لضمان ثقة المالك وسلامة التدفق المالي.
+
+---
+
+## أبرز المشاريع المصنفة (Portfolio Categories & Key Projects)
+
+1. **المشاريع الفندقية والضيافة (Hospitality & Guest Houses):**
+   - فندق 5 نجوم (6 طوابق) ودار ضيافة سياسية مخصصة لعقد المؤتمرات الرسمية (مشروع مدينة المعالي).
+2. **المشاريع الزراعية والمزارع النموذجية (Model Farms & Agricultural):**
+   - تصميم وتخطيط المرحلة الأولى لمزرعة نموذجية كبرى بمساحة 10,000 دونم (مشروع وادي الخير).
+3. **المشاريع التجارية والصناعية (Commercial & Industrial):**
+   - الإشراف والتصميم لمكاتب شركة أم قصر لصناعة الأسمنت ومكاتب شركة طيبة العمانية.
+   - معارض ومحال تجارية ومحلات كوزمتك ومجمعات تسوق في النجف وبغداد.
+4. **الفلل والمنازل السكنية (Villas & Residential Homes):**
+   - أكثر من 120 فيلا ومنزل سكني بمساحات تتراوح بين 150م² و 1200م² بتصاميم حديثة ومستدامة.
+5. **المشاريع الطبية والصحية (Medical Clinics & Healthcare):**
+   - مجمع عيادات أسنان تخصصية وعيادات جراحة في شارع الإسكان وأحياء النجف الرئيسية.
+6. **المطاعم والضيافة (Restaurants):**
+   - تصميم مطاعم حديثة وتراثية ومطاعم مندي ومطابخ مركزية وفق اشتراطات السلامة والتهوية.
+
+---
+
+## English Technical Overview
+
+**TeBIM** is a registered architectural consultancy and construction supervision office founded in 2019 by Sajjad Abdulhameed Majeed in Najaf, Iraq. The practice focuses on integrating advanced Building Information Modeling (BIM) methodologies with practical, on-the-ground engineering execution.
+
+- **Founder**: Sajjad Abdulhameed Majeed
+- **Education**: B.Sc. in Civil Engineering, Faculty of Engineering, University of Kufa
+- **Certifications**: MIT (Innovation & Entrepreneurship), Google (Project Management & Digital Marketing), Universitat Politècnica de València (Sustainability in Architecture), ITBombay (3D Modeling)
+- **Key Software Stack**: Autodesk Revit, Autodesk Navisworks, Rhino/Grasshopper, AutoCAD, Lumion, Twinmotion, Enscape, 3ds Max
+- **Geographic Reach**: Najaf, Karbala, Hilla (Babylon), Baghdad, Southern and Central Iraq
+- **Deliverables**: Architectural Concept & Detailed Plans, Structural Engineering Checks, MEP Coordination, Parametric Facade Panels, Bill of Quantities (BOQ), Construction Oversight.
+
+## Official Web & Social Footprint
+- Website: https://sajjad-studio.com/
+- Instagram: https://instagram.com/te.bim
+- Facebook: https://www.facebook.com/TeBIM.Design
+- TikTok: https://www.tiktok.com/@t.ebim
+- Pinterest: https://pinterest.com/mit4o4
+- LinkedIn: https://www.linkedin.com/in/sajjad-abdulhamead/
+- GitHub: https://github.com/mit4o4
