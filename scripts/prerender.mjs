@@ -42,6 +42,23 @@ function outputFile(routePath) {
   return relative ? path.join(DIST, relative, "index.html") : path.join(DIST, "index.html");
 }
 
+/** GitHub Pages has no server redirects, so moved pages use canonical + meta refresh + JS replace. */
+function redirectPage(absoluteTarget, relativeTarget) {
+  return `<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Moved</title>
+    <link rel="canonical" href="${absoluteTarget}" />
+    <meta name="robots" content="noindex, follow" />
+    <meta http-equiv="refresh" content="0; url=${relativeTarget}" />
+    <script>location.replace(${JSON.stringify(relativeTarget)} + location.hash);</script>
+  </head>
+  <body><a href="${relativeTarget}">${absoluteTarget}</a></body>
+</html>
+`;
+}
+
 function write(file, content) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, content, "utf8");
@@ -59,6 +76,12 @@ async function main() {
     write(outputFile(page.path), fillTemplate(template, page));
   }
 
+  // Renamed project URLs: static pages that send visitors and crawlers to the current URL.
+  const redirects = server.legacyRedirects();
+  for (const { from, to } of redirects) {
+    write(outputFile(from), redirectPage(server.absoluteUrl(to), to));
+  }
+
   // GitHub Pages serves 404.html for unknown URLs.
   write(path.join(DIST, "404.html"), fillTemplate(template, server.renderPage(NOT_FOUND_PATH)));
 
@@ -69,7 +92,7 @@ async function main() {
   write(path.join(DIST, "llms-full.txt"), server.buildLlmsFullTxt());
 
   fs.rmSync(SSR_DIR, { recursive: true, force: true });
-  console.log(`prerender: ${paths.length} pages + 404, sitemap, robots, llms files written to dist/`);
+  console.log(`prerender: ${paths.length} pages + ${redirects.length} redirects + 404, sitemap, robots, llms files written to dist/`);
 }
 
 main().catch((error) => fail(error instanceof Error ? error.stack ?? error.message : String(error)));

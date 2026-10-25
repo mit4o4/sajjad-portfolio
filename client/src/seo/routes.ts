@@ -58,7 +58,10 @@ export function parseRoute(pathname: string): Route {
   if (match) {
     const key = match[1];
     const project = projectsData.find(
-      p => p.slug === key || p.id.toLowerCase() === key.toLowerCase()
+      p =>
+        p.slug === key ||
+        p.legacySlugs?.includes(key) ||
+        p.id.toLowerCase() === key.toLowerCase()
     );
     if (project)
       return {
@@ -69,6 +72,24 @@ export function parseRoute(pathname: string): Route {
       };
   }
   return { kind: "notFound", lang, path };
+}
+
+export interface Redirect {
+  from: string;
+  to: string;
+}
+
+/** Old project URLs (renamed slugs) mapped to their current page, in both languages. */
+export function legacyRedirects(): Redirect[] {
+  const langs: Language[] = ["ar", "en"];
+  return projectsData.flatMap(project =>
+    (project.legacySlugs ?? []).flatMap(slug =>
+      langs.map(lang => ({
+        from: projectPath({ slug, id: project.id }, lang),
+        to: projectPath(project, lang),
+      }))
+    )
+  );
 }
 
 /** Every page that gets prerendered to static HTML. */

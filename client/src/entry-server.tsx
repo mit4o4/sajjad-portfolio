@@ -5,6 +5,8 @@
 import { renderToString } from "react-dom/server";
 import App from "./App";
 import { allRoutes, parseRoute } from "./seo/routes";
+
+export { legacyRedirects, absoluteUrl } from "./seo/routes";
 import { buildHead, headToHtml } from "./seo/head";
 
 export {

@@ -69,6 +69,8 @@ export interface Project {
   featured?: boolean;
   /** URL slug for the project page (ASCII, lowercase, hyphenated). */
   slug?: string;
+  /** Previous slugs; their URLs keep working as redirect pages to the current slug. */
+  legacySlugs?: string[];
   /** Thumbnail for grids (800px). Falls back to `image`. */
   thumb?: string;
 }
