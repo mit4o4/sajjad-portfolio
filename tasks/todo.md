@@ -113,8 +113,12 @@ Privacy default: private individuals' names (doctor, engineer, contractor) are N
 - Verified:
   - `pnpm check` and `pnpm build` pass.
   - Static production build tested in the browser: hydration has no errors, the AR↔EN switch works, and the project pages render.
+- DEPLOYED 2026-10-25:
+  - Merge 3123e52 to `main`, GitHub Pages run succeeded.
+  - The live sajjad-studio.com serves `/`, `/en/`, the project pages, the sitemap and llms.txt; unknown URLs return 404.
+  - Rollback tag `pre-redesign-2026-10-25` pushed.
+- Counter category totals are labelled "published portfolio" until the user supplies real totals.
 - Not done / next:
-  - Merge to `main` to deploy (needs user approval).
   - Run the crop pipeline on the 52 existing projects' raw sheets.
   - Resubmit the sitemap in Google Search Console and Bing.
   - Category totals for the 200+ figure, from the user.
