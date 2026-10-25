@@ -1,0 +1,108 @@
+{
+  "total": 26,
+  "byProject": [
+    {
+      "id": "00A-0062",
+      "spaces": ["Reception Area", "Interior Design (unnamed clinic interior)"],
+      "count": 2,
+      "evidence": "projectsData sections 'Reception Area' S1/S3 and 'Interior Design' S1/S2. Reception images 00A-0062-15..18 are distinct. 'Interior Design' is a generic label, so it is uncertain."
+    },
+    {
+      "id": "00A-0077",
+      "spaces": ["Restaurant interior"],
+      "count": 1,
+      "evidence": "projectsData section 'Interior Design' (10 imgs) plus 'Details' (2). Restaurant is a single space."
+    },
+    {
+      "id": "00A-0080",
+      "spaces": ["Living Area", "Bedrooms", "Guest Area"],
+      "count": 3,
+      "evidence": "Sections 'Living Area' (16-19 clean), 'Bedrooms' (46-49; 00A-0080-46 verified as an interior bedroom), 'Guest Area' (10-15, 24-28). 'Bedrooms' is plural but counted as 1 (uncertain). 'Entrance' excluded (entry, likely exterior). 'Pool & Landscape', 'Roof Elements' and 'Style Variations' excluded."
+    },
+    {
+      "id": "00A-0091",
+      "spaces": ["Sitting Area"],
+      "count": 1,
+      "evidence": "Section 'Sitting Area' (14-18, 20); 00A-0091-14 verified as interior lounge. 'Kitchen Facilities' excluded: 00A-0091-22 is an outdoor BBQ kitchen under a pergola. 'Landscape & Outdoor' and 'BBQ Area' excluded."
+    },
+    {
+      "id": "00A-0095",
+      "spaces": ["Interior Design (medical centre interior)"],
+      "count": 1,
+      "evidence": "Section 'Interior Design'; 00A-0095-17 verified as an interior office. 'Entrance & Reception' has no unique images (all shared with Interior Design, Exterior or Facade) so it is merged. 'Exterior' and 'Facade Details' excluded."
+    },
+    {
+      "id": "00A-0097",
+      "spaces": ["Main Areas (uncertain)", "Living Room"],
+      "count": 2,
+      "evidence": "Sections 'Main Areas' (00A-0097-1, -2) and 'Living Room' (-3, -4, -5). 'Main Areas' is generic and uncertain."
+    },
+    {
+      "id": "00A-0099",
+      "spaces": ["Living Room (from description only)"],
+      "count": 1,
+      "evidence": "description 'Residential house with living room design' / descriptionAr 'تصميم غرفة معيشة'. No section data and no image checked. Uncertain."
+    },
+    {
+      "id": "00A-0107",
+      "spaces": ["Living Room", "Kitchen"],
+      "count": 2,
+      "evidence": "Sections 'Living Room' (00A-0107-6, -7, -8 clean) and 'Kitchen' (-5, not checked). 'Bathroom' and 'Guest Room' excluded: 00A-0107-2 and -1 are exterior facade views, and -4 is exterior. 'Pool Area' excluded."
+    },
+    {
+      "id": "00A-0135",
+      "spaces": ["Wedding hall"],
+      "count": 1,
+      "evidence": "Title 'Wedding Hall design' / description 'Wedding hall design'. 00A-0135-1 is a 3D section of the ground-floor hall (interior). 'Wedding hall' is a single space."
+    },
+    {
+      "id": "00A-0161",
+      "spaces": ["Main Areas (uncertain)", "Bedroom Area"],
+      "count": 2,
+      "evidence": "Sections 'Main Areas' (-3, -4, -5) and 'Bedroom Area' (-1, -2). 'Main Areas' is generic and uncertain."
+    },
+    {
+      "id": "00A-0165",
+      "spaces": ["Gold shop (retail)"],
+      "count": 1,
+      "evidence": "Description 'Luxury retail shop design' / titleAr 'محل ذهب'. 00A-0165-1 is a plan and elevations of a shop with counters and display walls. Retail shop counts as 1."
+    },
+    {
+      "id": "00A-0179",
+      "spaces": ["Interior (full plan with details, Dr Haider clinic)"],
+      "count": 1,
+      "evidence": "Manifest sheets 'FullPlan WithDetails ÷Interior' S1 (render and sheet). Generic 'Interior' with no room name, so counted as 1. 'Facade Design' excluded."
+    },
+    {
+      "id": "00A-0190",
+      "spaces": ["Women's clothing store interior (retail)"],
+      "count": 1,
+      "evidence": "Manifest group 'محل ملابس نسائية مول الفرات' (4 sheets, no room label). Retail store, counted as 1 per instruction."
+    },
+    {
+      "id": "00A-0191",
+      "spaces": ["Appliance showroom interior (retail)"],
+      "count": 1,
+      "evidence": "Manifest group 'معرض اجهزة منزلية - شارع عطية جبوري' (5 sheets, no room label). Retail showroom, counted as 1."
+    },
+    {
+      "id": "00A-0200",
+      "spaces": ["Living room"],
+      "count": 1,
+      "evidence": "Manifest sheets 'Livingroom_Page_01..14'. 'Facade' sheets excluded."
+    },
+    {
+      "id": "00A-0201",
+      "spaces": ["Bedroom", "Guestroom", "Living room"],
+      "count": 3,
+      "evidence": "Manifest sheets 'Bedroom_Page_08..13', 'Guestroom_Page_08..11' and 'Livingroom_Page_08..12'. 'Facade' and 'Facade Details' excluded."
+    },
+    {
+      "id": "00A-0204",
+      "spaces": ["Guest room", "Living room"],
+      "count": 2,
+      "evidence": "Manifest sheets 'Guestroom_Page_01..14' and 'Livingroom S2_Page_01..12'."
+    }
+  ],
+  "notes": "Counts are distinct (project, space) pairs. Sum of counts = 26. Firm = 20. Uncertain = 6 pairs: 00A-0062 'Interior Design' (generic); 00A-0097 and 00A-0161 'Main Areas' (generic); 00A-0107 'Kitchen' (image not checked); 00A-0099 'Living room' (text only, no images checked); 00A-0080 'Bedrooms' (plural, counted as 1). Excluded: 00A-0064 (building types, not interior); 00A-0108 'Guest Room' (images are exterior); 00A-0091 'Kitchen Facilities' (outdoor BBQ kitchen); 00A-0080 'Entrance'; 00A-0109 'Home Appliances Showroom' (only image checked is a stair detail; no confirmed showroom interior); 00A-0173 (unit-type plans and landscapes, not interior); 00A-0182, 00A-0189, 00A-0198 (fuel stations); 00A-0195, 00A-0196 (kindergarten, no interior tokens in filenames); 00A-0061, 00A-0093 and other no-section projects (no room or retail words in title or description). Possible duplicate: 00A-0109 titleAr 'معرض أجهزة منزلية' and 00A-0191 'معرض اجهزة منزلية - شارع عطية جبوري'. Different IDs and the 0191 street name is specific, so they are counted separately and 0109 is not counted. If 0109 is confirmed as an interior showroom and is distinct, add 1. Image checks read: 00A-0107-1, -2, -4 (exterior), 00A-0108-11 (exterior), 00A-0091-14 (interior), 00A-0091-22 (outdoor), 00A-0080-46 (bedroom), 00A-0095-17 (office), 00A-0109-1 (stair drawing), 00A-0165-1 (shop plan), 00A-0135-1 (hall 3D section)."
+}

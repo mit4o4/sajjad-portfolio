@@ -1,492 +1,233 @@
+import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { X, ChevronDown, ChevronUp } from "lucide-react";
 import { projectsData } from "@/data/projectsData";
-import Reveal from "@/components/Reveal";
+import { SECTORS, projectSectors } from "@/data/taxonomy";
+import type { Project, SectorId } from "@/data/types";
+import ProjectDialog from "@/components/site/ProjectDialog";
 
-// Final fix: All images now point to .webp files
-export default function PortfolioSection() {
-  const { t, isRTL } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [showMore, setShowMore] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<
-    (typeof projectsData)[0] | null
-  >(null);
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+type Filter = SectorId | "all";
 
-  // Auto-rotate images every 3 seconds when modal is open
-  useEffect(() => {
-    if (!selectedProject) return;
+/** Curated order for the selected-work grid: strongest, most varied work first. */
+const FEATURED_ORDER = [
+  "00A-0196", "00A-0085", "00A-0198", "00A-0115", "00A-0094", "00A-0190",
+  "00A-0156", "00A-0195", "00A-0182", "00A-0179", "00A-0189", "00A-0204",
+];
+const featuredRank = (p: Project): number => {
+  const i = FEATURED_ORDER.indexOf(p.id);
+  return i === -1 ? FEATURED_ORDER.length : i;
+};
+const FEATURED = projectsData.filter((p) => p.featured).sort((a, b) => featuredRank(a) - featuredRank(b));
+const NOT_FEATURED = projectsData.filter((p) => !p.featured);
 
-    const interval = setInterval(() => {
-      const images = selectedProject.allImages || [selectedProject.image];
-      setCurrentImageIndex(prev => (prev + 1) % images.length);
-    }, 3000);
+interface CardProps {
+  project: Project;
+  onOpen: (project: Project) => void;
+}
 
-    return () => clearInterval(interval);
-  }, [selectedProject]);
-
-  // Listen for open-project events dispatched from map markers
-  useEffect(() => {
-    function handler(e: Event) {
-      // custom event may carry detail: { id, imageIndex }
-      const ev = e as CustomEvent<{ id?: string; imageIndex?: number }>;
-      const id = ev?.detail?.id;
-      const imageIndex =
-        typeof ev?.detail?.imageIndex === "number" ? ev.detail.imageIndex : 0;
-      if (!id) return;
-      const proj = projectsData.find(p => p.id === id);
-      if (proj) {
-        setSelectedProject(proj);
-        setExpandedSection(null);
-        setCurrentImageIndex(imageIndex || 0);
-      }
-    }
-    window.addEventListener("open-project", handler as EventListener);
-    return () =>
-      window.removeEventListener("open-project", handler as EventListener);
-  }, []);
-
-  // Handle image load
-  const handleImageLoad = (imageSrc: string) => {
-    setLoadedImages(prev => new Set([...prev, imageSrc]));
-  };
-
-  // Open a project's gallery modal
-  const openProject = (project: (typeof projectsData)[0]) => {
-    setSelectedProject(project);
-    setExpandedSection(null);
-  };
-
-  // Reverse projects order (newest first) - DISABLED: keeping original order
-  // const reversedProjects = [...projectsData].reverse();
-  const reversedProjects = [...projectsData]; // Keep original order: old first, new last
-
-  // derive categories from projectsData so UI reflects available projects
-  const derivedCategories = Array.from(
-    new Set(
-      projectsData.map(p => (p.category || "other").toString().toLowerCase())
-    )
-  );
-
-  // user-requested sections (stable order)
-  const desiredSections = [
-    "houses", // منازل
-    "commercial", // محال تجارية وشركات
-    "model_farms", // مزارع نموذجية
-    "villas", // فلل
-    "restaurants", // مطاعم
-    "clinics", // عيادات طبية
-  ];
-
-  // classifier: determine which desired section a project belongs to (by title or titleAr)
-  const classifyProject = (p: (typeof projectsData)[0]) => {
-    // ID-specific overrides provided by user
-    const idOverrides: Record<string, string> = {
-      "00A-0093": "commercial", // محل كوزمتك تجاري
-      "00A-0108": "houses", // منزل
-      "00A-0095": "clinics", // عيادة طبية
-      "00A-0094": "clinics", // عيادة طبية
-      "00A-0115": "restaurants", // مطعم
-      "00A-0109": "commercial", // معرض تجاري
-      "00A-0064": "model_farms", // مزرعة
-      "00A-0100": "commercial", // مشروع تجاري
-    };
-    if (p.id && idOverrides[p.id]) return idOverrides[p.id];
-    const text = (
-      (p.title || "") +
-      " " +
-      (p.titleAr || "") +
-      " " +
-      (p.description || "") +
-      " " +
-      (p.descriptionAr || "")
-    ).toLowerCase();
-
-    // clinics (عيادات)
-    if (/clinic|عيادة|عيادات|dental|أسنان|طبية|عيادة طبية/.test(text))
-      return "clinics";
-
-    // restaurants (مطاعم)
-    if (/restaurant|مطعم|مندي|تندور|مطاعم|مندي العقيق|مندي/.test(text))
-      return "restaurants";
-
-    // villas (فلل)
-    if (/villa|villas|فيلا|فلل|فيلا فاخرة|فيلا سكنية/.test(text))
-      return "villas";
-
-    // model farms (مزارع نموذجية)
-    if (/farm|مزرعة|مزارع|مزرعة نموذجية|model farm/.test(text))
-      return "model_farms";
-
-    // houses (منازل / houses / residential)
-    if (
-      /house|home|household|بيت|منازل|منزل|سكنية|residential|residence|villa/i.test(
-        text
-      )
-    )
-      return "houses";
-
-    // commercial (offices, companies, shops)
-    if (
-      /office|company|company|office|مكتب|شركة|محل|تجاري|تجارية|commercial/.test(
-        text
-      )
-    )
-      return "commercial";
-
-    // fallback
-    return "commercial";
-  };
-
-  const orderedCategories = ["all", ...desiredSections];
-  const categories = orderedCategories.map(c => ({ key: c, value: c }));
-
-  const filteredProjects =
-    activeCategory === "all"
-      ? reversedProjects
-      : reversedProjects.filter(
-          (p: (typeof projectsData)[0]) => classifyProject(p) === activeCategory
-        );
-
-  const displayedProjects = showMore
-    ? filteredProjects
-    : filteredProjects.slice(0, 8);
-  const hasMore = filteredProjects.length > 8;
+function ProjectCard({ project, onOpen }: CardProps) {
+  const { t, language, isRTL } = useLanguage();
+  const [showOptionB, setShowOptionB] = useState(false);
+  const title = isRTL ? project.titleAr : project.title;
+  const sectorName = SECTORS.find(s => s.id === project.sector)?.name[language];
+  const meta = [project.location?.[language], sectorName]
+    .filter(Boolean)
+    .join(" · ");
+  const optionB = project.options?.[1]?.images[0];
 
   return (
-    <section id="portfolio" className="py-20 bg-secondary/30">
-      <div className="container">
-        {/* Section Header */}
-        <Reveal as="div" className="max-w-2xl mb-12">
-          <span className="eyebrow block mb-4">02 — Selected Works</span>
-          <h2 className="text-foreground mb-4">{t("portfolio.title")}</h2>
-          <p className="text-lg text-foreground/60 font-light">
-            {t("portfolio.subtitle")}
-          </p>
-        </Reveal>
-
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-3 mb-12">
-          {categories.map(cat => (
-            <Button
-              key={cat.value}
-              variant={activeCategory === cat.value ? "default" : "outline"}
-              onClick={() => {
-                setActiveCategory(cat.value);
-                setShowMore(false);
-              }}
-              className="transition-all"
-            >
-              {/* translation fallback: if missing, show capitalized category */}
-              {t(`portfolio.categories.${cat.key}`) ||
-                cat.key.charAt(0).toUpperCase() + cat.key.slice(1)}
-            </Button>
-          ))}
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-          {displayedProjects.map((project: (typeof projectsData)[0]) => (
-            <div
-              key={project.id}
-              role="button"
-              tabIndex={0}
-              onClick={() => openProject(project)}
-              onKeyDown={e => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  openProject(project);
-                }
-              }}
-              className="group rounded-none overflow-hidden bg-card border border-border/60 hover-lift cursor-pointer"
-            >
-              {/* Image Container */}
-              <div className="relative h-64 overflow-hidden bg-muted select-none pointer-events-none">
-                {!loadedImages.has(project.image) && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse pointer-events-none" />
-                )}
-                <img
-                  src={project.image}
-                  alt={isRTL ? project.titleAr : project.title}
-                  className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-500 select-none ${
-                    loadedImages.has(project.image)
-                      ? "opacity-100"
-                      : "opacity-0"
-                  }`}
-                  draggable={false}
-                  onContextMenu={e => e.preventDefault()}
-                  loading="lazy"
-                  onLoad={() => handleImageLoad(project.image)}
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-
-              {/* Content */}
-              <div className="p-5">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-xs text-primary tracking-widest">
-                    {project.id}
-                  </span>
-                  <span className="font-mono text-[0.65rem] text-foreground/40 uppercase tracking-widest">
-                    {project.category}
-                  </span>
-                </div>
-                <h3 className="text-lg text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors duration-300">
-                  {isRTL ? project.titleAr : project.title}
-                </h3>
-                <p className="text-foreground/60 text-xs mb-3 line-clamp-2">
-                  {isRTL ? project.descriptionAr : project.description}
-                </p>
-                <Button
-                  onClick={e => {
-                    e.stopPropagation();
-                    openProject(project);
-                  }}
-                  variant="ghost"
-                  className="text-primary hover:text-primary/80 p-0 h-auto font-semibold text-xs w-auto inline-flex items-center gap-1"
-                >
-                  {t('portfolio.view') || 'View →'}
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Show More Button */}
-        {hasMore && !showMore && (
-          <div className="flex justify-center">
-            <Button
-              onClick={() => setShowMore(true)}
-              size="lg"
-              className="px-8"
-            >
-              {t('portfolio.showMore')} ({filteredProjects.length - 8})
-            </Button>
-          </div>
+    <article className="tb-card tb-rv" onClick={() => onOpen(project)}>
+      <div className={`tb-frame tb-rv-img${showOptionB ? " show-b" : ""}`}>
+        {project.options && optionB && (
+          <span
+            className="tb-opts"
+            role="group"
+            aria-label={t("site.projects.options")}
+            onClick={e => e.stopPropagation()}
+          >
+            {project.options.map((option, i) => (
+              <button
+                key={option.label.en}
+                type="button"
+                aria-pressed={showOptionB === (i === 1)}
+                onClick={() => setShowOptionB(i === 1)}
+              >
+                {option.label[language]}
+              </button>
+            ))}
+          </span>
         )}
-
-        {showMore && hasMore && (
-          <div className="flex justify-center">
-            <Button
-              onClick={() => setShowMore(false)}
-              variant="outline"
-              size="lg"
-              className="px-8"
-            >
-              {t('portfolio.showLess') || 'Show Less'}
-            </Button>
-          </div>
+        <img
+          src={project.thumb ?? project.image}
+          alt={title}
+          loading="lazy"
+          width={800}
+          height={600}
+          draggable={false}
+        />
+        {optionB && (
+          <img
+            className="tb-alt"
+            src={optionB}
+            alt=""
+            loading="lazy"
+            draggable={false}
+          />
         )}
       </div>
-
-      {/* Gallery Modal */}
-      {selectedProject && (
-        <div
-          style={{ zIndex: 9999999 }}
-          className="fixed inset-0 flex items-center justify-center bg-black/80 p-4 overflow-y-auto"
-          onClick={e => {
-            if (e.target === e.currentTarget) {
-              setSelectedProject(null);
-              setExpandedSection(null);
-            }
-          }}
-          onKeyDown={e => {
-            if (e.key === "Escape") {
-              setSelectedProject(null);
-              setExpandedSection(null);
-            }
-          }}
-          tabIndex={-1}
-        >
-          <div
-            onClick={e => e.stopPropagation()}
-            className="bg-card rounded-lg max-w-5xl w-full my-auto"
+      <div className="tb-top">
+        <h3>
+          <button
+            type="button"
+            className="tb-card-link"
+            onClick={e => {
+              e.stopPropagation();
+              onOpen(project);
+            }}
           >
-            {/* Modal Header */}
-            <div className="sticky top-0 flex items-center justify-between p-6 border-b border-border bg-card rounded-t-lg">
-              <div>
-                <p className="text-sm text-primary font-semibold uppercase">
-                  {selectedProject.id}
-                </p>
-                <h3 className="text-2xl font-bold text-foreground">
-                  {isRTL ? selectedProject.titleAr : selectedProject.title}
-                </h3>
-              </div>
-              <button
-                onClick={() => {
-                  setSelectedProject(null);
-                  setExpandedSection(null);
-                }}
-                className="p-2 hover:bg-secondary rounded-lg transition-colors shrink-0"
-              >
-                <X size={24} className="text-foreground" />
-              </button>
-            </div>
+            {title}
+          </button>
+        </h3>
+        <span className="tb-mono">{project.id}</span>
+      </div>
+      {meta && <span className="tb-meta">{meta}</span>}
+      <div className="tb-tags">
+        {project.role && (
+          <span className="tb-tag tb-tag--role">{project.role[language]}</span>
+        )}
+        {project.collaborator && (
+          <span className="tb-tag tb-tag--collab">
+            {t("site.projects.with")} {project.collaborator[language]}
+          </span>
+        )}
+      </div>
+    </article>
+  );
+}
 
-            {/* Modal Content */}
-            <div className="p-6 max-h-[calc(90vh-150px)] overflow-y-auto">
-              <p className="text-foreground/70 mb-6">
-                {isRTL
-                  ? selectedProject.descriptionAr
-                  : selectedProject.description}
-              </p>
+/** Opens a project from map markers (`open-project`) or from a `#project-<id>` deep link. */
+function useExternalOpen(
+  open: (project: Project, image?: number) => void,
+  setFilter: (f: Filter) => void
+) {
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      const detail = (e as CustomEvent<{ id?: string; imageIndex?: number }>)
+        .detail;
+      const project = projectsData.find(p => p.id === detail?.id);
+      if (project) open(project, detail?.imageIndex ?? 0);
+    };
+    const onFilter = (e: Event) => {
+      const sector = (e as CustomEvent<{ sector?: SectorId }>).detail?.sector;
+      if (sector) setFilter(sector);
+    };
+    const hashId = window.location.hash.match(/^#project-(.+)$/)?.[1];
+    const fromHash = projectsData.find(
+      p => p.id === hashId || p.slug === hashId
+    );
+    if (fromHash) open(fromHash);
+    window.addEventListener("open-project", onOpen);
+    window.addEventListener("filter-sector", onFilter);
+    return () => {
+      window.removeEventListener("open-project", onOpen);
+      window.removeEventListener("filter-sector", onFilter);
+    };
+  }, [open, setFilter]);
+}
 
-              {/* If has sections, show expandable sections */}
-              {selectedProject.sections &&
-              selectedProject.sections.length > 0 ? (
-                <div className="space-y-4">
-                  {selectedProject.sections.map(
-                    (section: (typeof projectsData)[0]["sections"][0]) => (
-                      <div
-                        key={section.nameAr}
-                        className="border border-border rounded-lg overflow-hidden"
-                      >
-                        <button
-                          onClick={() =>
-                            setExpandedSection(
-                              expandedSection === section.nameAr
-                                ? null
-                                : section.nameAr
-                            )
-                          }
-                          className="w-full px-6 py-4 flex items-center justify-between hover:bg-secondary/50 transition-colors"
-                        >
-                          <h4 className="text-lg font-semibold text-foreground">
-                            {isRTL ? section.nameAr : section.name}
-                          </h4>
-                          {expandedSection === section.nameAr ? (
-                            <ChevronUp className="text-primary shrink-0" />
-                          ) : (
-                            <ChevronDown className="text-primary shrink-0" />
-                          )}
-                        </button>
+export default function PortfolioSection() {
+  const { t, language } = useLanguage();
+  const [filter, setFilter] = useState<Filter>("all");
+  const [showAll, setShowAll] = useState(false);
+  const [selected, setSelected] = useState<{
+    project: Project;
+    image: number;
+  } | null>(null);
 
-                        {expandedSection === section.nameAr && (
-                          <div className="px-6 py-6 bg-secondary/30 border-t border-border">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                              {section.images.map(
-                                (image: string, idx: number) => (
-                                  <div
-                                    key={idx}
-                                    className="aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer select-none relative"
-                                  >
-                                    {!loadedImages.has(image) && (
-                                      <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
-                                    )}
-                                    <img
-                                      src={image}
-                                      alt={`${section.name} ${idx + 1}`}
-                                      className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-300 select-none pointer-events-none ${
-                                        loadedImages.has(image)
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      }`}
-                                      draggable={false}
-                                      onContextMenu={e => e.preventDefault()}
-                                      loading="lazy"
-                                      onLoad={() => handleImageLoad(image)}
-                                    />
-                                  </div>
-                                )
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )
-                  )}
-                </div>
-              ) : (
-                // If no sections, show carousel of images that auto-rotate
-                <div className="space-y-4">
-                  {/* Main carousel image */}
-                  <div className="relative aspect-video rounded-lg overflow-hidden bg-muted group select-none pointer-events-none">
-                    {!loadedImages.has(
-                      (selectedProject.allImages || [selectedProject.image])[
-                        currentImageIndex
-                      ]
-                    ) && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
-                    )}
-                    <img
-                      src={
-                        (selectedProject.allImages || [selectedProject.image])[
-                          currentImageIndex
-                        ]
-                      }
-                      alt={`Gallery ${currentImageIndex + 1}`}
-                      className={`w-full h-full object-cover transition-all duration-500 select-none ${
-                        loadedImages.has(
-                          (selectedProject.allImages || [
-                            selectedProject.image,
-                          ])[currentImageIndex]
-                        )
-                          ? "opacity-100"
-                          : "opacity-0"
-                      }`}
-                      draggable={false}
-                      onContextMenu={e => e.preventDefault()}
-                      loading="lazy"
-                      onLoad={() =>
-                        handleImageLoad(
-                          (selectedProject.allImages || [
-                            selectedProject.image,
-                          ])[currentImageIndex]
-                        )
-                      }
-                    />
-                    {/* Image counter */}
-                    <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      {currentImageIndex + 1} /{" "}
-                      {
-                        (selectedProject.allImages || [selectedProject.image])
-                          .length
-                      }
-                    </div>
-                  </div>
+  const open = useMemo(
+    () =>
+      (project: Project, image = 0) =>
+        setSelected({ project, image }),
+    []
+  );
+  useExternalOpen(open, setFilter);
 
-                  {/* Thumbnail grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {(selectedProject.allImages || [selectedProject.image]).map(
-                      (image: string, idx: number) => (
-                        <div
-                          key={idx}
-                          onClick={() => setCurrentImageIndex(idx)}
-                          className={`aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer transition-all select-none ${
-                            idx === currentImageIndex
-                              ? "ring-2 ring-primary shadow-lg"
-                              : "opacity-70 hover:opacity-100"
-                          }`}
-                        >
-                          {!loadedImages.has(image) && (
-                            <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse z-10 pointer-events-none" />
-                          )}
-                          <img
-                            src={image}
-                            alt={`Thumbnail ${idx + 1}`}
-                            className={`w-full h-full object-cover select-none ${
-                              loadedImages.has(image)
-                                ? "opacity-100"
-                                : "opacity-0"
-                            }`}
-                            draggable={false}
-                            onContextMenu={e => e.preventDefault()}
-                            loading="lazy"
-                            onLoad={() => handleImageLoad(image)}
-                          />
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+  const filters = useMemo(() => {
+    const present = SECTORS.filter(s =>
+      projectsData.some(p => projectSectors(p).includes(s.id))
+    );
+    return [
+      {
+        id: "all" as Filter,
+        label: t("site.projects.all"),
+        count: projectsData.length,
+      },
+      ...present.map(s => ({
+        id: s.id as Filter,
+        label: s.name[language],
+        count: projectsData.filter(p => projectSectors(p).includes(s.id))
+          .length,
+      })),
+    ];
+  }, [language, t]);
+
+  const visible = useMemo(() => {
+    if (filter !== "all")
+      return projectsData.filter(p => projectSectors(p).includes(filter));
+    return showAll ? [...FEATURED, ...NOT_FEATURED] : FEATURED;
+  }, [filter, showAll]);
+
+  return (
+    <section id="portfolio" className="tb-wrap tb-sec">
+      <div className="tb-head">
+        <span className="tb-eyebrow">{t("site.projects.eyebrow")}</span>
+        <h2>{t("site.projects.title")}</h2>
+        <p>{t("site.projects.intro")}</p>
+      </div>
+      <div
+        className="tb-filters"
+        role="group"
+        aria-label={t("site.projects.filterLabel")}
+      >
+        {filters.map(f => (
+          <button
+            key={f.id}
+            type="button"
+            className="tb-chip"
+            aria-pressed={filter === f.id}
+            onClick={() => setFilter(f.id)}
+          >
+            {f.label}
+            <span>{f.count}</span>
+          </button>
+        ))}
+      </div>
+      <div className="tb-grid">
+        {visible.map(project => (
+          <ProjectCard key={project.id} project={project} onOpen={open} />
+        ))}
+      </div>
+      {filter === "all" && (
+        <div className="tb-more">
+          <button
+            type="button"
+            className="tb-btn tb-btn--line"
+            onClick={() => setShowAll(v => !v)}
+          >
+            {showAll
+              ? t("site.projects.less")
+              : t("site.projects.more").replace(
+                  "{count}",
+                  String(projectsData.length)
+                )}
+          </button>
         </div>
+      )}
+      {selected && (
+        <ProjectDialog
+          project={selected.project}
+          initialImage={selected.image}
+          onClose={() => setSelected(null)}
+        />
       )}
     </section>
   );
