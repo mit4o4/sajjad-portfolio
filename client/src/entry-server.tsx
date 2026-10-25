@@ -7,7 +7,12 @@ import App from "./App";
 import { allRoutes, parseRoute } from "./seo/routes";
 import { buildHead, headToHtml } from "./seo/head";
 
-export { buildSitemap, buildRobots, buildLlmsTxt, buildLlmsFullTxt } from "./seo/files";
+export {
+  buildSitemap,
+  buildRobots,
+  buildLlmsTxt,
+  buildLlmsFullTxt,
+} from "./seo/files";
 
 export interface RenderedPage {
   path: string;
@@ -30,5 +35,5 @@ export function renderPage(pathname: string): RenderedPage {
 }
 
 export function routePaths(): string[] {
-  return allRoutes().map((r) => r.path);
+  return allRoutes().map(r => r.path);
 }

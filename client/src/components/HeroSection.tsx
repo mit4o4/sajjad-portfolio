@@ -44,21 +44,28 @@ function useSlideshow(
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting));
+    const observer = new IntersectionObserver(([entry]) =>
+      setIsVisible(entry.isIntersecting)
+    );
     observer.observe(el);
     return () => observer.disconnect();
   }, [stageRef]);
 
   const isRunning = !isPaused && !isHeld && isVisible;
   useEffect(() => {
-    if (!isRunning || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (
+      !isRunning ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
     let frame = 0;
     let last = performance.now();
     const tick = (now: number) => {
       elapsedRef.current += now - last;
       last = now;
       const progress = elapsedRef.current / SLIDE_MS;
-      if (barRef.current) barRef.current.style.transform = `scaleX(${Math.min(1, progress)})`;
+      if (barRef.current)
+        barRef.current.style.transform = `scaleX(${Math.min(1, progress)})`;
       if (progress >= 1) {
         elapsedRef.current = 0;
         setIndex(i => (i + 1) % count);
@@ -76,7 +83,11 @@ export default function HeroSection() {
   const { t, tList, language, isRTL } = useLanguage();
   const barRef = useRef<HTMLElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
-  const { index, goTo, isPaused, setIsPaused, setIsHeld } = useSlideshow(SLIDES.length, barRef, stageRef);
+  const { index, goTo, isPaused, setIsPaused, setIsHeld } = useSlideshow(
+    SLIDES.length,
+    barRef,
+    stageRef
+  );
 
   const current = projectsData.find(p => p.id === SLIDES[index].id);
   const title = current ? (isRTL ? current.titleAr : current.title) : "";
@@ -103,7 +114,10 @@ export default function HeroSection() {
             <WhatsAppIcon />
             {t("site.hero.cta")}
           </a>
-          <a className="tb-btn tb-btn--line" href={`${homePath(language)}#portfolio`}>
+          <a
+            className="tb-btn tb-btn--line"
+            href={`${homePath(language)}#portfolio`}
+          >
             {t("site.hero.work")}
           </a>
         </div>
@@ -159,7 +173,9 @@ export default function HeroSection() {
                 type="button"
                 onClick={() => setIsPaused(p => !p)}
                 aria-pressed={isPaused}
-                aria-label={isPaused ? t("site.hero.play") : t("site.hero.pause")}
+                aria-label={
+                  isPaused ? t("site.hero.play") : t("site.hero.pause")
+                }
               >
                 {isPaused ? <Play size={14} /> : <Pause size={14} />}
               </button>

@@ -90,6 +90,8 @@ export default function StatsBand() {
           sub={t("site.stats.interiorSub")}
         />
       </div>
+      {/* Category counts come from the published portfolio until the studio supplies full totals. */}
+      <p className="tb-wrap tb-stats-note">{t("site.stats.note")}</p>
     </section>
   );
 }

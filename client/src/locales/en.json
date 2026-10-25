@@ -259,7 +259,8 @@
       "totalLabel": "projects designed & delivered",
       "totalSub": "over {years} years of practice",
       "interiorLabel": "interior spaces designed",
-      "interiorSub": "each room counted separately"
+      "interiorSub": "each room counted separately",
+      "note": "Category counts reflect projects published in the online portfolio."
     },
     "sectors": {
       "eyebrow": "Project sectors",

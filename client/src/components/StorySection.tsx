@@ -11,7 +11,8 @@ interface StoryStep {
 }
 
 const clamp01 = (v: number): number => Math.max(0, Math.min(1, v));
-const hiddenClip = (isRTL: boolean): string => (isRTL ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)");
+const hiddenClip = (isRTL: boolean): string =>
+  isRTL ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)";
 
 /**
  * Pinned section: scrolling wipes the kindergarten from line drawing to final render.
@@ -38,7 +39,9 @@ export default function StorySection() {
       layerRefs.current.forEach((layer, i) => {
         if (!layer || i === 0) return;
         const k = clamp01(seg - (i - 1));
-        layer.style.clipPath = isRTL ? `inset(0 0 0 ${(1 - k) * 100}%)` : `inset(0 ${(1 - k) * 100}% 0 0)`;
+        layer.style.clipPath = isRTL
+          ? `inset(0 0 0 ${(1 - k) * 100}%)`
+          : `inset(0 ${(1 - k) * 100}% 0 0)`;
       });
       const current = Math.min(TRANSITIONS, Math.round(seg));
       meterRefs.current.forEach((meter, i) => {
@@ -48,7 +51,8 @@ export default function StorySection() {
       });
       const local = seg - Math.min(Math.floor(seg), TRANSITIONS - 1);
       if (scanRef.current) {
-        scanRef.current.style.opacity = local > 0.02 && local < 0.98 && seg < TRANSITIONS ? "1" : "0";
+        scanRef.current.style.opacity =
+          local > 0.02 && local < 0.98 && seg < TRANSITIONS ? "1" : "0";
         scanRef.current.style.insetInlineStart = `${local * 100}%`;
       }
       setActive(current);
@@ -67,19 +71,26 @@ export default function StorySection() {
   }, [isRTL]);
 
   return (
-    <section ref={sectionRef} className="tb-story" aria-label={t("site.story.title")}>
+    <section
+      ref={sectionRef}
+      className="tb-story"
+      aria-label={t("site.story.title")}
+    >
       <div className="tb-wrap tb-pin">
         <div className="tb-steps">
           <span className="tb-eyebrow">{t("site.story.eyebrow")}</span>
           <h2>{t("site.story.title")}</h2>
           {steps.map((step, i) => (
-            <div key={step.title} className={`tb-step${i === active ? " is-on" : ""}`}>
+            <div
+              key={step.title}
+              className={`tb-step${i === active ? " is-on" : ""}`}
+            >
               <span className="tb-no">{String(i + 1).padStart(2, "0")}</span>
               <b>{step.title}</b>
               <p>{step.text}</p>
               <span className="tb-meter">
                 <i
-                  ref={(el) => {
+                  ref={el => {
                     meterRefs.current[i] = el;
                   }}
                 />
@@ -87,20 +98,32 @@ export default function StorySection() {
             </div>
           ))}
         </div>
-        <div className="tb-frame tb-stage" role="img" aria-label={steps[active]?.title ?? t("site.story.title")}>
+        <div
+          className="tb-frame tb-stage"
+          role="img"
+          aria-label={steps[active]?.title ?? t("site.story.title")}
+        >
           <span className="tb-badge" aria-hidden="true">
-            {String(active + 1).padStart(2, "0")} / {String(LAYERS.length).padStart(2, "0")}
+            {String(active + 1).padStart(2, "0")} /{" "}
+            {String(LAYERS.length).padStart(2, "0")}
           </span>
           {LAYERS.map((src, i) => (
             <div
               key={src}
               className="tb-layer"
-              ref={(el) => {
+              ref={el => {
                 layerRefs.current[i] = el;
               }}
               style={i === 0 ? undefined : { clipPath: hiddenClip(isRTL) }}
             >
-              <img src={src} alt="" loading="lazy" decoding="async" width={1600} height={1200} />
+              <img
+                src={src}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                width={1600}
+                height={1200}
+              />
             </div>
           ))}
           <span className="tb-scan" ref={scanRef} aria-hidden="true" />

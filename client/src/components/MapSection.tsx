@@ -23,7 +23,8 @@ interface MarkerData {
 
 /** Image list for a project; the first entry is the lightweight thumb. */
 function getMarkerImages(p: Project): string[] {
-  const list = p.allImages && p.allImages.length > 0 ? [...p.allImages] : [p.image];
+  const list =
+    p.allImages && p.allImages.length > 0 ? [...p.allImages] : [p.image];
   list[0] = p.thumb ?? p.image;
   return list;
 }

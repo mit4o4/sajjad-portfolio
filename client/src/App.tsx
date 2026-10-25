@@ -18,7 +18,8 @@ function App({ pathname }: AppProps) {
 
   let page = <NotFound />;
   if (route.kind === "home") page = <HomePage />;
-  if (route.kind === "project" && route.project) page = <ProjectPage project={route.project} />;
+  if (route.kind === "project" && route.project)
+    page = <ProjectPage project={route.project} />;
 
   return (
     <ErrorBoundary>

@@ -46,7 +46,8 @@ export default function Navigation() {
 
   useEffect(() => {
     if (!isMenuOpen) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setIsMenuOpen(false);
+    const onKey = (e: KeyboardEvent) =>
+      e.key === "Escape" && setIsMenuOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [isMenuOpen]);

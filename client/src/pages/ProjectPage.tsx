@@ -13,18 +13,30 @@ const RELATED_COUNT = 3;
 
 function relatedProjects(project: Project): Project[] {
   const sectors = projectSectors(project);
-  const sameSector = projectsData.filter((p) => p.id !== project.id && projectSectors(p).some((s) => sectors.includes(s)));
-  const ranked = [...sameSector.filter((p) => p.featured), ...sameSector.filter((p) => !p.featured)];
+  const sameSector = projectsData.filter(
+    p => p.id !== project.id && projectSectors(p).some(s => sectors.includes(s))
+  );
+  const ranked = [
+    ...sameSector.filter(p => p.featured),
+    ...sameSector.filter(p => !p.featured),
+  ];
   return ranked.slice(0, RELATED_COUNT);
 }
 
 function RelatedCard({ project }: { project: Project }) {
   const { language, isRTL } = useLanguage();
-  const sectorName = SECTORS.find((s) => s.id === project.sector)?.name[language];
+  const sectorName = SECTORS.find(s => s.id === project.sector)?.name[language];
   return (
     <a className="tb-card" href={projectPath(project, language)}>
       <div className="tb-frame">
-        <img src={project.thumb ?? project.image} alt="" loading="lazy" decoding="async" width={800} height={600} />
+        <img
+          src={project.thumb ?? project.image}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          width={800}
+          height={600}
+        />
       </div>
       <div className="tb-top">
         <h3>{isRTL ? project.titleAr : project.title}</h3>
@@ -40,8 +52,10 @@ export default function ProjectPage({ project }: { project: Project }) {
   const { t, language, isRTL } = useLanguage();
   const title = isRTL ? project.titleAr : project.title;
   const description = isRTL ? project.descriptionAr : project.description;
-  const sector = SECTORS.find((s) => s.id === project.sector);
-  const similarMessage = t("site.dialog.similarMessage").replace("{title}", title).replace("{code}", project.id);
+  const sector = SECTORS.find(s => s.id === project.sector);
+  const similarMessage = t("site.dialog.similarMessage")
+    .replace("{title}", title)
+    .replace("{code}", project.id);
   const related = relatedProjects(project);
   const home = homePath(language);
 
@@ -63,7 +77,11 @@ export default function ProjectPage({ project }: { project: Project }) {
           <h1>{title}</h1>
           {description && <p className="tb-lede">{description}</p>}
           <div className="tb-tags">
-            {project.role && <span className="tb-tag tb-tag--role">{project.role[language]}</span>}
+            {project.role && (
+              <span className="tb-tag tb-tag--role">
+                {project.role[language]}
+              </span>
+            )}
             {project.collaborator && (
               <span className="tb-tag tb-tag--collab">
                 {t("site.projects.with")} {project.collaborator[language]}
@@ -79,7 +97,12 @@ export default function ProjectPage({ project }: { project: Project }) {
           <aside className="tb-project-aside">
             <h2>{t("site.project.factsTitle")}</h2>
             <ProjectFacts project={project} />
-            <a className="tb-btn tb-btn--primary" href={whatsappUrl(similarMessage)} target="_blank" rel="noopener noreferrer">
+            <a
+              className="tb-btn tb-btn--primary"
+              href={whatsappUrl(similarMessage)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <WhatsAppIcon />
               {t("site.dialog.similar")}
             </a>
@@ -95,7 +118,7 @@ export default function ProjectPage({ project }: { project: Project }) {
               <h2 id="related-title">{t("site.project.related")}</h2>
             </div>
             <div className="tb-grid">
-              {related.map((p) => (
+              {related.map(p => (
                 <RelatedCard key={p.id} project={p} />
               ))}
             </div>

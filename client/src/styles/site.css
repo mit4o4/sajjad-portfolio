@@ -178,6 +178,7 @@ html { scroll-padding-top: calc(var(--tb-header) + 12px); }
 .tb-stat .tb-n { font-family: var(--tb-f-body); font-size: var(--tb-t-xl); font-weight: 600; line-height: 1; color: var(--tb-ink); font-variant-numeric: tabular-nums; }
 .tb-stat .tb-n em { font-style: normal; color: var(--tb-sand); }
 .tb-stat.is-lead .tb-n { color: var(--tb-navy); }
+.tb-stats-note { font-size: var(--tb-t-xs); color: var(--tb-mute); padding-bottom: 14px; margin-top: -8px; }
 .tb-stat .tb-l { font-size: var(--tb-t-sm); color: var(--tb-ink-2); line-height: 1.5; }
 .tb-stat .tb-s { font-size: var(--tb-t-xs); color: var(--tb-mute); line-height: 1.5; }
 @media (max-width: 920px) {

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 
 const REVEAL_SELECTOR = ".tb-rv, .tb-rv-img, .tb-pstep";
-const PENDING_SELECTOR = ".tb-rv:not(.is-in), .tb-rv-img:not(.is-in), .tb-pstep:not(.is-in)";
+const PENDING_SELECTOR =
+  ".tb-rv:not(.is-in), .tb-rv-img:not(.is-in), .tb-pstep:not(.is-in)";
 /** Safety net for embedded viewers that pause scroll events / observers. */
 const FALLBACK_POLL_MS = 500;
 
@@ -13,7 +14,9 @@ declare global {
 
 function markIn(el: Element): void {
   el.classList.add("is-in");
-  el.querySelectorAll(".tb-rv-img").forEach((child) => child.classList.add("is-in"));
+  el.querySelectorAll(".tb-rv-img").forEach(child =>
+    child.classList.add("is-in")
+  );
 }
 
 function isInViewport(el: Element): boolean {
@@ -32,22 +35,25 @@ export function useRevealAll(): void {
     if (!root.classList.contains("tb-js")) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           markIn(entry.target);
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
+      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
     );
 
     let pollId = 0;
     const main = document.getElementById("main") ?? document.body;
-    const observePending = () => main.querySelectorAll(PENDING_SELECTOR).forEach((el) => observer.observe(el));
+    const observePending = () =>
+      main
+        .querySelectorAll(PENDING_SELECTOR)
+        .forEach(el => observer.observe(el));
     const revealVisible = () => {
       const pending = main.querySelectorAll(PENDING_SELECTOR);
-      pending.forEach((el) => {
+      pending.forEach(el => {
         if (isInViewport(el)) markIn(el);
       });
       if (pending.length === 0) window.clearInterval(pollId);
@@ -66,7 +72,9 @@ export function useRevealAll(): void {
       mutations.disconnect();
       window.clearInterval(pollId);
       window.removeEventListener("scroll", revealVisible);
-      document.querySelectorAll(REVEAL_SELECTOR).forEach((el) => el.classList.add("is-in"));
+      document
+        .querySelectorAll(REVEAL_SELECTOR)
+        .forEach(el => el.classList.add("is-in"));
     };
   }, []);
 }

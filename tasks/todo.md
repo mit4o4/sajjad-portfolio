@@ -101,5 +101,20 @@ Privacy default: private individuals' names (doctor, engineer, contractor) are N
 3. Design direction (3D immersive vs other).
 4. Approval of new URL structure.
 
-## Review
-(to be filled at end)
+## Review (2026-10-25)
+- Commit 1904b01, redesign v3:
+  - Light design system, sectors, data-driven counters, 64 projects (12 new), About with a credentials rail, FAQ.
+  - Build size dropped from 919 MB to 208 MB.
+- Commit fc3792b, SEO/GEO:
+  - 130 prerendered pages, each with its own head, hreflang and JSON-LD.
+  - Sitemap, robots.txt, llms.txt and llms-full.txt are generated at build time.
+  - 404 page with noindex.
+  - Code-review fixes applied.
+- Verified:
+  - `pnpm check` and `pnpm build` pass.
+  - Static production build tested in the browser: hydration has no errors, the AR↔EN switch works, and the project pages render.
+- Not done / next:
+  - Merge to `main` to deploy (needs user approval).
+  - Run the crop pipeline on the 52 existing projects' raw sheets.
+  - Resubmit the sitemap in Google Search Console and Bing.
+  - Category totals for the 200+ figure, from the user.

@@ -56,13 +56,13 @@ const XML_ESCAPES: Readonly<Record<string, string>> = {
 };
 
 function escapeXml(value: string): string {
-  return value.replace(/[&<>"']/g, (ch) => XML_ESCAPES[ch]);
+  return value.replace(/[&<>"']/g, ch => XML_ESCAPES[ch]);
 }
 
 const siteEn = en.site;
 
 function sectorName(id: string | undefined): string {
-  const sector = SECTORS.find((s) => s.id === id);
+  const sector = SECTORS.find(s => s.id === id);
   return sector ? sector.name.en : id === "other" || !id ? "Other" : id;
 }
 
@@ -123,7 +123,7 @@ function urlEntry(route: Route, lastmod: string): string {
 }
 
 export function buildSitemap(lastmod: string): string {
-  const entries = allRoutes().map((route) => urlEntry(route, lastmod));
+  const entries = allRoutes().map(route => urlEntry(route, lastmod));
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
@@ -138,12 +138,12 @@ export function buildSitemap(lastmod: string): string {
 /* ------------------------------------------------------------------ */
 
 export function buildRobots(): string {
-  const botBlocks = SEARCH_BOTS.map((bot) => `User-agent: ${bot}\nAllow: /`);
+  const botBlocks = SEARCH_BOTS.map(bot => `User-agent: ${bot}\nAllow: /`);
   return [
     "User-agent: *",
     "Allow: /",
     "",
-    ...botBlocks.flatMap((block) => [block, ""]),
+    ...botBlocks.flatMap(block => [block, ""]),
     `Sitemap: ${SITE_URL}/sitemap.xml`,
     "",
   ].join("\n");
@@ -163,12 +163,12 @@ function summaryLine(): string {
 }
 
 function servicesBullet(): string {
-  return siteEn.services.items.map((item) => item.title).join("; ");
+  return siteEn.services.items.map(item => item.title).join("; ");
 }
 
 function sectorsBullet(): string {
   return SECTORS.map(
-    (s) => `${s.name.en} (${countBySector(projectsData, s.id)})`
+    s => `${s.name.en} (${countBySector(projectsData, s.id)})`
   ).join(", ");
 }
 
@@ -198,7 +198,7 @@ function pageLinks(): string[] {
 
 function projectLines(): string[] {
   return projectsData.map(
-    (p) => `- [${p.title}](${projectUrl(p, "en")}): ${projectMeta(p)}`
+    p => `- [${p.title}](${projectUrl(p, "en")}): ${projectMeta(p)}`
   );
 }
 
@@ -253,12 +253,12 @@ function aboutSection(): string[] {
     `### ${about.experienceTitle}`,
     "",
     ...about.experience.map(
-      (e) => `- ${e.when} · ${e.title}, ${e.org}: ${e.text}`
+      e => `- ${e.when} · ${e.title}, ${e.org}: ${e.text}`
     ),
     "",
     `### ${about.skillsTitle}`,
     "",
-    ...about.skills.map((s) => `- ${s}`),
+    ...about.skills.map(s => `- ${s}`),
     "",
   ];
 }
@@ -268,11 +268,11 @@ function credentialsSection(): string[] {
   return [
     `## ${cred.title}`,
     "",
-    ...cred.items.map((i) => `- ${i.title}, ${i.issuer} (${i.date})`),
+    ...cred.items.map(i => `- ${i.title}, ${i.issuer} (${i.date})`),
     "",
     `### ${cred.moreTitle}`,
     "",
-    ...cred.more.map((m) => `- ${m}`),
+    ...cred.more.map(m => `- ${m}`),
     "",
   ];
 }
@@ -281,12 +281,12 @@ function servicesSection(): string[] {
   return [
     "## Services",
     "",
-    ...siteEn.services.items.flatMap((item) => [
+    ...siteEn.services.items.flatMap(item => [
       `### ${item.title}`,
       "",
       item.text,
       "",
-      ...item.points.map((p) => `- ${p}`),
+      ...item.points.map(p => `- ${p}`),
       "",
     ]),
   ];
@@ -296,7 +296,7 @@ function faqSection(): string[] {
   return [
     "## FAQ",
     "",
-    ...siteEn.faq.items.flatMap((item) => [`**Q: ${item.q}**`, "", item.a, ""]),
+    ...siteEn.faq.items.flatMap(item => [`**Q: ${item.q}**`, "", item.a, ""]),
   ];
 }
 
@@ -314,4 +314,3 @@ export function buildLlmsFullTxt(): string {
     ...projectsData.flatMap(projectSection),
   ].join("\n");
 }
-

@@ -7,11 +7,17 @@ export default function ProjectFacts({ project }: { project: Project }) {
   const { t, language } = useLanguage();
   const rows: [string, string | undefined][] = [
     [t("site.dialog.code"), project.id],
-    [t("site.dialog.sector"), SECTORS.find((s) => s.id === project.sector)?.name[language]],
+    [
+      t("site.dialog.sector"),
+      SECTORS.find(s => s.id === project.sector)?.name[language],
+    ],
     [t("site.dialog.role"), project.role?.[language]],
     [t("site.dialog.collaborator"), project.collaborator?.[language]],
     [t("site.dialog.location"), project.location?.[language]],
-    [t("site.dialog.spaces"), project.interiorSpaces ? String(project.interiorSpaces) : undefined],
+    [
+      t("site.dialog.spaces"),
+      project.interiorSpaces ? String(project.interiorSpaces) : undefined,
+    ],
   ];
   return (
     <dl className="tb-facts">

@@ -95,7 +95,8 @@ function ProjectCard({ project, onOpen }: CardProps) {
             className="tb-card-link"
             href={projectPath(project, language)}
             onClick={e => {
-              if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0)
+                return;
               e.preventDefault();
               e.stopPropagation();
               onOpen(project);
