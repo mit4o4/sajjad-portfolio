@@ -6,16 +6,13 @@ import path from "path";
 import { defineConfig } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
 
-const isDev = process.env.NODE_ENV !== "production";
-const plugins = [
-  react(),
-  tailwindcss(),
-  jsxLocPlugin(),
-  ...(isDev ? [vitePluginManusRuntime()] : []),
-];
-
-export default defineConfig({
-  plugins,
+export default defineConfig(({ command, isSsrBuild }) => ({
+  // Dev-server-only plugins: jsxLocPlugin writes source paths into markup, which must never ship.
+  plugins: [
+    react(),
+    tailwindcss(),
+    ...(command === "serve" ? [jsxLocPlugin(), vitePluginManusRuntime()] : []),
+  ],
   base: "/",
   resolve: {
     alias: {
@@ -27,7 +24,8 @@ export default defineConfig({
   envDir: path.resolve(import.meta.dirname),
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist"),
+    // The SSR bundle is only used by scripts/prerender.mjs and is deleted afterwards.
+    outDir: path.resolve(import.meta.dirname, isSsrBuild ? "dist-ssr" : "dist"),
     emptyOutDir: true,
   },
   server: {
@@ -48,4 +46,4 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
-});
+}));

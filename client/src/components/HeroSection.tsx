@@ -1,193 +1,196 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { homePath } from "@/seo/routes";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ArrowRight, Mail } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import Reveal from "@/components/Reveal";
-import heroBimDesign from "../../public/images/hero-bim-design.jpg";
+import { projectsData } from "@/data/projectsData";
+import { showcase } from "@/data/taxonomy";
+import { whatsappUrl } from "@/data/contact";
+import { WhatsAppIcon } from "@/components/site/icons";
 
-/** Animate a number from 0 → target with an easeOutCubic curve. */
-function useCountUp(target: number, durationMs = 1600): number {
-  const [value, setValue] = useState(0);
+/** Hero slides: a curated 4:3 image per flagship project. */
+const SLIDES = [
+  { id: "00A-0196", image: showcase("k-a.webp") },
+  { id: "00A-0115", image: showcase("resto.webp") },
+  { id: "00A-0198", image: showcase("fuel2.webp") },
+  { id: "00A-0156", image: showcase("villa-faiz.webp") },
+  { id: "00A-0085", image: showcase("gate.webp") },
+  { id: "00A-0204", image: showcase("int-204.webp") },
+];
+const SLIDE_MS = 6500;
+
+/**
+ * Auto-advancing slideshow. It pauses when the user asks, while hovered/focused,
+ * and while the hero is off screen, and it never runs under reduced motion (WCAG 2.2.2).
+ */
+function useSlideshow(
+  count: number,
+  barRef: React.RefObject<HTMLElement | null>,
+  stageRef: React.RefObject<HTMLElement | null>
+) {
+  const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isHeld, setIsHeld] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const elapsedRef = useRef(0);
+
+  const goTo = useCallback(
+    (next: number) => {
+      setIndex(((next % count) + count) % count);
+      elapsedRef.current = 0;
+    },
+    [count]
+  );
+
   useEffect(() => {
-    let raf = 0;
-    let start: number | null = null;
-    const tick = (t: number) => {
-      if (start === null) start = t;
-      const p = Math.min(1, (t - start) / durationMs);
-      setValue(Math.round(target * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [target, durationMs]);
-  return value;
-}
+    const el = stageRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) =>
+      setIsVisible(entry.isIntersecting)
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [stageRef]);
 
-interface Stat {
-  value: number;
-  suffix: string;
-  label: string;
+  const isRunning = !isPaused && !isHeld && isVisible;
+  useEffect(() => {
+    if (
+      !isRunning ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    let frame = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      elapsedRef.current += now - last;
+      last = now;
+      const progress = elapsedRef.current / SLIDE_MS;
+      if (barRef.current)
+        barRef.current.style.transform = `scaleX(${Math.min(1, progress)})`;
+      if (progress >= 1) {
+        elapsedRef.current = 0;
+        setIndex(i => (i + 1) % count);
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [count, barRef, isRunning]);
+
+  return { index, goTo, isPaused, setIsPaused, setIsHeld };
 }
 
 export default function HeroSection() {
-  const { t } = useLanguage();
-  const bgRef = useRef<HTMLDivElement | null>(null);
+  const { t, tList, language, isRTL } = useLanguage();
+  const barRef = useRef<HTMLElement | null>(null);
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const { index, goTo, isPaused, setIsPaused, setIsHeld } = useSlideshow(
+    SLIDES.length,
+    barRef,
+    stageRef
+  );
 
-  // Subtle parallax: drift the background image as the hero scrolls away.
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        if (bgRef.current) {
-          bgRef.current.style.transform = `translate3d(0, ${window.scrollY * 0.18}px, 0) scale(1.06)`;
-        }
-        ticking = false;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const projects = useCountUp(200);
-  const years = useCountUp(7);
-  const companies = useCountUp(3);
-  const stats: Stat[] = [
-    { value: projects, suffix: "+", label: t("hero.stats.projects") },
-    { value: years, suffix: "+", label: t("hero.stats.years") },
-    { value: companies, suffix: "", label: t("hero.stats.companies") },
-  ];
+  const current = projectsData.find(p => p.id === SLIDES[index].id);
+  const title = current ? (isRTL ? current.titleAr : current.title) : "";
+  const role = current?.role?.[language] ?? "";
+  const trust = tList<string>("site.hero.trust");
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen pt-20 flex items-center overflow-hidden"
-    >
-      {/* Background image with parallax + layered editorial gradient */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div ref={bgRef} className="absolute inset-0 will-change-transform">
-          <img
-            src={heroBimDesign}
-            alt="TeBIM - التصميم المعماري ونمذجة BIM في العراق"
-            className="w-full h-full object-cover"
-            fetchPriority="high"
-            decoding="async"
-          />
-        </div>
-        <div className="absolute inset-0 bg-linear-to-r from-background via-background/85 to-background/30"></div>
-        <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent"></div>
-      </div>
-
-      {/* Content */}
-      <div className="container relative z-10">
-        <div className="max-w-3xl">
-          <div className="space-y-7">
-            {/* Eyebrow badge */}
-            <Reveal as="div" delay={50}>
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 backdrop-blur-sm">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
-                </span>
-                <span className="eyebrow !text-primary">
-                  {t("hero.subtitle")}
-                </span>
-              </div>
-            </Reveal>
-
-            {/* Main title — Fraunces display */}
-            <Reveal as="h1" delay={150} className="text-foreground">
-              {t("hero.title")}
-            </Reveal>
-
-            {/* Description */}
-            <Reveal
-              as="p"
-              delay={350}
-              className="text-lg md:text-xl text-foreground/70 max-w-xl font-light leading-relaxed"
-            >
-              {t("hero.description")}
-            </Reveal>
-
-            {/* CTA Buttons */}
-            <Reveal
-              as="div"
-              delay={500}
-              className="flex flex-col sm:flex-row gap-4 pt-2"
-            >
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 group rounded-none px-7 h-13 hover-lift"
-                onClick={() =>
-                  document
-                    .getElementById("portfolio")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-              >
-                {t("hero.cta")}
-                <ArrowRight
-                  size={20}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="gap-2 rounded-none px-7 h-13 border-foreground/20 hover:border-foreground/60"
-                onClick={() =>
-                  document
-                    .getElementById("contact")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-              >
-                <Mail size={20} />
-                {t("hero.contact")}
-              </Button>
-            </Reveal>
-
-            {/* Stats — animated count-up, hairline-separated */}
-            <Reveal
-              as="div"
-              delay={650}
-              className="flex flex-wrap gap-x-10 gap-y-6 pt-10 border-t border-border/60 mt-2"
-            >
-              {stats.map(s => (
-                <div key={s.label}>
-                  <div className="text-4xl font-mono font-medium text-primary tabular-nums">
-                    {s.value}
-                    {s.suffix}
-                  </div>
-                  <div className="text-xs text-foreground/60 uppercase tracking-widest mt-1">
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </Reveal>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-        <div className="flex flex-col items-center gap-2 animate-bounce">
-          <span className="eyebrow text-foreground/40 !text-[0.6rem]">
-            {t("hero.scroll")}
-          </span>
-          <svg
-            className="w-5 h-5 text-foreground/40"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+    <section id="home" className="tb-wrap tb-hero">
+      <div className="tb-hero-copy">
+        <span className="tb-eyebrow">{t("site.hero.eyebrow")}</span>
+        <h1>
+          {t("site.hero.title1")}
+          <br />
+          <span>{t("site.hero.title2")}</span>
+        </h1>
+        <p className="tb-lede">{t("site.hero.lede")}</p>
+        <div className="tb-actions">
+          <a
+            className="tb-btn tb-btn--primary"
+            href={whatsappUrl(t("site.wa.message"))}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+            <WhatsAppIcon />
+            {t("site.hero.cta")}
+          </a>
+          <a
+            className="tb-btn tb-btn--line"
+            href={`${homePath(language)}#portfolio`}
+          >
+            {t("site.hero.work")}
+          </a>
+        </div>
+        <div className="tb-trust">
+          <span className="tb-mono">{t("site.hero.trustTitle")}</span>
+          <ul>
+            {Array.isArray(trust) &&
+              trust.map(item => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div className="tb-hero-media">
+        <div
+          className="tb-frame"
+          ref={stageRef}
+          onMouseEnter={() => setIsHeld(true)}
+          onMouseLeave={() => setIsHeld(false)}
+          onFocus={() => setIsHeld(true)}
+          onBlur={() => setIsHeld(false)}
+        >
+          {SLIDES.map((slide, i) => (
+            <div
+              key={slide.id}
+              className={`tb-slide${i === index ? " is-on" : ""}`}
+              aria-hidden={i !== index}
+            >
+              <img
+                src={slide.image}
+                alt={i === index ? title : ""}
+                width={1600}
+                height={1200}
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : "auto"}
+              />
+            </div>
+          ))}
+          <div className="tb-tcard">
+            <span className="tb-code">{SLIDES[index].id}</span>
+            <span>
+              <b>{title}</b>
+              {role && <span className="tb-role"> · {role}</span>}
+            </span>
+            <span className="tb-ctrl">
+              <button
+                type="button"
+                onClick={() => goTo(index - 1)}
+                aria-label={t("site.hero.prev")}
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsPaused(p => !p)}
+                aria-pressed={isPaused}
+                aria-label={
+                  isPaused ? t("site.hero.play") : t("site.hero.pause")
+                }
+              >
+                {isPaused ? <Play size={14} /> : <Pause size={14} />}
+              </button>
+              <button
+                type="button"
+                onClick={() => goTo(index + 1)}
+                aria-label={t("site.hero.next")}
+              >
+                <ChevronRight size={16} />
+              </button>
+            </span>
+            <span className="tb-bar-track" aria-hidden="true">
+              <i ref={barRef} />
+            </span>
+          </div>
         </div>
       </div>
     </section>

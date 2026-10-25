@@ -96,19 +96,39 @@
     "categories": {
       "bim": {
         "title": "Building Information Modeling (BIM)",
-        "skills": ["Revit (Architectural, Structural, MEP)", "BIM Management and Coordination", "Google Project Management Certification"]
+        "skills": [
+          "Revit (Architectural, Structural, MEP)",
+          "BIM Management and Coordination",
+          "Google Project Management Certification"
+        ]
       },
       "design": {
         "title": "Advanced & Parametric Design",
-        "skills": ["Grasshopper", "Algorithmic Design", "Environmental Simulation", "Design Evolutionary", "Architectural Design"]
+        "skills": [
+          "Grasshopper",
+          "Algorithmic Design",
+          "Environmental Simulation",
+          "Design Evolutionary",
+          "Architectural Design"
+        ]
       },
       "mep": {
         "title": "Engineering Systems Design",
-        "skills": ["Water and Drainage Systems Design", "Electrical Systems Design", "Mechanical, Electrical, and Plumbing (MEP) Design"]
+        "skills": [
+          "Water and Drainage Systems Design",
+          "Electrical Systems Design",
+          "Mechanical, Electrical, and Plumbing (MEP) Design"
+        ]
       },
       "supervision": {
         "title": "Site Supervision and Execution",
-        "skills": ["Project Management", "Site Supervision", "Quality Assurance (QA/QC)", "Reading Executive Drawings", "Contract Management"]
+        "skills": [
+          "Project Management",
+          "Site Supervision",
+          "Quality Assurance (QA/QC)",
+          "Reading Executive Drawings",
+          "Contract Management"
+        ]
       }
     }
   },
@@ -194,5 +214,302 @@
     "copyright": "© 2026 TeBIM — Sajjad Abdulhameed Majeed. All rights reserved.",
     "followMe": "Follow Us",
     "quickLinks": "Quick Links"
+  },
+  "site": {
+    "brand": {
+      "name": "Sajjad Abdulhameed",
+      "tagline": "TeBIM · Design, BIM, construction"
+    },
+    "nav": {
+      "label": "Main menu",
+      "sectors": "Sectors",
+      "projects": "Projects",
+      "services": "Services",
+      "about": "About",
+      "pricing": "Pricing",
+      "contact": "Contact",
+      "cta": "Book a consultation",
+      "menu": "Open menu",
+      "switchLanguage": "التبديل إلى العربية",
+      "mobileLabel": "Mobile menu"
+    },
+    "wa": {
+      "message": "Hello, I'd like to ask about designing a project."
+    },
+    "hero": {
+      "eyebrow": "Architecture · BIM · Supervision & execution",
+      "title1": "From drawing to building,",
+      "title2": "one team, one model",
+      "lede": "Over 200 projects in Najaf and across Iraq: villas and residential complexes, kindergartens, fuel stations, medical centers and stores. We design in full BIM and supervise construction through handover.",
+      "cta": "Start your project on WhatsApp",
+      "work": "Browse projects",
+      "trustTitle": "We've worked with",
+      "trust": [
+        "Najaf Governorate office",
+        "Al-Qaws Engineering Consultancy",
+        "Madina Al-Moali Company"
+      ],
+      "prev": "Previous project",
+      "next": "Next project",
+      "pause": "Pause slideshow",
+      "play": "Play slideshow"
+    },
+    "stats": {
+      "label": "Portfolio in numbers",
+      "totalLabel": "projects designed & delivered",
+      "totalSub": "over {years} years of practice",
+      "interiorLabel": "interior spaces designed",
+      "interiorSub": "each room counted separately",
+      "note": "Category counts reflect projects published in the online portfolio."
+    },
+    "sectors": {
+      "eyebrow": "Project sectors",
+      "title": "Nine sectors, one body of experience",
+      "intro": "Pick the sector closest to your project to see similar work we've delivered.",
+      "unitProjects": "projects",
+      "unitSpaces": "spaces"
+    },
+    "story": {
+      "eyebrow": "How we work · Kindergarten 00A-0196",
+      "title": "From sheet to site",
+      "steps": [
+        {
+          "title": "Line drawing",
+          "text": "A facade drawn to scale, before any colour or material."
+        },
+        {
+          "title": "BIM model",
+          "text": "A Revit model holding architecture and quantities in one file."
+        },
+        {
+          "title": "Materials & colour",
+          "text": "Brick and ornament in their real colours, approved with the owner."
+        },
+        {
+          "title": "Final render",
+          "text": "An image that matches the model, and what we then supervise."
+        }
+      ]
+    },
+    "projects": {
+      "eyebrow": "Selected projects",
+      "title": "Recent work from every sector",
+      "intro": "Each project shows our actual role and who we worked with. Open any project to see all its images.",
+      "filterLabel": "Filter by sector",
+      "all": "All",
+      "more": "View all projects ({count})",
+      "less": "Show selected only",
+      "with": "with",
+      "options": "Facade options",
+      "register": "Full project register by sector",
+      "otherSector": "Other"
+    },
+    "dialog": {
+      "all": "All images",
+      "views": "Image sets",
+      "code": "Project code",
+      "sector": "Sector",
+      "role": "Our role",
+      "collaborator": "In collaboration with",
+      "location": "Location",
+      "spaces": "Interior spaces",
+      "similar": "I want a similar project",
+      "similarMessage": "Hello, I'd like a project similar to {title} ({code}).",
+      "close": "Close",
+      "prev": "Previous image",
+      "next": "Next image",
+      "fullPage": "Open full project page"
+    },
+    "map": {
+      "eyebrow": "Project locations",
+      "intro": "Select any marker to open the project and its images."
+    },
+    "services": {
+      "eyebrow": "Services",
+      "title": "Design, modeling and construction under one roof",
+      "items": [
+        {
+          "title": "Design & visualization",
+          "text": "Facades, interiors and realistic renders that help you decide before you build.",
+          "points": [
+            "Architecture & facades",
+            "Interior design for every space",
+            "3D visualization"
+          ]
+        },
+        {
+          "title": "Full BIM modeling",
+          "text": "One Revit model that produces the drawings, schedules and quantities.",
+          "points": [
+            "Construction drawings",
+            "Quantity & material schedules",
+            "Early clash detection"
+          ]
+        },
+        {
+          "title": "Supervision & execution",
+          "text": "Site follow-up, checking the build against the model through handover.",
+          "points": [
+            "Engineering site supervision",
+            "Contractor & quality follow-up",
+            "Handover to the drawings"
+          ]
+        }
+      ]
+    },
+    "process": {
+      "eyebrow": "Process",
+      "title": "Five steps from first meeting to handover",
+      "steps": [
+        {
+          "title": "Meeting & brief",
+          "text": "Site visit, needs and budget."
+        },
+        {
+          "title": "Design concept",
+          "text": "Preliminary plans and renders for approval."
+        },
+        {
+          "title": "BIM model",
+          "text": "Coordinated model and clash checks."
+        },
+        {
+          "title": "Drawings & quantities",
+          "text": "Construction set and schedules from the model."
+        },
+        {
+          "title": "Supervision & handover",
+          "text": "Site follow-up to handover."
+        }
+      ]
+    },
+    "about": {
+      "eyebrow": "About",
+      "name": "Sajjad Abdulhameed Majeed",
+      "role": "Architectural designer & civil engineer · Founder of TeBIM",
+      "portraitAlt": "Sajjad Abdulhameed Majeed",
+      "bio": "Civil engineer from the University of Kufa, specializing in BIM-based architectural design in Revit and parametric design in Grasshopper. For over 7 years I've worked on residential, commercial and public projects in Najaf and across Iraq, from the first idea to supervising construction on site.",
+      "experienceTitle": "Field experience",
+      "experience": [
+        {
+          "when": "2020 – now",
+          "title": "Consulting supervisor",
+          "org": "Madina Al-Moali Company",
+          "text": "Supervising a villa, a 6-storey five-star hotel and a guest house that hosts international conferences."
+        },
+        {
+          "when": "Recent",
+          "title": "Consulting supervision",
+          "org": "Dar Al-Naseem Company",
+          "text": "Supervised construction of the Um Qasr Northern Cement Company offices."
+        },
+        {
+          "when": "2019 – 2020",
+          "title": "Design & supervision engineer",
+          "org": "Wadi Al-Khair Company",
+          "text": "Designed and supervised the first phase of a 10,000-dunam model farm."
+        }
+      ],
+      "skillsTitle": "Tools & disciplines",
+      "skills": [
+        "Revit: architecture, structure, MEP",
+        "BIM management & coordination",
+        "Grasshopper & parametric design",
+        "Electrical & plumbing design",
+        "Site supervision",
+        "QA/QC",
+        "Contract management",
+        "Architectural visualization"
+      ]
+    },
+    "credentials": {
+      "title": "Credentials",
+      "items": [
+        {
+          "kind": "degree",
+          "title": "B.Sc. Civil Engineering",
+          "issuer": "University of Kufa",
+          "date": "University degree"
+        },
+        {
+          "kind": "cert",
+          "title": "Sustainability in Architecture",
+          "issuer": "Universitat Politècnica de València",
+          "date": "2024"
+        },
+        {
+          "kind": "cert",
+          "title": "3D Modeling from Architectural Drawings",
+          "issuer": "IIT Bombay",
+          "date": "2020"
+        },
+        {
+          "kind": "cert",
+          "title": "Project Management Certificate",
+          "issuer": "Google",
+          "date": "Professional certificate"
+        }
+      ],
+      "moreTitle": "Other professional development",
+      "more": [
+        "Innovation & Entrepreneurship, MIT (2020)",
+        "Global Entrepreneurship Network, Bahrain (2021)",
+        "Full Stack Development, Udacity (2019)",
+        "Fundamentals of Digital Marketing, Google (2019)"
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Before you start",
+      "intro": "Short answers to what clients ask us most.",
+      "items": [
+        {
+          "q": "What's the difference between regular design and BIM?",
+          "a": "With BIM we build a 3D digital model of the building, and every drawing and quantity comes out of it. A change updates every sheet, so there are fewer errors and less waste on site."
+        },
+        {
+          "q": "Do you supervise construction or only design?",
+          "a": "Both. You can ask for design only, or design plus supervision through handover."
+        },
+        {
+          "q": "Which cities do you work in?",
+          "a": "We're based in Najaf with projects in Baghdad and other provinces. Design work can be done remotely anywhere in Iraq."
+        },
+        {
+          "q": "Do you design interiors room by room?",
+          "a": "Yes. Every space is designed on its own: living room, bedrooms, majlis and kitchen, with ceiling, lighting and electrical plans."
+        },
+        {
+          "q": "What should I send to get started?",
+          "a": "The plot location, area and dimensions, the number of floors and rooms you need, and photos of designs you like if you have them."
+        }
+      ]
+    },
+    "cta": {
+      "eyebrow": "Let's start",
+      "title": "Have a plot or a project idea?",
+      "text": "Send the location and area on WhatsApp, and we'll come back with a first take and a clear work plan.",
+      "wa": "Message us on WhatsApp",
+      "email": "Send an email"
+    },
+    "footer": {
+      "rights": "Sajjad Abdulhameed · TeBIM",
+      "place": "Najaf, Iraq",
+      "social": "Social profiles"
+    },
+    "project": {
+      "breadcrumb": "Breadcrumb",
+      "home": "Home",
+      "projects": "Projects",
+      "factsTitle": "Project details",
+      "back": "Back to projects",
+      "related": "Similar projects"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "text": "The link may have changed. Browse the projects or go back home.",
+      "home": "Home",
+      "projects": "Browse projects"
+    }
   }
 }
