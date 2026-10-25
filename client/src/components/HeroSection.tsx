@@ -86,14 +86,14 @@ export default function HeroSection() {
   return (
     <section id="home" className="tb-wrap tb-hero">
       <div className="tb-hero-copy">
-        <span className="tb-eyebrow tb-rv">{t("site.hero.eyebrow")}</span>
-        <h1 className="tb-rv">
+        <span className="tb-eyebrow">{t("site.hero.eyebrow")}</span>
+        <h1>
           {t("site.hero.title1")}
           <br />
           <span>{t("site.hero.title2")}</span>
         </h1>
-        <p className="tb-lede tb-rv">{t("site.hero.lede")}</p>
-        <div className="tb-actions tb-rv">
+        <p className="tb-lede">{t("site.hero.lede")}</p>
+        <div className="tb-actions">
           <a
             className="tb-btn tb-btn--primary"
             href={whatsappUrl(t("site.wa.message"))}
@@ -107,7 +107,7 @@ export default function HeroSection() {
             {t("site.hero.work")}
           </a>
         </div>
-        <div className="tb-trust tb-rv">
+        <div className="tb-trust">
           <span className="tb-mono">{t("site.hero.trustTitle")}</span>
           <ul>
             {Array.isArray(trust) &&

@@ -6,16 +6,13 @@ import path from "path";
 import { defineConfig } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
 
-const isDev = process.env.NODE_ENV !== "production";
-const plugins = [
-  react(),
-  tailwindcss(),
-  jsxLocPlugin(),
-  ...(isDev ? [vitePluginManusRuntime()] : []),
-];
-
-export default defineConfig(({ isSsrBuild }) => ({
-  plugins,
+export default defineConfig(({ command, isSsrBuild }) => ({
+  // Dev-server-only plugins: jsxLocPlugin writes source paths into markup, which must never ship.
+  plugins: [
+    react(),
+    tailwindcss(),
+    ...(command === "serve" ? [jsxLocPlugin(), vitePluginManusRuntime()] : []),
+  ],
   base: "/",
   resolve: {
     alias: {

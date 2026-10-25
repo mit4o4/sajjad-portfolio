@@ -21,6 +21,8 @@ export interface HeadData {
   ogLocale: string;
   jsonLd: Record<string, unknown>;
   noindex?: boolean;
+  /** LCP image to preload (first hero slide / project cover). */
+  preloadImage?: string;
 }
 
 const MAX_DESCRIPTION = 160;
@@ -181,6 +183,7 @@ export function buildHead(route: Route): HeadData {
       description: truncate(projectDescription(project, lang)),
       ogType: "article",
       ogImage: abs(project.image),
+      preloadImage: (project.allImages?.[0] ?? project.image),
       jsonLd: { "@context": "https://schema.org", "@graph": [studioNode(lang), personNode(lang), websiteNode(), ...projectNodes(project, route)] },
     };
   }
@@ -203,6 +206,7 @@ export function buildHead(route: Route): HeadData {
     description: truncate(COPY[lang].hero.lede.replace("200", String(DECLARED_TOTAL_PROJECTS))),
     ogType: "website",
     ogImage: abs(showcase("k-a.webp")),
+    preloadImage: showcase("k-a.webp"),
     jsonLd: { "@context": "https://schema.org", "@graph": [studioNode(lang), personNode(lang), websiteNode(), faqNode(lang)] },
   };
 }
@@ -233,6 +237,7 @@ export function headToHtml(head: HeadData): string {
     `<meta name="twitter:description" content="${escapeAttr(head.description)}" />`,
     `<meta name="twitter:image" content="${head.ogImage}" />`,
     `<script type="application/ld+json">${JSON.stringify(head.jsonLd).replace(/</g, "\\u003c")}</script>`,
+    ...(head.preloadImage ? [`<link rel="preload" as="image" href="${escapeAttr(head.preloadImage)}" fetchpriority="high" />`] : []),
   ];
   return tags.join("\n    ");
 }
