@@ -7,8 +7,8 @@ interface FaqItem {
 
 /** Visible FAQ: answers real client questions and gives search/AI engines quotable facts. */
 export default function FaqSection() {
-  const { t } = useLanguage();
-  const items: FaqItem[] = t("site.faq.items");
+  const { t, tList } = useLanguage();
+  const items = tList<FaqItem>("site.faq.items");
 
   return (
     <section id="faq" className="tb-wrap tb-sec tb-sec-tight">

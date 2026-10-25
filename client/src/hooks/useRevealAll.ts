@@ -1,16 +1,19 @@
 import { useEffect } from "react";
 
 const REVEAL_SELECTOR = ".tb-rv, .tb-rv-img, .tb-pstep";
-const PENDING_SELECTOR =
-  ".tb-rv:not(.is-in), .tb-rv-img:not(.is-in), .tb-pstep:not(.is-in)";
+const PENDING_SELECTOR = ".tb-rv:not(.is-in), .tb-rv-img:not(.is-in), .tb-pstep:not(.is-in)";
 /** Safety net for embedded viewers that pause scroll events / observers. */
 const FALLBACK_POLL_MS = 500;
 
+declare global {
+  interface Window {
+    __tbReady?: boolean;
+  }
+}
+
 function markIn(el: Element): void {
   el.classList.add("is-in");
-  el.querySelectorAll(".tb-rv-img").forEach(child =>
-    child.classList.add("is-in")
-  );
+  el.querySelectorAll(".tb-rv-img").forEach((child) => child.classList.add("is-in"));
 }
 
 function isInViewport(el: Element): boolean {
@@ -19,58 +22,51 @@ function isInViewport(el: Element): boolean {
 }
 
 /**
- * Enables entrance reveals site-wide. Content stays visible without JS because the
- * hidden state only applies under the `tb-js` class this hook adds to <html>.
+ * Drives entrance reveals site-wide. The hidden state only applies under the `tb-js` class,
+ * which an inline script in index.html adds before first paint (and removes if the app never boots).
  */
 export function useRevealAll(): void {
   useEffect(() => {
+    window.__tbReady = true;
     const root = document.documentElement;
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (reduceMotion) return;
-    root.classList.add("tb-js");
+    if (!root.classList.contains("tb-js")) return;
 
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           markIn(entry.target);
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
     );
 
-    const observePending = () => {
-      document
-        .querySelectorAll(PENDING_SELECTOR)
-        .forEach(el => observer.observe(el));
-    };
+    let pollId = 0;
+    const main = document.getElementById("main") ?? document.body;
+    const observePending = () => main.querySelectorAll(PENDING_SELECTOR).forEach((el) => observer.observe(el));
     const revealVisible = () => {
-      document.querySelectorAll(PENDING_SELECTOR).forEach(el => {
+      const pending = main.querySelectorAll(PENDING_SELECTOR);
+      pending.forEach((el) => {
         if (isInViewport(el)) markIn(el);
       });
+      if (pending.length === 0) window.clearInterval(pollId);
     };
 
     observePending();
     revealVisible();
-
-    // New cards appear when filters or language change.
+    // New cards appear when filters change; only watch the page content, not the whole document.
     const mutations = new MutationObserver(observePending);
-    mutations.observe(document.body, { childList: true, subtree: true });
-    const poll = window.setInterval(revealVisible, FALLBACK_POLL_MS);
+    mutations.observe(main, { childList: true, subtree: true });
+    pollId = window.setInterval(revealVisible, FALLBACK_POLL_MS);
     window.addEventListener("scroll", revealVisible, { passive: true });
 
     return () => {
       observer.disconnect();
       mutations.disconnect();
-      window.clearInterval(poll);
+      window.clearInterval(pollId);
       window.removeEventListener("scroll", revealVisible);
-      root.classList.remove("tb-js");
-      document
-        .querySelectorAll(REVEAL_SELECTOR)
-        .forEach(el => el.classList.add("is-in"));
+      document.querySelectorAll(REVEAL_SELECTOR).forEach((el) => el.classList.add("is-in"));
     };
   }, []);
 }

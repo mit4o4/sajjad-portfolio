@@ -21,11 +21,11 @@ interface Credential {
  * certificates; unrelated ones are tucked into a disclosure so they don't dilute the pitch.
  */
 export default function AboutSection() {
-  const { t } = useLanguage();
-  const experience: ExperienceItem[] = t("site.about.experience");
-  const skills: string[] = t("site.about.skills");
-  const credentials: Credential[] = t("site.credentials.items");
-  const otherCredentials: string[] = t("site.credentials.more");
+  const { t, tList } = useLanguage();
+  const experience = tList<ExperienceItem>("site.about.experience");
+  const skills = tList<string>("site.about.skills");
+  const credentials = tList<Credential>("site.credentials.items");
+  const otherCredentials = tList<string>("site.credentials.more");
 
   return (
     <section id="about" className="tb-wrap tb-sec tb-sec-tight">

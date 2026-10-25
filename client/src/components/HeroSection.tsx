@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { homePath } from "@/seo/routes";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { projectsData } from "@/data/projectsData";
 import { showcase } from "@/data/taxonomy";
@@ -17,50 +18,70 @@ const SLIDES = [
 ];
 const SLIDE_MS = 6500;
 
+/**
+ * Auto-advancing slideshow. It pauses when the user asks, while hovered/focused,
+ * and while the hero is off screen, and it never runs under reduced motion (WCAG 2.2.2).
+ */
 function useSlideshow(
   count: number,
-  barRef: React.RefObject<HTMLElement | null>
+  barRef: React.RefObject<HTMLElement | null>,
+  stageRef: React.RefObject<HTMLElement | null>
 ) {
   const [index, setIndex] = useState(0);
-  const startRef = useRef(performance.now());
+  const [isPaused, setIsPaused] = useState(false);
+  const [isHeld, setIsHeld] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const elapsedRef = useRef(0);
 
   const goTo = useCallback(
     (next: number) => {
       setIndex(((next % count) + count) % count);
-      startRef.current = performance.now();
+      elapsedRef.current = 0;
     },
     [count]
   );
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = stageRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [stageRef]);
+
+  const isRunning = !isPaused && !isHeld && isVisible;
+  useEffect(() => {
+    if (!isRunning || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let frame = 0;
+    let last = performance.now();
     const tick = (now: number) => {
-      const progress = (now - startRef.current) / SLIDE_MS;
-      if (barRef.current)
-        barRef.current.style.transform = `scaleX(${Math.min(1, progress)})`;
+      elapsedRef.current += now - last;
+      last = now;
+      const progress = elapsedRef.current / SLIDE_MS;
+      if (barRef.current) barRef.current.style.transform = `scaleX(${Math.min(1, progress)})`;
       if (progress >= 1) {
-        startRef.current = now;
+        elapsedRef.current = 0;
         setIndex(i => (i + 1) % count);
       }
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [count, barRef]);
+  }, [count, barRef, isRunning]);
 
-  return { index, goTo };
+  return { index, goTo, isPaused, setIsPaused, setIsHeld };
 }
 
 export default function HeroSection() {
-  const { t, language, isRTL } = useLanguage();
+  const { t, tList, language, isRTL } = useLanguage();
   const barRef = useRef<HTMLElement | null>(null);
-  const { index, goTo } = useSlideshow(SLIDES.length, barRef);
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const { index, goTo, isPaused, setIsPaused, setIsHeld } = useSlideshow(SLIDES.length, barRef, stageRef);
 
   const current = projectsData.find(p => p.id === SLIDES[index].id);
   const title = current ? (isRTL ? current.titleAr : current.title) : "";
   const role = current?.role?.[language] ?? "";
-  const trust: string[] = t("site.hero.trust");
+  const trust = tList<string>("site.hero.trust");
 
   return (
     <section id="home" className="tb-wrap tb-hero">
@@ -82,7 +103,7 @@ export default function HeroSection() {
             <WhatsAppIcon />
             {t("site.hero.cta")}
           </a>
-          <a className="tb-btn tb-btn--line" href="#portfolio">
+          <a className="tb-btn tb-btn--line" href={`${homePath(language)}#portfolio`}>
             {t("site.hero.work")}
           </a>
         </div>
@@ -96,7 +117,14 @@ export default function HeroSection() {
       </div>
 
       <div className="tb-hero-media">
-        <div className="tb-frame">
+        <div
+          className="tb-frame"
+          ref={stageRef}
+          onMouseEnter={() => setIsHeld(true)}
+          onMouseLeave={() => setIsHeld(false)}
+          onFocus={() => setIsHeld(true)}
+          onBlur={() => setIsHeld(false)}
+        >
           {SLIDES.map((slide, i) => (
             <div
               key={slide.id}
@@ -113,7 +141,7 @@ export default function HeroSection() {
               />
             </div>
           ))}
-          <div className="tb-tcard" aria-live="polite">
+          <div className="tb-tcard">
             <span className="tb-code">{SLIDES[index].id}</span>
             <span>
               <b>{title}</b>
@@ -126,6 +154,14 @@ export default function HeroSection() {
                 aria-label={t("site.hero.prev")}
               >
                 <ChevronLeft size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsPaused(p => !p)}
+                aria-pressed={isPaused}
+                aria-label={isPaused ? t("site.hero.play") : t("site.hero.pause")}
+              >
+                {isPaused ? <Play size={14} /> : <Pause size={14} />}
               </button>
               <button
                 type="button"

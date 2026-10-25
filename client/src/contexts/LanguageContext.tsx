@@ -1,73 +1,66 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import en from '@/locales/en.json';
-import ar from '@/locales/ar.json';
+import { createContext, useContext, useMemo, type ReactNode } from "react";
+import en from "@/locales/en.json";
+import ar from "@/locales/ar.json";
+import type { Language } from "@/data/types";
 
-type Language = 'en' | 'ar';
+const translations: Record<Language, unknown> = { en, ar };
 
 interface LanguageContextType {
   language: Language;
-  setLanguage: (lang: Language) => void;
-  t: (path: string) => string | any;
   isRTL: boolean;
+  /** Returns the string at `path`, or the path itself when missing (makes gaps visible). */
+  t: (path: string) => string;
+  /** Returns the array at `path`, or an empty array when missing or not an array. */
+  tList: <T>(path: string) => T[];
+  /** URL of the current page in the other language. */
+  switchHref: string;
+  /** Navigates to the current page in `lang`. */
+  setLanguage: (lang: Language) => void;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const translations = { en, ar };
-
-const getNestedValue = (obj: any, path: string): string => {
-  return path.split('.').reduce((current, prop) => current?.[prop], obj) || path;
-};
-
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('ar');
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    // Get language from localStorage or browser preference
-    const savedLanguage = localStorage.getItem('language') as Language | null;
-    const browserLanguage = navigator.language.startsWith('en') ? 'en' : 'ar';
-    const initialLanguage = savedLanguage || browserLanguage;
-    
-    setLanguageState(initialLanguage);
-    document.documentElement.lang = initialLanguage;
-    document.documentElement.dir = initialLanguage === 'ar' ? 'rtl' : 'ltr';
-    setIsHydrated(true);
-  }, []);
-
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    localStorage.setItem('language', lang);
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  };
-
-  const t = (path: string): string | any => {
-    return getNestedValue(translations[language], path);
-  };
-
-  if (!isHydrated) {
-    return null;
-  }
-
-  return (
-    <LanguageContext.Provider
-      value={{
-        language,
-        setLanguage,
-        t,
-        isRTL: language === 'ar',
-      }}
-    >
-      {children}
-    </LanguageContext.Provider>
-  );
+function lookup(language: Language, path: string): unknown {
+  return path.split(".").reduce<unknown>((node, key) => {
+    if (node && typeof node === "object" && key in node) return (node as Record<string, unknown>)[key];
+    return undefined;
+  }, translations[language]);
 }
 
-export function useLanguage() {
+interface LanguageProviderProps {
+  /** Language is decided by the URL (`/` = Arabic, `/en/` = English), never by stored preference. */
+  language: Language;
+  /** Href of the same page in the other language. */
+  switchHref: string;
+  children: ReactNode;
+}
+
+export function LanguageProvider({ language, switchHref, children }: LanguageProviderProps) {
+  const value = useMemo<LanguageContextType>(
+    () => ({
+      language,
+      isRTL: language === "ar",
+      switchHref,
+      t: (path) => {
+        const found = lookup(language, path);
+        return typeof found === "string" ? found : path;
+      },
+      tList: <T,>(path: string) => {
+        const found = lookup(language, path);
+        return Array.isArray(found) ? (found as T[]) : [];
+      },
+      setLanguage: (lang) => {
+        if (lang !== language) window.location.assign(switchHref);
+      },
+    }),
+    [language, switchHref],
+  );
+
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
+}
+
+export function useLanguage(): LanguageContextType {
   const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
+  if (context === undefined) throw new Error("useLanguage must be used within a LanguageProvider");
   return context;
 }

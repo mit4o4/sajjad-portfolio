@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { TEBIM_PRICING_URL, whatsappUrl } from "@/data/contact";
+import { homePath } from "@/seo/routes";
 import sajjadProfile from "../../public/images/sajjad.png";
 
 interface NavItem {
@@ -10,6 +11,7 @@ interface NavItem {
   external?: boolean;
 }
 
+/** Section anchors resolve against the home page of the current language, so they work from project pages too. */
 const NAV_ITEMS: NavItem[] = [
   { key: "sectors", href: "#sectors" },
   { key: "projects", href: "#portfolio" },
@@ -36,15 +38,23 @@ function useScrollChrome(barRef: React.RefObject<HTMLElement | null>): boolean {
 }
 
 export default function Navigation() {
-  const { t, language, setLanguage } = useLanguage();
+  const { t, language, switchHref } = useLanguage();
   const progressRef = useRef<HTMLElement | null>(null);
   const isSolid = useScrollChrome(progressRef);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const home = homePath(language);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setIsMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMenuOpen]);
 
   const links = NAV_ITEMS.map(item => (
     <a
       key={item.key}
-      href={item.href}
+      href={item.external ? item.href : `${home}${item.href}`}
       onClick={() => setIsMenuOpen(false)}
       {...(item.external
         ? { target: "_blank", rel: "noopener noreferrer" }
@@ -62,7 +72,7 @@ export default function Navigation() {
       <header className={`tb-header${isSolid ? " is-solid" : ""}`}>
         <div className="tb-wrap">
           <div className="tb-bar">
-            <a className="tb-brand" href="#home">
+            <a className="tb-brand" href={home}>
               <img src={sajjadProfile} alt="" width={36} height={36} />
               <span>
                 {t("site.brand.name")}
@@ -72,14 +82,16 @@ export default function Navigation() {
             <nav className="tb-nav" aria-label={t("site.nav.label")}>
               {links}
             </nav>
-            <button
+            <a
               className="tb-lang"
-              type="button"
-              onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
+              href={switchHref}
+              hrefLang={language === "ar" ? "en" : "ar"}
+              lang={language === "ar" ? "en" : "ar"}
               aria-label={t("site.nav.switchLanguage")}
+              style={{ display: "inline-flex", alignItems: "center" }}
             >
               {language === "ar" ? "EN" : "عربي"}
-            </button>
+            </a>
             <a
               className="tb-btn tb-btn--primary"
               href={whatsappUrl(t("site.wa.message"))}
@@ -102,7 +114,8 @@ export default function Navigation() {
           <nav
             id="tb-mobile-nav"
             className={`tb-mobile-nav${isMenuOpen ? " is-open" : ""}`}
-            aria-label={t("site.nav.label")}
+            aria-label={t("site.nav.mobileLabel")}
+            hidden={!isMenuOpen}
           >
             {links}
           </nav>

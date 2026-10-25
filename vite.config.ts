@@ -14,7 +14,7 @@ const plugins = [
   ...(isDev ? [vitePluginManusRuntime()] : []),
 ];
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins,
   base: "/",
   resolve: {
@@ -27,7 +27,8 @@ export default defineConfig({
   envDir: path.resolve(import.meta.dirname),
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist"),
+    // The SSR bundle is only used by scripts/prerender.mjs and is deleted afterwards.
+    outDir: path.resolve(import.meta.dirname, isSsrBuild ? "dist-ssr" : "dist"),
     emptyOutDir: true,
   },
   server: {
@@ -48,4 +49,4 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
-});
+}));

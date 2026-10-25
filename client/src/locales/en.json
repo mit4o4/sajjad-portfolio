@@ -230,7 +230,8 @@
       "contact": "Contact",
       "cta": "Book a consultation",
       "menu": "Open menu",
-      "switchLanguage": "التبديل إلى العربية"
+      "switchLanguage": "التبديل إلى العربية",
+      "mobileLabel": "Mobile menu"
     },
     "wa": {
       "message": "Hello, I'd like to ask about designing a project."
@@ -249,7 +250,9 @@
         "Madina Al-Moali Company"
       ],
       "prev": "Previous project",
-      "next": "Next project"
+      "next": "Next project",
+      "pause": "Pause slideshow",
+      "play": "Play slideshow"
     },
     "stats": {
       "label": "Portfolio in numbers",
@@ -296,7 +299,9 @@
       "more": "View all projects ({count})",
       "less": "Show selected only",
       "with": "with",
-      "options": "Facade options"
+      "options": "Facade options",
+      "register": "Full project register by sector",
+      "otherSector": "Other"
     },
     "dialog": {
       "all": "All images",
@@ -311,7 +316,8 @@
       "similarMessage": "Hello, I'd like a project similar to {title} ({code}).",
       "close": "Close",
       "prev": "Previous image",
-      "next": "Next image"
+      "next": "Next image",
+      "fullPage": "Open full project page"
     },
     "map": {
       "eyebrow": "Project locations",
@@ -489,6 +495,20 @@
       "rights": "Sajjad Abdulhameed · TeBIM",
       "place": "Najaf, Iraq",
       "social": "Social profiles"
+    },
+    "project": {
+      "breadcrumb": "Breadcrumb",
+      "home": "Home",
+      "projects": "Projects",
+      "factsTitle": "Project details",
+      "back": "Back to projects",
+      "related": "Similar projects"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "text": "The link may have changed. Browse the projects or go back home.",
+      "home": "Home",
+      "projects": "Browse projects"
     }
   }
 }

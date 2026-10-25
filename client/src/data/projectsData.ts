@@ -1518,7 +1518,8 @@ export const projectsData: Project[] = [
     titleAr: "تصميم داخلي لصف ومكتب مدرسة",
     image: imagePath("00A-0078-1.webp"),
     category: "interior",
-    description: "Interior design for a school classroom and an administrative office.",
+    description:
+      "Interior design for a school classroom and an administrative office.",
     descriptionAr: "تصميم داخلي لصف دراسي ومكتب إداري في مدرسة.",
     slug: "school-classroom-and-office-interiors-0078",
     sector: "interior",
@@ -1821,13 +1822,21 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0173-1.webp"),
     thumb: imagePath("00A-0173-1-thumb.webp"),
     category: "complex",
-    description: "A residential complex with several house types. We designed the A+ house type in full, including its exterior and the complex visualization.",
-    descriptionAr: "مجمع سكني بعدة نماذج بيوت. صممنا بيت الفئة A+ بالكامل مع واجهاته الخارجية وإظهار المجمع.",
+    description:
+      "A residential complex with several house types. We designed the A+ house type in full, including its exterior and the complex visualization.",
+    descriptionAr:
+      "مجمع سكني بعدة نماذج بيوت. صممنا بيت الفئة A+ بالكامل مع واجهاته الخارجية وإظهار المجمع.",
     slug: "residential-complex-a-house-type-0173",
     sector: "complex",
     services: ["architecture", "visualization", "bim"],
-    role: { en: "A+ house design, facades & visualization", ar: "تصميم بيت الفئة A+ وواجهاته والإظهار" },
-    collaborator: { en: "Al-Qaws Engineering Consultancy", ar: "شركة القوس للاستشارات الهندسية" },
+    role: {
+      en: "A+ house design, facades & visualization",
+      ar: "تصميم بيت الفئة A+ وواجهاته والإظهار",
+    },
+    collaborator: {
+      en: "Al-Qaws Engineering Consultancy",
+      ar: "شركة القوس للاستشارات الهندسية",
+    },
     allImages: [
       imagePath("00A-0173-1.webp"),
       imagePath("00A-0173-2.webp"),
@@ -1842,13 +1851,17 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0179-1.webp"),
     thumb: imagePath("00A-0179-1-thumb.webp"),
     category: "villa",
-    description: "A private residence with a contemporary facade and fully designed interiors.",
+    description:
+      "A private residence with a contemporary facade and fully designed interiors.",
     descriptionAr: "منزل خاص بواجهة معاصرة وتصميم داخلي متكامل.",
     slug: "residence-in-kinda-district-0179",
     sector: "villa",
     alsoIn: ["interior"],
     services: ["interior", "visualization"],
-    role: { en: "Facade & interior design", ar: "تصميم الواجهة والتصميم الداخلي" },
+    role: {
+      en: "Facade & interior design",
+      ar: "تصميم الواجهة والتصميم الداخلي",
+    },
     location: { en: "Kinda, Najaf", ar: "حي كندة، النجف" },
     interiorSpaces: 1,
     featured: true,
@@ -1873,13 +1886,18 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0182-1.webp"),
     thumb: imagePath("00A-0182-1-thumb.webp"),
     category: "fuel",
-    description: "Photorealistic visualization of a fuel station, prepared from the consultant's drawings.",
-    descriptionAr: "إظهار واقعي لمحطة وقود انطلاقاً من مخططات الجهة الاستشارية.",
+    description:
+      "Photorealistic visualization of a fuel station, prepared from the consultant's drawings.",
+    descriptionAr:
+      "إظهار واقعي لمحطة وقود انطلاقاً من مخططات الجهة الاستشارية.",
     slug: "al-jinsiya-fuel-station-0182",
     sector: "fuel",
     services: ["visualization"],
     role: { en: "Architectural visualization", ar: "إظهار معماري" },
-    collaborator: { en: "Al-Qaws Engineering Consultancy", ar: "شركة القوس للاستشارات الهندسية" },
+    collaborator: {
+      en: "Al-Qaws Engineering Consultancy",
+      ar: "شركة القوس للاستشارات الهندسية",
+    },
     featured: true,
     allImages: [
       imagePath("00A-0182-1.webp"),
@@ -1898,13 +1916,18 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0189-1.webp"),
     thumb: imagePath("00A-0189-1-thumb.webp"),
     category: "fuel",
-    description: "Fuel station with service buildings and retail frontage. Floor plans by the consultant; we completed the 3D design and visualization.",
-    descriptionAr: "محطة وقود مع مبانٍ خدمية وواجهات تجارية. المخططات من الجهة الاستشارية، وأكملنا التصميم ثلاثي الأبعاد والإظهار.",
+    description:
+      "Fuel station with service buildings and retail frontage. Floor plans by the consultant; we completed the 3D design and visualization.",
+    descriptionAr:
+      "محطة وقود مع مبانٍ خدمية وواجهات تجارية. المخططات من الجهة الاستشارية، وأكملنا التصميم ثلاثي الأبعاد والإظهار.",
     slug: "ya-ali-road-fuel-station-0189",
     sector: "fuel",
     services: ["visualization", "bim"],
     role: { en: "3D design & visualization", ar: "تصميم ثلاثي الأبعاد وإظهار" },
-    collaborator: { en: "Al-Qaws Engineering Consultancy", ar: "شركة القوس للاستشارات الهندسية" },
+    collaborator: {
+      en: "Al-Qaws Engineering Consultancy",
+      ar: "شركة القوس للاستشارات الهندسية",
+    },
     location: { en: "Najaf", ar: "النجف" },
     featured: true,
     allImages: [
@@ -1926,8 +1949,10 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0190-1.webp"),
     thumb: imagePath("00A-0190-1-thumb.webp"),
     category: "retail",
-    description: "Store interior with display walls, shopfront and cash desk, documented in plans and elevations.",
-    descriptionAr: "تصميم داخلي لمتجر بجدران عرض وواجهة وكاونتر، موثق بالمخططات والمقاطع.",
+    description:
+      "Store interior with display walls, shopfront and cash desk, documented in plans and elevations.",
+    descriptionAr:
+      "تصميم داخلي لمتجر بجدران عرض وواجهة وكاونتر، موثق بالمخططات والمقاطع.",
     slug: "women-s-fashion-store-al-furat-mall-0190",
     sector: "retail",
     alsoIn: ["interior"],
@@ -1990,7 +2015,10 @@ export const projectsData: Project[] = [
     sector: "education",
     services: ["architecture", "visualization", "bim"],
     role: { en: "Full design + BIM", ar: "تصميم كامل + BIM" },
-    collaborator: { en: "Al-Qaws Engineering Consultancy", ar: "شركة القوس للاستشارات الهندسية" },
+    collaborator: {
+      en: "Al-Qaws Engineering Consultancy",
+      ar: "شركة القوس للاستشارات الهندسية",
+    },
     location: { en: "Najaf", ar: "النجف" },
     featured: true,
     allImages: [
@@ -2007,13 +2035,18 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0196-1.webp"),
     thumb: imagePath("00A-0196-1-thumb.webp"),
     category: "education",
-    description: "A 50×25 m kindergarten with two exterior design options: yellow brick with ceramic ornament, and a white, colourful scheme.",
-    descriptionAr: "روضة أطفال بأبعاد 50×25 م بخيارين للتصميم الخارجي: طابوق أصفر بزخارف خزفية، وتصميم أبيض بألوان مرحة.",
+    description:
+      "A 50×25 m kindergarten with two exterior design options: yellow brick with ceramic ornament, and a white, colourful scheme.",
+    descriptionAr:
+      "روضة أطفال بأبعاد 50×25 م بخيارين للتصميم الخارجي: طابوق أصفر بزخارف خزفية، وتصميم أبيض بألوان مرحة.",
     slug: "kindergarten-50-25-m-0196",
     sector: "education",
     services: ["architecture", "visualization", "bim"],
     role: { en: "Full design + BIM", ar: "تصميم كامل + BIM" },
-    collaborator: { en: "Al-Qaws Engineering Consultancy", ar: "شركة القوس للاستشارات الهندسية" },
+    collaborator: {
+      en: "Al-Qaws Engineering Consultancy",
+      ar: "شركة القوس للاستشارات الهندسية",
+    },
     location: { en: "Najaf", ar: "النجف" },
     featured: true,
     allImages: [
@@ -2035,7 +2068,9 @@ export const projectsData: Project[] = [
       imagePath("00A-0196-16.webp"),
     ],
     options: [
-      { label: { ar: "واجهة أ", en: "Option A" }, images: [
+      {
+        label: { ar: "واجهة أ", en: "Option A" },
+        images: [
           imagePath("00A-0196-1.webp"),
           imagePath("00A-0196-2.webp"),
           imagePath("00A-0196-3.webp"),
@@ -2048,13 +2083,17 @@ export const projectsData: Project[] = [
           imagePath("00A-0196-10.webp"),
           imagePath("00A-0196-11.webp"),
           imagePath("00A-0196-12.webp"),
-        ] },
-      { label: { ar: "واجهة ب", en: "Option B" }, images: [
+        ],
+      },
+      {
+        label: { ar: "واجهة ب", en: "Option B" },
+        images: [
           imagePath("00A-0196-13.webp"),
           imagePath("00A-0196-14.webp"),
           imagePath("00A-0196-15.webp"),
           imagePath("00A-0196-16.webp"),
-        ] },
+        ],
+      },
     ],
   },
 
@@ -2065,13 +2104,17 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0198-1.webp"),
     thumb: imagePath("00A-0198-1-thumb.webp"),
     category: "fuel",
-    description: "Canopy, forecourt and service building designed in 3D and visualized.",
+    description:
+      "Canopy, forecourt and service building designed in 3D and visualized.",
     descriptionAr: "تصميم ثلاثي الأبعاد وإظهار للمظلة والساحة ومبنى الخدمات.",
     slug: "fuel-station-baghdad-0198",
     sector: "fuel",
     services: ["visualization", "bim"],
     role: { en: "3D design & visualization", ar: "تصميم ثلاثي الأبعاد وإظهار" },
-    collaborator: { en: "Al-Qaws Engineering Consultancy", ar: "شركة القوس للاستشارات الهندسية" },
+    collaborator: {
+      en: "Al-Qaws Engineering Consultancy",
+      ar: "شركة القوس للاستشارات الهندسية",
+    },
     location: { en: "Baghdad", ar: "بغداد" },
     featured: true,
     allImages: [
@@ -2093,13 +2136,18 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0200-1.webp"),
     thumb: imagePath("00A-0200-1-thumb.webp"),
     category: "villa",
-    description: "A 13×20 m house with brick-and-white facade and designed living spaces.",
-    descriptionAr: "منزل بمساحة 13×20 م بواجهة من الطابوق والأبيض وتصميم داخلي للصالات.",
+    description:
+      "A 13×20 m house with brick-and-white facade and designed living spaces.",
+    descriptionAr:
+      "منزل بمساحة 13×20 م بواجهة من الطابوق والأبيض وتصميم داخلي للصالات.",
     slug: "house-13-20-m-0200",
     sector: "villa",
     alsoIn: ["interior"],
     services: ["interior", "visualization"],
-    role: { en: "Facade & interior design", ar: "تصميم الواجهة والتصميم الداخلي" },
+    role: {
+      en: "Facade & interior design",
+      ar: "تصميم الواجهة والتصميم الداخلي",
+    },
     location: { en: "Najaf", ar: "النجف" },
     interiorSpaces: 1,
     allImages: [
@@ -2134,13 +2182,18 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0201-1.webp"),
     thumb: imagePath("00A-0201-1-thumb.webp"),
     category: "villa",
-    description: "Full renovation of an existing house: new facade options and redesigned bedrooms and lounges.",
-    descriptionAr: "ترميم كامل لمنزل قائم: خيارات جديدة للواجهة وإعادة تصميم غرف النوم والصالات.",
+    description:
+      "Full renovation of an existing house: new facade options and redesigned bedrooms and lounges.",
+    descriptionAr:
+      "ترميم كامل لمنزل قائم: خيارات جديدة للواجهة وإعادة تصميم غرف النوم والصالات.",
     slug: "house-renovation-al-jamia-district-0201",
     sector: "villa",
     alsoIn: ["interior"],
     services: ["interior", "visualization"],
-    role: { en: "Renovation, facade & interior", ar: "ترميم وواجهة وتصميم داخلي" },
+    role: {
+      en: "Renovation, facade & interior",
+      ar: "ترميم وواجهة وتصميم داخلي",
+    },
     location: { en: "Al-Jamia, Najaf", ar: "حي الجامعة، النجف" },
     interiorSpaces: 3,
     allImages: [
@@ -2178,7 +2231,8 @@ export const projectsData: Project[] = [
     image: imagePath("00A-0204-1.webp"),
     thumb: imagePath("00A-0204-1-thumb.webp"),
     category: "interior",
-    description: "Guest lounges and living rooms with ceiling, lighting and electrical plans.",
+    description:
+      "Guest lounges and living rooms with ceiling, lighting and electrical plans.",
     descriptionAr: "صالات ضيوف وجلوس مع مخططات السقف والإضاءة والكهرباء.",
     slug: "doctors-house-interiors-0204",
     sector: "interior",

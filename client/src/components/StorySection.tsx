@@ -11,109 +11,96 @@ interface StoryStep {
 }
 
 const clamp01 = (v: number): number => Math.max(0, Math.min(1, v));
+const hiddenClip = (isRTL: boolean): string => (isRTL ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)");
 
-/** Pinned section: scrolling wipes the kindergarten from line drawing to final render. */
+/**
+ * Pinned section: scrolling wipes the kindergarten from line drawing to final render.
+ * Scroll work is done imperatively; React state only changes when the active step changes.
+ */
 export default function StorySection() {
-  const { t, isRTL } = useLanguage();
+  const { t, tList, isRTL } = useLanguage();
   const sectionRef = useRef<HTMLElement | null>(null);
   const layerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const meterRefs = useRef<(HTMLElement | null)[]>([]);
   const scanRef = useRef<HTMLSpanElement | null>(null);
-  const [progress, setProgress] = useState(0);
-  const steps: StoryStep[] = t("site.story.steps");
+  const [active, setActive] = useState(0);
+  const steps = tList<StoryStep>("site.story.steps");
 
   useEffect(() => {
-    const onScroll = () => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
       const el = sectionRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const p = clamp01(-rect.top / (rect.height - window.innerHeight));
-      const seg = p * TRANSITIONS;
+      const span = Math.max(1, rect.height - window.innerHeight);
+      const seg = clamp01(-rect.top / span) * TRANSITIONS;
       layerRefs.current.forEach((layer, i) => {
         if (!layer || i === 0) return;
         const k = clamp01(seg - (i - 1));
-        layer.style.clipPath = isRTL
-          ? `inset(0 0 0 ${(1 - k) * 100}%)`
-          : `inset(0 ${(1 - k) * 100}% 0 0)`;
+        layer.style.clipPath = isRTL ? `inset(0 0 0 ${(1 - k) * 100}%)` : `inset(0 ${(1 - k) * 100}% 0 0)`;
+      });
+      const current = Math.min(TRANSITIONS, Math.round(seg));
+      meterRefs.current.forEach((meter, i) => {
+        if (!meter) return;
+        const fill = i < current ? 1 : i === current ? clamp01(seg - i + 1) : 0;
+        meter.style.width = `${fill * 100}%`;
       });
       const local = seg - Math.min(Math.floor(seg), TRANSITIONS - 1);
       if (scanRef.current) {
-        scanRef.current.style.opacity =
-          local > 0.02 && local < 0.98 && seg < TRANSITIONS ? "1" : "0";
+        scanRef.current.style.opacity = local > 0.02 && local < 0.98 && seg < TRANSITIONS ? "1" : "0";
         scanRef.current.style.insetInlineStart = `${local * 100}%`;
       }
-      setProgress(seg);
+      setActive(current);
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
   }, [isRTL]);
 
-  const active = Math.min(TRANSITIONS, Math.round(progress));
-
   return (
-    <section
-      ref={sectionRef}
-      className="tb-story"
-      aria-label={t("site.story.title")}
-    >
+    <section ref={sectionRef} className="tb-story" aria-label={t("site.story.title")}>
       <div className="tb-wrap tb-pin">
         <div className="tb-steps">
           <span className="tb-eyebrow">{t("site.story.eyebrow")}</span>
           <h2>{t("site.story.title")}</h2>
-          {Array.isArray(steps) &&
-            steps.map((step, i) => {
-              const fill =
-                i < active ? 1 : i === active ? clamp01(progress - i + 1) : 0;
-              return (
-                <div
-                  key={step.title}
-                  className={`tb-step${i === active ? " is-on" : ""}`}
-                >
-                  <span className="tb-no">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <b>{step.title}</b>
-                  <p>{step.text}</p>
-                  <span className="tb-meter">
-                    <i style={{ width: `${fill * 100}%` }} />
-                  </span>
-                </div>
-              );
-            })}
+          {steps.map((step, i) => (
+            <div key={step.title} className={`tb-step${i === active ? " is-on" : ""}`}>
+              <span className="tb-no">{String(i + 1).padStart(2, "0")}</span>
+              <b>{step.title}</b>
+              <p>{step.text}</p>
+              <span className="tb-meter">
+                <i
+                  ref={(el) => {
+                    meterRefs.current[i] = el;
+                  }}
+                />
+              </span>
+            </div>
+          ))}
         </div>
-        <div className="tb-frame tb-stage">
-          <span className="tb-badge">
-            {String(active + 1).padStart(2, "0")} /{" "}
-            {String(LAYERS.length).padStart(2, "0")}
+        <div className="tb-frame tb-stage" role="img" aria-label={steps[active]?.title ?? t("site.story.title")}>
+          <span className="tb-badge" aria-hidden="true">
+            {String(active + 1).padStart(2, "0")} / {String(LAYERS.length).padStart(2, "0")}
           </span>
           {LAYERS.map((src, i) => (
             <div
               key={src}
               className="tb-layer"
-              ref={el => {
+              ref={(el) => {
                 layerRefs.current[i] = el;
               }}
-              style={
-                i === 0
-                  ? undefined
-                  : {
-                      clipPath: isRTL
-                        ? "inset(0 0 0 100%)"
-                        : "inset(0 100% 0 0)",
-                    }
-              }
+              style={i === 0 ? undefined : { clipPath: hiddenClip(isRTL) }}
             >
-              <img
-                src={src}
-                alt={Array.isArray(steps) ? (steps[i]?.title ?? "") : ""}
-                loading="lazy"
-                width={1600}
-                height={1200}
-              />
+              <img src={src} alt="" loading="lazy" decoding="async" width={1600} height={1200} />
             </div>
           ))}
           <span className="tb-scan" ref={scanRef} aria-hidden="true" />

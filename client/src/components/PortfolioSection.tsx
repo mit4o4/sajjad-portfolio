@@ -4,20 +4,34 @@ import { projectsData } from "@/data/projectsData";
 import { SECTORS, projectSectors } from "@/data/taxonomy";
 import type { Project, SectorId } from "@/data/types";
 import ProjectDialog from "@/components/site/ProjectDialog";
+import { projectPath } from "@/seo/routes";
+import ProjectRegister from "@/components/site/ProjectRegister";
 
 type Filter = SectorId | "all";
 
 /** Curated order for the selected-work grid: strongest, most varied work first. */
 const FEATURED_ORDER = [
-  "00A-0196", "00A-0085", "00A-0198", "00A-0115", "00A-0094", "00A-0190",
-  "00A-0156", "00A-0195", "00A-0182", "00A-0179", "00A-0189", "00A-0204",
+  "00A-0196",
+  "00A-0085",
+  "00A-0198",
+  "00A-0115",
+  "00A-0094",
+  "00A-0190",
+  "00A-0156",
+  "00A-0195",
+  "00A-0182",
+  "00A-0179",
+  "00A-0189",
+  "00A-0204",
 ];
 const featuredRank = (p: Project): number => {
   const i = FEATURED_ORDER.indexOf(p.id);
   return i === -1 ? FEATURED_ORDER.length : i;
 };
-const FEATURED = projectsData.filter((p) => p.featured).sort((a, b) => featuredRank(a) - featuredRank(b));
-const NOT_FEATURED = projectsData.filter((p) => !p.featured);
+const FEATURED = projectsData
+  .filter(p => p.featured)
+  .sort((a, b) => featuredRank(a) - featuredRank(b));
+const NOT_FEATURED = projectsData.filter(p => !p.featured);
 
 interface CardProps {
   project: Project;
@@ -58,7 +72,7 @@ function ProjectCard({ project, onOpen }: CardProps) {
         )}
         <img
           src={project.thumb ?? project.image}
-          alt={title}
+          alt=""
           loading="lazy"
           width={800}
           height={600}
@@ -76,16 +90,19 @@ function ProjectCard({ project, onOpen }: CardProps) {
       </div>
       <div className="tb-top">
         <h3>
-          <button
-            type="button"
+          {/* Real link for crawlers and new-tab users; a plain click opens the quick-look dialog. */}
+          <a
             className="tb-card-link"
+            href={projectPath(project, language)}
             onClick={e => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+              e.preventDefault();
               e.stopPropagation();
               onOpen(project);
             }}
           >
             {title}
-          </button>
+          </a>
         </h3>
         <span className="tb-mono">{project.id}</span>
       </div>
@@ -104,7 +121,7 @@ function ProjectCard({ project, onOpen }: CardProps) {
   );
 }
 
-/** Opens a project from map markers (`open-project`) or from a `#project-<id>` deep link. */
+/** Opens a project from map markers (`open-project`) and applies sector filters requested by the sector tiles. */
 function useExternalOpen(
   open: (project: Project, image?: number) => void,
   setFilter: (f: Filter) => void
@@ -120,11 +137,6 @@ function useExternalOpen(
       const sector = (e as CustomEvent<{ sector?: SectorId }>).detail?.sector;
       if (sector) setFilter(sector);
     };
-    const hashId = window.location.hash.match(/^#project-(.+)$/)?.[1];
-    const fromHash = projectsData.find(
-      p => p.id === hashId || p.slug === hashId
-    );
-    if (fromHash) open(fromHash);
     window.addEventListener("open-project", onOpen);
     window.addEventListener("filter-sector", onFilter);
     return () => {
@@ -222,8 +234,10 @@ export default function PortfolioSection() {
           </button>
         </div>
       )}
+      <ProjectRegister />
       {selected && (
         <ProjectDialog
+          key={`${selected.project.id}-${selected.image}`}
           project={selected.project}
           initialImage={selected.image}
           onClose={() => setSelected(null)}

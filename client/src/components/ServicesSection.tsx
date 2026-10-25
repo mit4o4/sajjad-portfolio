@@ -14,9 +14,9 @@ const SERVICE_IMAGES = [
 ];
 
 export default function ServicesSection() {
-  const { t } = useLanguage();
-  const services: ServiceItem[] = t("site.services.items");
-  const steps: { title: string; text: string }[] = t("site.process.steps");
+  const { t, tList } = useLanguage();
+  const services = tList<ServiceItem>("site.services.items");
+  const steps = tList<{ title: string; text: string }>("site.process.steps");
 
   return (
     <section id="services" className="tb-wrap tb-sec tb-sec-tight">
