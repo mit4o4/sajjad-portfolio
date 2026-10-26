@@ -117,6 +117,14 @@ Privacy default: private individuals' names (doctor, engineer, contractor) are N
   - Merge 3123e52 to `main`, GitHub Pages run succeeded.
   - The live sajjad-studio.com serves `/`, `/en/`, the project pages, the sitemap and llms.txt; unknown URLs return 404.
   - Rollback tag `pre-redesign-2026-10-25` pushed.
+- DEPLOYED e7ccfe4:
+  - 65 older sheets re-cropped in 21 projects, including manual fixes to 0077-4, 0147-1 and 0091-19/-21.
+  - 423 thumbnails added.
+  - Live assets verified to match the new files.
+- DEPLOYED 253b852:
+  - Private client names removed from 14 project titles and URLs.
+  - 28 legacy redirects (old URLs → new pages).
+  - 0115 description corrected.
 - Counter category totals are labelled "published portfolio" until the user supplies real totals.
 - Not done / next:
   - Run the crop pipeline on the 52 existing projects' raw sheets.

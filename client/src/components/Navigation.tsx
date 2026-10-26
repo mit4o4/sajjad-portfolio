@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { TEBIM_PRICING_URL, whatsappUrl } from "@/data/contact";
 import { homePath } from "@/seo/routes";
-import sajjadProfile from "../../public/images/sajjad.png";
+import { FOUNDER_AVATAR } from "@/data/founder";
 
 interface NavItem {
   key: string;
@@ -74,7 +74,7 @@ export default function Navigation() {
         <div className="tb-wrap">
           <div className="tb-bar">
             <a className="tb-brand" href={home}>
-              <img src={sajjadProfile} alt="" width={36} height={36} />
+              <img src={FOUNDER_AVATAR} alt="" width={36} height={36} />
               <span>
                 {t("site.brand.name")}
                 <small>{t("site.brand.tagline")}</small>

@@ -1,5 +1,6 @@
 import HeroSection from "@/components/HeroSection";
 import StatsBand from "@/components/StatsBand";
+import PartnersSection from "@/components/PartnersSection";
 import SectorsSection from "@/components/SectorsSection";
 import StorySection from "@/components/StorySection";
 import PortfolioSection from "@/components/PortfolioSection";
@@ -15,6 +16,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <StatsBand />
+      <PartnersSection />
       <SectorsSection />
       <StorySection />
       <PortfolioSection />

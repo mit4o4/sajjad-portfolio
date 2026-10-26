@@ -7,6 +7,7 @@ import ar from "@/locales/ar.json";
 import type { Language, Project } from "@/data/types";
 import { SECTORS, DECLARED_TOTAL_PROJECTS, showcase } from "@/data/taxonomy";
 import { EMAIL, PHONE_E164 } from "@/data/contact";
+import { FOUNDER_PORTRAIT, FOUNDER_SHARE_IMAGE } from "@/data/founder";
 import {
   SITE_URL,
   absoluteUrl,
@@ -49,9 +50,20 @@ const COPY: Record<Language, SiteCopy> = {
 };
 
 const HOME_TITLE: Record<Language, string> = {
-  ar: "سجاد عبد الحميد | تصميم معماري وBIM وإشراف تنفيذ في النجف — TeBIM",
-  en: "Sajjad Abdulhameed | Architecture, BIM & Construction Supervision in Najaf — TeBIM",
+  ar: "المهندس سجاد الهنداوي | تصميم معماري وBIM وإشراف تنفيذ في النجف — TeBIM",
+  en: "Eng. Sajjad Al-Hindawi | Architecture, BIM & Construction Supervision in Najaf — TeBIM",
 };
+
+/** Previous public name forms, kept so search engines connect existing profiles to the current name. */
+const PERSON_ALTERNATE_NAMES = [
+  "سجاد الهنداوي",
+  "Sajjad Al-Hindawi",
+  "Sajjad Alhindawi",
+  "سجاد عبد الحميد مجيد",
+  "Sajjad Abdulhameed Majeed",
+];
+const FOUNDER_IMAGE = FOUNDER_PORTRAIT;
+const HOME_SHARE_IMAGE = FOUNDER_SHARE_IMAGE;
 
 function truncate(text: string, max = MAX_DESCRIPTION): string {
   const clean = text.replace(/\s+/g, " ").trim();
@@ -92,8 +104,8 @@ function studioNode(lang: Language) {
     name: "TeBIM",
     alternateName:
       lang === "ar"
-        ? "سجاد عبد الحميد — تصميم معماري وBIM"
-        : "Sajjad Abdulhameed — Architecture & BIM",
+        ? "المهندس سجاد الهنداوي — تصميم معماري وBIM"
+        : "Eng. Sajjad Al-Hindawi — Architecture & BIM",
     url: SITE_URL,
     image: abs(showcase("k-a.webp")),
     telephone: PHONE_E164,
@@ -132,6 +144,8 @@ function personNode(lang: Language) {
     "@type": "Person",
     "@id": PERSON_ID,
     name: about.name,
+    alternateName: PERSON_ALTERNATE_NAMES,
+    image: abs(FOUNDER_IMAGE),
     jobTitle: about.role,
     description: about.bio,
     worksFor: { "@id": STUDIO_ID },
@@ -288,7 +302,7 @@ export function buildHead(route: Route): HeadData {
       COPY[lang].hero.lede.replace("200", String(DECLARED_TOTAL_PROJECTS))
     ),
     ogType: "website",
-    ogImage: abs(showcase("k-a.webp")),
+    ogImage: abs(HOME_SHARE_IMAGE),
     preloadImage: showcase("k-a.webp"),
     jsonLd: {
       "@context": "https://schema.org",

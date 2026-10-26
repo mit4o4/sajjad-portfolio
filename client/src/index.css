@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "./styles/site.css";
@@ -45,13 +45,13 @@
 
 :root {
   /* Primary — refined architectural indigo */
-  --primary: oklch(0.42 0.13 264);
+  --primary: oklch(0.39 0.06 215);
   --primary-foreground: oklch(0.98 0.005 85);
   --sidebar-primary: oklch(0.46 0.14 262);
   --sidebar-primary-foreground: oklch(0.98 0.005 85);
 
   /* Accent — deep slate blue */
-  --accent: oklch(0.54 0.15 258);
+  --accent: oklch(0.46 0.07 212);
   --accent-foreground: oklch(0.98 0.005 85);
   
   /* Chart Colors */
@@ -79,7 +79,7 @@
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.885 0.01 80);
   --input: oklch(0.885 0.01 80);
-  --ring: oklch(0.60 0.18 250);
+  --ring: oklch(0.46 0.07 212);
   --sidebar: oklch(0.99 0 0);
   --sidebar-foreground: oklch(0.15 0.02 280);
   --sidebar-accent: oklch(0.92 0.01 280);
@@ -361,4 +361,10 @@
   font-family: 'IBM Plex Sans Arabic', 'Fraunces', serif;
   letter-spacing: 0;
   line-height: 1.35;
+}
+/* Display headings get a geometric Arabic face; h3 and below stay in the reading face. */
+[dir="rtl"] h1, [dir="rtl"] h2 {
+  font-family: 'Readex Pro', 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  line-height: 1.3;
 }
