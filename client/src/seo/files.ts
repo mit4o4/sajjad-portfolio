@@ -24,7 +24,7 @@ import {
   type Route,
 } from "./routes";
 
-const SITE_NAME = "Sajjad Abdulhameed — TeBIM";
+const SITE_NAME = "Eng. Sajjad Al-Hindawi — TeBIM";
 const DEFAULT_LANG: Language = "ar";
 
 const SEARCH_BOTS = [
@@ -155,10 +155,13 @@ export function buildRobots(): string {
 
 function summaryLine(): string {
   return (
-    `> Sajjad Abdulhameed Majeed is a civil engineer and architectural designer based in Najaf, Iraq, ` +
-    `and the founder of TeBIM. The studio offers architecture and design, full BIM modeling in Revit, ` +
-    `and construction supervision and execution, with ${DECLARED_TOTAL_PROJECTS}+ projects delivered ` +
-    `over ${YEARS_OF_PRACTICE}+ years across Najaf and other Iraqi provinces.`
+    `> Eng. Sajjad Al-Hindawi (Arabic: المهندس سجاد الهنداوي; also published as Sajjad Abdulhameed Majeed) ` +
+    `is a civil engineer and architectural designer based in Najaf, Iraq, and the founder of TeBIM. ` +
+    `The studio offers architecture and design, full BIM modeling in Revit, and construction supervision ` +
+    `and execution, with ${DECLARED_TOTAL_PROJECTS}+ projects delivered over ${YEARS_OF_PRACTICE}+ years ` +
+    `across Najaf and other Iraqi provinces. Clients and partners include the Najaf Governorate office, ` +
+    `Al-Qaws Engineering Consultancy, Dar Al-Naseem Company, Um Qasr Northern Cement Company, ` +
+    `Wadi Al-Khair Company and Madina Al-Moali Company, as well as local engineering offices and contractors.`
   );
 }
 

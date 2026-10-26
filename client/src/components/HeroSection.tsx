@@ -6,6 +6,7 @@ import { projectsData } from "@/data/projectsData";
 import { showcase } from "@/data/taxonomy";
 import { whatsappUrl } from "@/data/contact";
 import { WhatsAppIcon } from "@/components/site/icons";
+import { FOUNDER_AVATAR } from "@/data/founder";
 
 /** Hero slides: a curated 4:3 image per flagship project. */
 const SLIDES = [
@@ -80,7 +81,7 @@ function useSlideshow(
 }
 
 export default function HeroSection() {
-  const { t, tList, language, isRTL } = useLanguage();
+  const { t, language, isRTL } = useLanguage();
   const barRef = useRef<HTMLElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const { index, goTo, isPaused, setIsPaused, setIsHeld } = useSlideshow(
@@ -92,7 +93,6 @@ export default function HeroSection() {
   const current = projectsData.find(p => p.id === SLIDES[index].id);
   const title = current ? (isRTL ? current.titleAr : current.title) : "";
   const role = current?.role?.[language] ?? "";
-  const trust = tList<string>("site.hero.trust");
 
   return (
     <section id="home" className="tb-wrap tb-hero">
@@ -121,13 +121,13 @@ export default function HeroSection() {
             {t("site.hero.work")}
           </a>
         </div>
-        <div className="tb-trust">
-          <span className="tb-mono">{t("site.hero.trustTitle")}</span>
-          <ul>
-            {Array.isArray(trust) &&
-              trust.map(item => <li key={item}>{item}</li>)}
-          </ul>
-        </div>
+        <a className="tb-founder-line" href={`${homePath(language)}#about`}>
+          <img src={FOUNDER_AVATAR} alt="" width={48} height={48} />
+          <span>
+            <b>{t("site.hero.founderName")}</b>
+            <small>{t("site.hero.founderRole")}</small>
+          </span>
+        </a>
       </div>
 
       <div className="tb-hero-media">

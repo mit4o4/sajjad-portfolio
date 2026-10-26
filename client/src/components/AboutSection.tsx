@@ -1,6 +1,6 @@
 import { Award, GraduationCap } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import sajjadProfile from "../../public/images/sajjad.png";
+import { FOUNDER_PORTRAIT, FOUNDER_PORTRAIT_SIZE } from "@/data/founder";
 
 interface ExperienceItem {
   when: string;
@@ -17,8 +17,10 @@ interface Credential {
 }
 
 /**
- * About + credentials. The rail leads with the degree and the architecture-relevant
- * certificates; unrelated ones are tucked into a disclosure so they don't dilute the pitch.
+ * The one dark chapter of the page. Its background matches the portrait's studio backdrop,
+ * so the photo dissolves into the section instead of sitting in a box.
+ * The credentials rail leads with the degree and architecture-relevant certificates;
+ * unrelated ones are tucked into a disclosure so they don't dilute the pitch.
  */
 export default function AboutSection() {
   const { t, tList } = useLanguage();
@@ -28,55 +30,47 @@ export default function AboutSection() {
   const otherCredentials = tList<string>("site.credentials.more");
 
   return (
-    <section id="about" className="tb-wrap tb-sec tb-sec-tight">
-      <div className="tb-about">
-        <div className="tb-about-main">
+    <section id="about" className="tb-about-dark" aria-labelledby="about-title">
+      <div className="tb-wrap tb-about">
+        <figure className="tb-founder tb-rv">
+          <img
+            src={FOUNDER_PORTRAIT}
+            alt={t("site.about.portraitAlt")}
+            width={FOUNDER_PORTRAIT_SIZE.width}
+            height={FOUNDER_PORTRAIT_SIZE.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+
+        <div className="tb-about-intro tb-rv">
           <span className="tb-eyebrow">{t("site.about.eyebrow")}</span>
-          <div className="tb-about-intro tb-rv">
-            <div className="tb-portrait">
-              <img
-                src={sajjadProfile}
-                alt={t("site.about.portraitAlt")}
-                loading="lazy"
-              />
-            </div>
-            <div>
-              <h2>{t("site.about.name")}</h2>
-              <p className="tb-role-line">{t("site.about.role")}</p>
-              <p>{t("site.about.bio")}</p>
-            </div>
+          <h2 id="about-title">{t("site.about.name")}</h2>
+          <p className="tb-role-line">{t("site.about.role")}</p>
+          <p className="tb-bio">{t("site.about.bio")}</p>
+          <div className="tb-skills">
+            {skills.map(skill => (
+              <span key={skill} className="tb-tag">
+                {skill}
+              </span>
+            ))}
           </div>
+        </div>
 
-          <div>
-            <h3 style={{ marginBottom: 8 }}>
-              {t("site.about.experienceTitle")}
-            </h3>
-            <div className="tb-exp">
-              {Array.isArray(experience) &&
-                experience.map(item => (
-                  <div key={item.title} className="tb-exp-item tb-rv">
-                    <span className="tb-when">{item.when}</span>
-                    <div>
-                      <b>{item.title}</b>
-                      <div className="tb-org">{item.org}</div>
-                    </div>
-                    <p>{item.text}</p>
-                  </div>
-                ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 style={{ marginBottom: 12 }}>{t("site.about.skillsTitle")}</h3>
-            <div className="tb-skills">
-              {Array.isArray(skills) &&
-                skills.map(skill => (
-                  <span key={skill} className="tb-tag">
-                    {skill}
-                  </span>
-                ))}
-            </div>
-          </div>
+        <div className="tb-about-exp">
+          <h3>{t("site.about.experienceTitle")}</h3>
+          <ol className="tb-exp">
+            {experience.map(item => (
+              <li key={item.title + item.org} className="tb-exp-item tb-rv">
+                <span className="tb-when">{item.when}</span>
+                <div>
+                  <b>{item.title}</b>
+                  <div className="tb-org">{item.org}</div>
+                </div>
+                <p>{item.text}</p>
+              </li>
+            ))}
+          </ol>
         </div>
 
         <aside className="tb-rail" aria-label={t("site.credentials.title")}>
@@ -84,21 +78,17 @@ export default function AboutSection() {
             <Award aria-hidden="true" />
             {t("site.credentials.title")}
           </h3>
-          {Array.isArray(credentials) &&
-            credentials.map(c => (
-              <div
-                key={c.title}
-                className={`tb-cred${c.kind === "degree" ? " is-degree" : ""}`}
-              >
-                <span className="tb-ico" aria-hidden="true">
-                  {c.kind === "degree" ? <GraduationCap /> : <Award />}
-                </span>
-                <b>{c.title}</b>
-                <span>{c.issuer}</span>
-                <span>{c.date}</span>
-              </div>
-            ))}
-          {Array.isArray(otherCredentials) && otherCredentials.length > 0 && (
+          {credentials.map(c => (
+            <div key={c.title} className={`tb-cred${c.kind === "degree" ? " is-degree" : ""}`}>
+              <span className="tb-ico" aria-hidden="true">
+                {c.kind === "degree" ? <GraduationCap /> : <Award />}
+              </span>
+              <b>{c.title}</b>
+              <span>{c.issuer}</span>
+              <span>{c.date}</span>
+            </div>
+          ))}
+          {otherCredentials.length > 0 && (
             <details>
               <summary>{t("site.credentials.moreTitle")}</summary>
               <ul>

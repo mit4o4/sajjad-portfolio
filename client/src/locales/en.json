@@ -10,7 +10,7 @@
   "hero": {
     "title": "BIM Specialist & Architectural Supervision Engineer",
     "subtitle": "7+ Years of Experience | 200+ Projects | Revit, BIM, Grasshopper",
-    "description": "TeBIM Studio, founded by Sajjad Abdulhameed Majeed — specializing in BIM-based architectural design, parametric facade engineering, and comprehensive on-site engineering supervision and execution across 200+ residential and commercial projects in Iraq.",
+    "description": "TeBIM Studio, founded by Eng. Sajjad Al-Hindawi — specializing in BIM-based architectural design, parametric facade engineering, and comprehensive on-site engineering supervision and execution across 200+ residential and commercial projects in Iraq.",
     "cta": "Explore Portfolio",
     "contact": "Get in Touch",
     "stats": {
@@ -176,7 +176,7 @@
     "interests": "Passionate about architecture, parametric design, construction technology, programming, and sustainable design solutions.",
     "linkedin": "https://www.linkedin.com/in/sajjad-abdulhamead/",
     "github": "https://github.com/mit4o4",
-    "avatarAlt": "Sajjad Abdulhameed Majeed - Founder of TeBIM",
+    "avatarAlt": "Eng. Sajjad Al-Hindawi - Founder of TeBIM",
     "stats": {
       "projects": "Projects",
       "years": "Years",
@@ -211,13 +211,13 @@
   "footer": {
     "brand": "TeBIM",
     "tagline": "Architectural Design, BIM Modeling & Engineering Execution in Iraq",
-    "copyright": "© 2026 TeBIM — Sajjad Abdulhameed Majeed. All rights reserved.",
+    "copyright": "© 2026 TeBIM — Eng. Sajjad Al-Hindawi. All rights reserved.",
     "followMe": "Follow Us",
     "quickLinks": "Quick Links"
   },
   "site": {
     "brand": {
-      "name": "Sajjad Abdulhameed",
+      "name": "Eng. Sajjad Al-Hindawi",
       "tagline": "TeBIM · Design, BIM, construction"
     },
     "nav": {
@@ -252,7 +252,9 @@
       "prev": "Previous project",
       "next": "Next project",
       "pause": "Pause slideshow",
-      "play": "Play slideshow"
+      "play": "Play slideshow",
+      "founderName": "Eng. Sajjad Al-Hindawi",
+      "founderRole": "Civil engineer & architectural designer · BIM"
     },
     "stats": {
       "label": "Portfolio in numbers",
@@ -385,9 +387,9 @@
     },
     "about": {
       "eyebrow": "About",
-      "name": "Sajjad Abdulhameed Majeed",
-      "role": "Architectural designer & civil engineer · Founder of TeBIM",
-      "portraitAlt": "Sajjad Abdulhameed Majeed",
+      "name": "Eng. Sajjad Al-Hindawi",
+      "role": "Civil engineer & architectural designer · Founder of TeBIM",
+      "portraitAlt": "Eng. Sajjad Al-Hindawi",
       "bio": "Civil engineer from the University of Kufa, specializing in BIM-based architectural design in Revit and parametric design in Grasshopper. For over 7 years I've worked on residential, commercial and public projects in Najaf and across Iraq, from the first idea to supervising construction on site.",
       "experienceTitle": "Field experience",
       "experience": [
@@ -400,7 +402,7 @@
         {
           "when": "Recent",
           "title": "Consulting supervision",
-          "org": "Dar Al-Naseem Company",
+          "org": "Dar Al-Naseem Company · Um Qasr Northern Cement Company",
           "text": "Supervised construction of the Um Qasr Northern Cement Company offices."
         },
         {
@@ -408,6 +410,12 @@
           "title": "Design & supervision engineer",
           "org": "Wadi Al-Khair Company",
           "text": "Designed and supervised the first phase of a 10,000-dunam model farm."
+        },
+        {
+          "when": "Ongoing",
+          "title": "Design & BIM modeling",
+          "org": "Executing engineering offices and local contractors",
+          "text": "Architectural design, BIM models and construction drawings for engineering offices and contractors in Najaf and other provinces."
         }
       ],
       "skillsTitle": "Tools & disciplines",
@@ -493,7 +501,7 @@
       "email": "Send an email"
     },
     "footer": {
-      "rights": "Sajjad Abdulhameed · TeBIM",
+      "rights": "Eng. Sajjad Al-Hindawi · TeBIM",
       "place": "Najaf, Iraq",
       "social": "Social profiles"
     },
@@ -510,6 +518,19 @@
       "text": "The link may have changed. Browse the projects or go back home.",
       "home": "Home",
       "projects": "Browse projects"
+    },
+    "partners": {
+      "eyebrow": "Worked with",
+      "title": "Organisations and companies that trusted our work",
+      "items": [
+        "Najaf Governorate office",
+        "Al-Qaws Engineering Consultancy",
+        "Dar Al-Naseem Company",
+        "Um Qasr Northern Cement Company",
+        "Wadi Al-Khair Company",
+        "Madina Al-Moali Company"
+      ],
+      "more": "and many executing engineering offices and contractors across Najaf and other provinces"
     }
   }
 }
