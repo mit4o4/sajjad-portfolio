@@ -79,7 +79,10 @@ export default function AboutSection() {
             {t("site.credentials.title")}
           </h3>
           {credentials.map(c => (
-            <div key={c.title} className={`tb-cred${c.kind === "degree" ? " is-degree" : ""}`}>
+            <div
+              key={c.title}
+              className={`tb-cred${c.kind === "degree" ? " is-degree" : ""}`}
+            >
               <span className="tb-ico" aria-hidden="true">
                 {c.kind === "degree" ? <GraduationCap /> : <Award />}
               </span>
